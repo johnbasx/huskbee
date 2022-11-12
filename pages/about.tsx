@@ -41,12 +41,12 @@ const AboutPage = () => (
         <Movie key={movie.id + movie.name} {...movie} />
       ))}
     </div>
-    <h1>About</h1>
+    {/* <h1>About</h1>
 
     <p>This is the about page</p>
     <p>
       <Link href="/">Go home</Link>
-    </p>
+    </p> */}
   </Layout>
 );
 

@@ -1,4 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
+import Image from "next/image";
 import Link from "next/link";
 import { SVGProps } from "react";
 
@@ -101,13 +102,17 @@ export default function Example() {
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
-            <img
-              className="h-12"
-              src="/logo/axewhy-colorful-logo.png"
-              alt="Company name"
-            />
+            <div className="relative h-12 object-contain">
+              <Image
+                className="h-12"
+                src="/logo/axewhy-colorful-logo.png"
+                alt="Company name"
+                height={100}
+                width={100}
+              />
+            </div>
             <h1 className="text-white text-4xl font-bold tracking-tight">
-              axewhy
+              huskbee
             </h1>
             <p className="text-gray-500 text-base">
               Making the world a better place through constructing elegant
