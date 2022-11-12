@@ -1,0 +1,4 @@
+background: linear-gradient(75deg, rgb(10, 37, 64) 0%, rgba(10, 37, 64, 0.75) 100%);
+1. #0f2944 to #48596e
+2. #463ac9
+3. #ddff00

@@ -1,3 +1,7 @@
+import MainNav from "@components/navigation/MainNav";
+
 export default function Home() {
-  return <div>Hello Baemee</div>;
+  return (
+    <MainNav/>
+  );
 }
