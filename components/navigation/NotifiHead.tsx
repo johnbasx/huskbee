@@ -2,6 +2,8 @@ import React from "react";
 import { HiFire } from "react-icons/hi";
 import { TbArrowNarrowRight } from "react-icons/tb";
 
+const message = "Website is under development!";
+
 const NotifiHead = () => {
   return (
     <div className="bg-gradient-to-r from-purple-600 to-orange-400 via-pink-500">
@@ -12,12 +14,8 @@ const NotifiHead = () => {
               <HiFire className="h-4 w-4" />
             </span>
             <p className="ml-3 truncate font-medium text-sm text-white">
-              <span className="md:hidden">
-                Big news! Get your free passes now!
-              </span>
-              <span className="hidden md:inline">
-                Big news! Get your free passes now!
-              </span>
+              <span className="md:hidden">{message}</span>
+              <span className="hidden md:inline">{message}</span>
             </p>
           </div>
 
