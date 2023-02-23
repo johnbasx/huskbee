@@ -1,24 +1,34 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useRef, useState } from "react";
-import { Popover, Transition } from "@headlessui/react";
-import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-
 import {
-  solutions,
+  Fragment,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Popover, Transition } from "@headlessui/react";
+import {
   callsToAction,
-  resources,
-  recentPosts,
   navigation,
+  recentPosts,
+  resources,
+  solutions,
 } from "@constants/header-menu-items";
+
 import Image from "next/image";
+import Link from "next/link";
 import NotifiHead from "./NotifiHead";
+import { authStatus } from "@store/index";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
+  const { status } = authStatus();
   let timeout: ReturnType<typeof setTimeout>;
   let timeoutDuration = 200;
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -279,12 +289,15 @@ export default function Navbar() {
               </Popover.Group>
               {/* Contact Us Button */}
               <div className="hidden items-center justify-end md:flex">
-                <a
-                  href="#"
-                  className="ml-8 inline-flex scale-100 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm transition-all duration-500 ease-in-out hover:scale-110 hover:bg-indigo-600"
-                >
-                  Contact Us
-                </a>
+                {status == false ? (
+                  <Link href="/login">
+                    <span className="ml-8 inline-flex scale-100 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm transition-all duration-500 ease-in-out hover:scale-110 hover:bg-indigo-600">
+                      Sign In
+                    </span>
+                  </Link>
+                ) : (
+                  <SignOut />
+                )}
               </div>
             </div>
             <Popover.Overlay className="fixed h-screen inset-0 bg-slate-900/80 backdrop-blur-sm " />
@@ -394,3 +407,23 @@ export default function Navbar() {
     </>
   );
 }
+
+const SignOut = () => {
+  const router = useRouter();
+  const handleSignOut = async () => {
+    try {
+      const response = await axios.post("/api/logout");
+      console.log("successfully logout");
+      router.push("/login");
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+  return (
+    <a onClick={() => handleSignOut()}>
+      <span className="cursor-pointer ml-8 inline-flex scale-100 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-500 px-4 py-2 text-base font-medium text-white shadow-sm transition-all duration-500 ease-in-out hover:scale-110 hover:bg-indigo-600">
+        Sign out
+      </span>
+    </a>
+  );
+};
