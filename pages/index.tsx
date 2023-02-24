@@ -24,12 +24,12 @@ const IndexPage = ({ login }: { login: string }) => {
   }, []);
 
   return (
-    <Layout title="About | Next.js + TypeScript Example">
+    <Layout title='HuskBee | All in one booking platform'>
       <Carousel />
 
-      <div className="flex flex-col w-full items-center py-4 relative">
+      <div className='relative flex flex-col items-center w-full py-4'>
         {/* <div className="w-full absolute top-24 shadow-lg px-4 rounded-3xl h-[10vh]">
-        <div className="bg-zinc-900 border-zinc-800 border h-full w-full rounded-3xl"></div>
+        <div className="w-full h-full border bg-zinc-900 border-zinc-800 rounded-3xl"></div>
       </div> */}
 
         <MenuCard />
@@ -37,18 +37,18 @@ const IndexPage = ({ login }: { login: string }) => {
       <UpcomingEvents />
       <DigitalEvents />
 
-      {/* <div className="flex mt-2 flex-wrap"> */}
+      {/* <div className="flex flex-wrap mt-2"> */}
       <DiscoverContainer
-        className="mt-4 mb-0"
-        classNameChild="border-none bg-transparent"
+        className='mt-4 mb-0'
+        classNameChild='border-none bg-transparent'
       >
         <DiscoverTitle
-          title="Upcoming Events"
-          about="Come watch and enjoy all these upcomimg events hapenning around you."
+          title='Upcoming Events'
+          about='Come watch and enjoy all these upcomimg events hapenning around you.'
           icon={FaGuitar}
         />
       </DiscoverContainer>
-      <div className="grid grid-cols-1 md:grid-cols-2 mt-2 ">
+      <div className='grid grid-cols-1 mt-2 md:grid-cols-2 '>
         {movieList.map((movie) => (
           <Movie key={movie.id + movie.name} {...movie} />
         ))}
