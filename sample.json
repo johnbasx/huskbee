@@ -1,0 +1,24 @@
+{
+  "id": "ba70d8fe-33d0-4f2e-a7f8-a26f7af24231",
+  "organiser": [
+    {
+      "id": "82c6a53b-2522-4411-94c1-9e057a214bcb",
+      "name": "Dev Organiser",
+      "logo": "http://127.0.0.1:8000/media/ORGANISER_LOGO/verified.png",
+      "organiser_type": "Dev Type",
+      "created_at": "2023-02-17T06:59:36.412420Z",
+      "updated_at": "2023-02-17T06:59:36.412420Z",
+      "user": 2
+    }
+  ],
+  "name": "Dev Event",
+  "tag_line": "DevTag",
+  "description": "sfsfsf",
+  "start_date": "2023-02-04",
+  "end_date": "2023-02-11",
+  "start_time": "06:00:00",
+  "end_time": "18:00:00",
+  "logo": "http://127.0.0.1:8000/media/EVENT_LOGO/verified_aLfLIxR.png",
+  "event_type": "Entertainment",
+  "hero_image": "http://127.0.0.1:8000/media/EVENT_HERO_IMAGE/mimi-thian-jxUuXxUFfp4-unsplash.jpg"
+}

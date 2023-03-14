@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import type { NextRequest } from "next/server";
 import { serialize } from "cookie";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
+  // let cookie = req.cookies.clear();
   res.setHeader("Set-Cookie", [
     serialize("access_token", "null", {
       httpOnly: true,

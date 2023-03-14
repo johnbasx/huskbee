@@ -1,4 +1,12 @@
-import React, { FormEvent, ReducerState, useReducer } from "react";
+import * as yup from "yup";
+
+import { Path, SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
+import React, {
+  FormEvent,
+  HTMLInputTypeAttribute,
+  ReducerState,
+  useReducer,
+} from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 import AuthLayout from "@components/layout/AuthLayout";
@@ -8,14 +16,18 @@ import { GoogleSvg } from "@components/common/GoogleSvg";
 import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
+import Username from "@components/signUp/FormInputs/Username";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export interface signUpProps {
   first_name: string;
   last_name: string;
   email: string;
   password: string;
+  confirmPassword: string;
+  user_name: string;
 }
 
 function reducer<T extends signUpProps>(state: T, newState: Partial<T>) {
@@ -30,9 +42,48 @@ const initialState: signUpProps = {
   last_name: "",
   email: "",
   password: "",
+  confirmPassword: "",
+  user_name: "",
 };
 
+const PHONENUMBER_REGEX = /^[0-9\- ]{10}$/;
+const schema = yup
+  .object({
+    username: yup
+      .string()
+      .required("Username is required")
+      .matches(/^[A-Za-z ]*$/, "Please enter a valid name")
+      .min(2, "Enter a valid name")
+      .max(40, "Name is too long"),
+    first_name: yup.string().required("First name is required"),
+    last_name: yup.string().required("Last name is required"),
+    email: yup.string().required("Email is required"),
+    phone: yup
+      .string()
+      .matches(PHONENUMBER_REGEX, {
+        message: "Phone number is not valid",
+        excludeEmptyString: true,
+      })
+      // .min(10, 'Phone number should be of 10 digits')
+      .nullable()
+      .max(9999999999, "Phone number can't be more than 10 digits")
+      .required("Phone is required"),
+    password: yup.string().required("Password is required"),
+    confirm_password: yup.string().required("Confirm password is required"),
+  })
+  .required();
+
+type FormData = yup.InferType<typeof schema>;
+
 const Signup: NextPage = () => {
+  // const { register } = useForm<IFormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
   // const {useReducer} = React
   const router = useRouter();
   const [value, setValue] = useReducer(reducer, initialState);
@@ -64,6 +115,22 @@ const Signup: NextPage = () => {
     }
   };
 
+  const onsubmit = (data: FormData) => {
+    const comparePassword = ComparePassword(
+      data.password,
+      data.confirm_password
+    );
+    if (comparePassword) {
+      console.log(comparePassword);
+    } else {
+      console.log(comparePassword, "Confirm password didn't match");
+    }
+  };
+
+  const ComparePassword = (password: string, confirmPassword: string) => {
+    if (password === confirmPassword) return true;
+    return false;
+  };
   return (
     <>
       <Toaster />
@@ -82,8 +149,8 @@ const Signup: NextPage = () => {
           </div>
           <div className="flex w-full max-w-sm mx-auto overflow-hidden rounded-3xl shadow-lg bg-zinc-900/50 border border-zinc-800/50 backdrop-blur-lg lg:max-w-4xl">
             {/* Login image for Large Screens */}
-            <div className="hidden bg-cover lg:block lg:w-1/2 bg-loginImage"></div>
-            <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
+            {/* <div className="hidden bg-cover lg:block lg:w-1/2 bg-loginImage"></div> */}
+            <div className="w-full px-6 py-8 md:px-8 lg:w-full">
               <div className="w-full flex justify-center py-4 relative items-center">
                 <Image
                   alt="Company Logo"
@@ -97,87 +164,118 @@ const Signup: NextPage = () => {
                 HuskBee
               </h2>
 
-              <form onSubmit={handleSignup}>
-                <div className="mt-4">
-                  <label
-                    className="block mb-2 text-sm font-medium text-gray-200"
-                    htmlFor="first_name"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    id="first_name"
-                    className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
-                    type="text"
-                    placeholder="First name"
-                    onChange={(e) => setValue({ first_name: e.target.value })}
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <label
-                    className="block mb-2 text-sm font-medium text-gray-200"
-                    htmlFor="last name"
-                  >
-                    Last name
-                  </label>
-                  <input
-                    id="last_name"
-                    className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
-                    type="text"
-                    placeholder="Last name"
-                    onChange={(e) => setValue({ last_name: e.target.value })}
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <label
-                    className="block mb-2 text-sm font-medium text-gray-200"
-                    htmlFor="LoggingEmailAddress"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    id="email"
-                    className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
-                    type="email"
-                    placeholder="huskbee@example.com"
-                    onChange={(e) => setValue({ email: e.target.value })}
-                  />
-                </div>
-                <div className="mt-4">
-                  <label
-                    className="block mb-2 text-sm font-medium text-gray-200"
-                    htmlFor="LoggingEmailAddress"
-                  >
-                    Contact number
-                  </label>
-                  <input
-                    id="email"
-                    className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
-                    type="email"
-                    placeholder="huskbee@example.com"
-                    onChange={(e) => setValue({ email: e.target.value })}
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <div className="flex justify-between">
+              <form onSubmit={handleSubmit(onsubmit)} className="">
+                <div className="grid grid-cols-6 gap-6">
+                  <div className="mt-4 col-span-6 sm:col-span-3">
                     <label
                       className="block mb-2 text-sm font-medium text-gray-200"
-                      htmlFor="loggingPassword"
+                      htmlFor="user_name"
+                    >
+                      Username
+                    </label>
+                    <input
+                      className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+                      type="text"
+                      {...register("username")}
+                    />
+                    <p>{errors.username?.message}</p>
+                    {/* <Input
+                      label="Username"
+                      value="username"
+                      register={register}
+                      type="text"
+                      required
+                    /> */}
+                  </div>
+
+                  <div className="mt-4 col-span-6 sm:col-span-3">
+                    <label
+                      className="block mb-2 text-sm font-medium text-gray-200"
+                      htmlFor="user_name"
+                    >
+                      First name
+                    </label>
+                    <input
+                      className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+                      type="text"
+                      {...register("first_name")}
+                    />
+                    <p>{errors.first_name?.message}</p>
+                  </div>
+
+                  <div className="mt-4 col-span-6 sm:col-span-3">
+                    <label
+                      className="block mb-2 text-sm font-medium text-gray-200"
+                      htmlFor="user_name"
+                    >
+                      Last name
+                    </label>
+                    <input
+                      className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+                      type="text"
+                      {...register("last_name")}
+                    />
+                    <p>{errors.last_name?.message}</p>
+                  </div>
+
+                  <div className="mt-4 col-span-6 sm:col-span-3">
+                    <label
+                      className="block mb-2 text-sm font-medium text-gray-200"
+                      htmlFor="user_name"
+                    >
+                      Email
+                    </label>
+                    <input
+                      className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+                      type="text"
+                      {...register("email")}
+                    />
+                    <p>{errors.email?.message}</p>
+                  </div>
+                  <div className="mt-4 col-span-6 sm:col-span-3">
+                    <label
+                      className="block mb-2 text-sm font-medium text-gray-200"
+                      htmlFor="user_name"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+                      type="text"
+                      {...register("phone")}
+                    />
+                    <p>{errors.phone?.message}</p>
+                  </div>
+
+                  <div className="mt-4 col-span-6 sm:col-span-3">
+                    <label
+                      className="block mb-2 text-sm font-medium text-gray-200"
+                      htmlFor="user_name"
                     >
                       Password
                     </label>
+                    <input
+                      className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+                      type="password"
+                      {...register("password")}
+                    />
+                    <p>{errors.password?.message}</p>
                   </div>
 
-                  <input
-                    id="loggingPassword"
-                    className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50 "
-                    type="password"
-                    placeholder="*******"
-                    onChange={(e) => setValue({ password: e.target.value })}
-                  />
+                  <div className="mt-4 col-span-6 sm:col-span-3">
+                    <label
+                      className="block mb-2 text-sm font-medium text-gray-200"
+                      htmlFor="user_name"
+                    >
+                      Confirm Password
+                    </label>
+                    <input
+                      className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+                      type="password"
+                      {...register("confirm_password")}
+                    />
+                    <p>{errors.confirm_password?.message}</p>
+                  </div>
                 </div>
 
                 <div className="mt-8">
@@ -239,3 +337,59 @@ const Signup: NextPage = () => {
 };
 
 export default Signup;
+
+// interface IFormValues {
+//   username: string;
+//   first_name: string;
+//   last_name: string;
+//   email: string;
+//   phone: string;
+//   password: string;
+//   confirm_password: string;
+//   // Age: number;
+// }
+
+// type InputProps = {
+//   label: string;
+//   value: Path<IFormValues>;
+//   type: HTMLInputTypeAttribute;
+//   register: UseFormRegister<IFormValues>;
+//   required: boolean;
+// };
+
+// const Input = ({ label, value, type, register, required }: InputProps) => {
+//   const schema = yup
+//     .object({
+//       username: yup.string().required(),
+//   first_name: yup.string().required(),
+//   last_name: yup.string().required(),
+//   email: yup.string().required(),
+//   phone: yup.string().required(),
+//   password: yup.string().required(),
+//   confirm_password: yup.string().required(),
+//     })
+//     .required();
+//   type FormData = yup.InferType<typeof schema>;
+
+//   const {
+//     formState: { errors },
+//   } = useForm({
+//     resolver: yupResolver(schema),
+//   });
+//   return (
+//     <>
+//       <label
+//         className="block mb-2 text-sm font-medium text-gray-200"
+//         htmlFor="user_name"
+//       >
+//         {label}
+//       </label>
+//       <input
+//         className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+//         type={type}
+//         {...register(value, { required: true, minLength: 3 })}
+//       />
+//       <p>{errors.}</p>
+//     </>
+//   );
+// };
