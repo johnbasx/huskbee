@@ -24,7 +24,7 @@ export function middleware(request: NextRequest) {
 
     return NextResponse.redirect(new URL(BASE_URL + param!.toString()));
   } else if (pathname.startsWith("/login") && login?.value == "true") {
-    return NextResponse.next();
+    return NextResponse.redirect(new URL(BASE_URL));
   }
 
   // pathname

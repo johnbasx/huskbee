@@ -8,7 +8,6 @@ import { GoogleSvg } from "@components/common/GoogleSvg";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import cookie from "cookie";
 import { useRouter } from "next/router";
 
 const LoginPage = () => {
@@ -44,14 +43,11 @@ const LoginPage = () => {
     const data = {
       access_token: token,
     };
-    console.log(data);
     try {
       const response = await axios.post("/api/googleSignin", data);
-      console.table(response);
+      // console.table(response);
       toast.success("Login successful");
-      console.log("login Path", router.pathname);
-      router.reload(window.location.pathname);
-      // resolvedUrl ? router.push("/" + resolvedUrl) : router.push("/");
+      router.push("/");
     } catch (e: any) {
       console.log(e);
     }
@@ -216,34 +212,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-// export async function getServerSideProps(context: NextPageContext) {
-//   const { login } = cookie.parse(
-//     context.req ? context.req.headers.cookie || "" : document.cookie
-//   );
-
-//   const { redirectref } = context.query;
-//   console.log(redirectref);
-
-// console.log("type", typeof redirectref);
-// if (login === "true" && redirectref != undefined) {
-//   return {
-//     redirect: {
-//       destination: "http://localhost:3000" + redirectref,
-//       permanent: false,
-//     },
-//   };
-// } else
-// if (login === "true") {
-//   return {
-//     redirect: {
-//       destination: "http://localhost:3000",
-//       permanent: false,
-//     },
-//   };
-// }
-
-//   return {
-//     props: { login: login || null },
-//   };
-// }
