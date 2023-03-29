@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Tab } from "@headlessui/react";
@@ -17,8 +17,16 @@ export const delivery_type = [
     charge: "50",
   },
 ];
+
 const AvailableTickets = () => {
   const [deliveryMethod, setDeliveryMethod] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    console.log("AvailableTickets: ", selectedIndex);
+    
+  }, [selectedIndex]);
+
   return (
     <>
       <div className="px-4 py-5 sm:px-6">
@@ -27,7 +35,7 @@ const AvailableTickets = () => {
         </h3>
       </div>
       <dl>
-        <Tab.Group>
+        <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <Tab.List className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-8 px-4 pb-4">
             {delivery_type.map((type) => (
               <Tab key={type.id} className="border-gray-200 focus: border-none">
@@ -55,7 +63,7 @@ const AvailableTickets = () => {
                         }`}
                       />
                     </div>
-                    {/* <div className="flex justify-start">
+                    <div className="flex justify-start">
                       <p
                         className={`text-sm font-semibold items-start ${
                           type.id == deliveryMethod
@@ -63,9 +71,9 @@ const AvailableTickets = () => {
                             : `text-gray-500`
                         }`}
                       >
-                        {type.description}
+                        Some description of {type.type} tickets
                       </p>
-                    </div> */}
+                    </div>
                     <div className="flex justify-start">
                       <p
                         className={`text-base font-bold ${

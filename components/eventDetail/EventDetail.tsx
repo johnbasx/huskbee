@@ -1,19 +1,20 @@
+import Link from "next/link";
 import React from "react";
 
 export interface EventDetailProps {
+  event: string;
   name: string;
-  version: string;
-  datetime: string;
-  date: string;
-  review: number;
+  startDate: string;
+  endDate: string;
   description: string;
+  startTime: string;
 }
 const EventDetail = ({
+  event,
   name,
-  version,
-  datetime,
-  date,
-  review,
+  startDate,
+  startTime,
+  endDate,
   description,
 }: EventDetailProps) => {
   return (
@@ -28,25 +29,28 @@ const EventDetail = ({
             Product information
           </h2>
           <p className="text-sm text-gray-300 mt-2">
-            Version {version} (Updated <time dateTime={datetime}>{date}</time>)
+            Event starts on {startDate} at {startTime}
+            {/* Version {version} (Updated <time dateTime={datetime}>{date}</time>) */}
           </p>
         </div>
 
         <div>
           <h3 className="sr-only">Reviews</h3>
-          <p className="sr-only">{review} out of 5 stars</p>
+          <p className="sr-only"> out of 5 stars</p>
         </div>
       </div>
 
       <p className="text-gray-500 mt-6">{description}</p>
 
       <div className="mt-10 gap-y-4">
-        <button
-          type="button"
-          className="w-full bg-purple-600 hover:bg-purple-700 border border-transparent rounded-lg py-3 px-8 flex items-center justify-center text-lg font-bold text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
-        >
-          Book this event
-        </button>
+        <Link href={`/book-event/` + event}>
+          <span
+            // type="button"
+            className="w-full bg-purple-600 hover:bg-purple-700 border border-transparent rounded-lg py-3 px-8 flex items-center justify-center text-lg font-bold text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+          >
+            Book this event
+          </span>
+        </Link>
         {/* <button
       type="button"
       className="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"

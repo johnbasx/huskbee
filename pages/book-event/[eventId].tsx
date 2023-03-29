@@ -1,146 +1,231 @@
-import React, { useState } from "react";
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 import AvailableTickets from "@components/bookEvent/AvailableTickets";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { BOOKING_BASE_URL } from "@constants/api-urls";
+import BookedBy from "@components/bookEvent/BookedBy";
+import BookingSummary from "@components/bookEvent/BookingSummary";
 import Layout from "@components/layout/Layout";
-import Link from "next/link";
 import { NextPageContext } from "next/types";
-import cookie from "cookie";
+import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 
-export const delivery_type = [
-  {
-    id: 1,
-    type: "VIP",
-    description: "4-10 business day",
-    charge: "45",
-  },
-  {
-    id: 2,
-    type: "Normal",
-    description: "2-5 business day",
-    charge: "80",
-  },
-];
+interface TicketsProps {
+  id: string;
+  available_tickets: number;
+  original_price: number;
+  offer_price: number;
+  type: string;
+  total_tickets: number;
+  event: string;
+}
+export interface SelectedTicketsProps {
+  // [key: string]: number;
+  event_name?: string;
+  total_amount?: number;
+}
 
-export const cartItem = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "330.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "240.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-];
-
-const BookEvent = ({
-  eventId,
-  resolvedUrl,
-}: {
-  eventId: string;
-  resolvedUrl?: string;
-}) => {
+const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
   const router = useRouter();
-  const [deliveryMethod, setDeliveryMethod] = useState(1);
+  const [subtotal, setSubtotal] = useState(0);
+  const [gst, setGst] = useState(0);
+  const [orderTotal, setOrderTotal] = useState(0);
+
+  // console.log("Available Tickets: ", eventTickets);
+
+  const [selected_tickets, setSelected_tickets] = useState<
+    SelectedTicketsProps[]
+  >([]);
+
+  const Options = () => {
+    var arr = [];
+
+    for (let i = 0; i <= 5; i++) {
+      arr.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+
+    return arr;
+  };
+
+  const selectHandler = async (
+    event: ChangeEvent<HTMLSelectElement>,
+    price: number,
+    ticket: string
+  ) => {
+    const number_of_tickets = parseInt(event.target.value, 10);
+    let index = selected_tickets.findIndex((x) => x.event_name === ticket);
+
+    if (index < 0) {
+      let ticket_obj = {
+        event_name: ticket,
+        total_amount: number_of_tickets * price,
+      };
+      setSelected_tickets([...selected_tickets, ticket_obj]);
+    } else {
+      let newArray = [...selected_tickets];
+      newArray[index].total_amount = number_of_tickets * price;
+      setSelected_tickets(newArray);
+    }
+  };
+
+  useEffect(() => {
+    let total = 0;
+
+    for (let i = 0; i < selected_tickets.length; i++) {
+      total += selected_tickets[i].total_amount!;
+    }
+
+    setSubtotal(total);
+    setGst(0.05 * subtotal);
+    setOrderTotal(subtotal + gst);
+  }, [selected_tickets, subtotal, gst]);
 
   return (
-    <Layout title="Book event">
-      <div className="mt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <Layout title="event-book">
+      <div className="bg-white">
+        <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            Available Tickets
+          </h1>
+          <form className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
+            <section aria-labelledby="cart-heading" className="lg:col-span-7">
+              <h2 id="cart-heading" className="sr-only">
+                Items in your shopping cart
+              </h2>
+
+              <ul
+                role="list"
+                className="border-t border-gray-200 divide-y divide-gray-200"
+              >
+                {eventTickets.length > 0 ? (
+                  eventTickets.map((ticket, ticketIdx) => (
+                    <li key={ticket.id} className="flex py-6 sm:py-10">
+                      {/*<div className="flex-shrink-0">
+                        <img
+                          src={ticket.imageSrc}
+                          alt={ticket.imageAlt}
+                          className="w-24 h-24 rounded-md object-center object-cover sm:w-48 sm:h-48"
+                        />
+                      </div> */}
+
+                      <div className="ml-4 flex-1 flex flex-col justify-between sm:ml-6">
+                        <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+                          <div>
+                            <div className="flex justify-between">
+                              <h3 className="text-sm">
+                                <a
+                                  href="#!"
+                                  className="font-medium text-gray-700 hover:text-gray-800"
+                                >
+                                  {ticket.type}
+                                </a>
+                              </h3>
+                            </div>
+                            <div className="mt-1 flex text-sm">
+                              <p className="text-gray-500">
+                                {ticket.total_tickets} Tickets
+                              </p>
+                            </div>
+                            <p className="mt-1 text-sm font-medium text-gray-900">
+                              ₹{ticket.offer_price}
+                            </p>
+                          </div>
+
+                          <div className="mt-4 sm:mt-0 sm:pr-9">
+                            <label
+                              htmlFor={`quantity-${ticketIdx}`}
+                              className="sr-only"
+                            >
+                              Quantity, {ticket.type}
+                            </label>
+                            <select
+                              disabled={
+                                ticket.available_tickets === 0 ? true : false
+                              }
+                              onChange={(event) => {
+                                selectHandler(
+                                  event,
+                                  ticket.offer_price,
+                                  ticket.type
+                                );
+                              }}
+                              id={`quantity-${ticketIdx}`}
+                              name={`quantity-${ticketIdx}`}
+                              className="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            >
+                              {Options()}
+                            </select>
+
+                            {/* <div className="absolute top-0 right-0">
+                            <button
+                              type="button"
+                              className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500"
+                            >
+                              <span className="sr-only">Remove</span>
+                              <XMarkIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </button>
+                          </div> */}
+                          </div>
+                        </div>
+
+                        <p className="mt-4 flex text-sm text-gray-700 space-x-2">
+                          {ticket.available_tickets > 0 ? (
+                            <CheckIcon
+                              className="flex-shrink-0 h-5 w-5 text-green-500"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <XMarkIcon
+                              className="flex-shrink-0 h-5 w-5 text-red-500"
+                              aria-hidden="true"
+                            />
+                          )}
+
+                          <span>
+                            {ticket.available_tickets > 0
+                              ? `${ticket.available_tickets} tickets available`
+                              : `All tickets solded out`}
+                          </span>
+                        </p>
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <p className="text-black">
+                    No tickets available for this event
+                  </p>
+                )}
+              </ul>
+            </section>
+
+            {/* Order summary */}
+            <BookingSummary
+              subtotal={subtotal}
+              gst={gst}
+              orderTotal={orderTotal}
+            />
+          </form>
+        </div>
+      </div>
+      {/* <div className="mt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
           <div className="relative">
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-              <div className="px-4 py-5 sm:px-6">
-                <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  Booked by
-                </h3>
-              </div>
-              <div className="border-t border-gray-200">
-                <dl>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-base font-medium text-gray-500">
-                      Full name
-                    </dt>
-                    <dd className="mt-1 text-base text-gray-900 sm:mt-0 sm:col-span-2">
-                      Laishram Chinglemba
-                    </dd>
-                  </div>
-                  <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-base font-medium text-gray-500">
-                      Phone number
-                    </dt>
-                    <dd className="mt-1 text-base text-gray-900 sm:mt-0 sm:col-span-2">
-                      +91 9523845328
-                    </dd>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-base font-medium text-gray-500">
-                      Email address
-                    </dt>
-                    <dd className="mt-1 text-base text-gray-900 sm:mt-0 sm:col-span-2">
-                      chinglemba@xy.com
-                    </dd>
-                  </div>
-                </dl>
-              </div>
+              <BookedBy />
               <AvailableTickets />
             </div>
           </div>
 
-          <div className="relative ">
-            <div className="w-full px-4 py-4 border shadow-md rounded-lg">
-              <div className=" mt-4 flow-root">
-                <h3 className="text-lg leading-6 font-medium">
-                  Booking summary for Rock carnival ShiRock
-                </h3>
-
-                <div className="mt-6 space-y-4 px-2 border-b-2 py-2">
-                  <div className="flex justify-between text-base font-medium ">
-                    <h3 className="text-gray-300">Subtotal</h3>
-                    <p className="text-gray-300">₹ 570</p>
-                  </div>
-                  <div className="flex justify-between text-base font-medium ">
-                    <h3 className="text-gray-300">Shipping</h3>
-                    <p className="text-gray-300">₹ 40</p>
-                  </div>
-                  <div className="flex justify-between text-base font-medium ">
-                    <h3 className="text-gray-300">Taxes</h3>
-                    <p className="text-gray-300">₹ 15</p>
-                  </div>
-                </div>
-
-                <div className="flex justify-between text-base font-medium text-gray-900 px-2 mt-2">
-                  <h3 className="text-gray-300">Total</h3>
-                  <p className="text-gray-300 font-bold">₹ 625</p>
-                </div>
-                <div className="mt-6 px-4">
-                  <Link href="#!">
-                    <span className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
-                      Pay
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+          <BookingSummary />
         </dl>
-      </div>
+      </div> */}
     </Layout>
   );
 };
@@ -148,22 +233,18 @@ const BookEvent = ({
 export default BookEvent;
 
 export async function getServerSideProps(context: NextPageContext) {
-  const { login } = cookie.parse(
-    context.req ? context.req.headers.cookie || "" : document.cookie
-  );
-
   const { eventId } = context.query;
-  // console.log(login);
-  // if (login === undefined || login === "false") {
-  //   return {
-  //     redirect: {
-  //       destination: "/login?redirectref=/book-event/" + eventId,
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  const req = context.req;
+  const res = context.res;
+  const token = getCookie("access_token", { req, res });
 
+  const response = await fetch(BOOKING_BASE_URL + "event-tickets/" + eventId, {
+    headers: { Authorization: "Bearer " + token },
+  });
+
+  const eventTickets = await response.json();
+  console.log(eventTickets);
   return {
-    props: { eventId },
+    props: { eventTickets },
   };
 }
