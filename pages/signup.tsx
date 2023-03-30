@@ -135,7 +135,7 @@ const Signup: NextPage = () => {
     <>
       <Toaster />
       <AuthLayout>
-        <div className="flex flex-1 h-screen max-w-7xl mx-auto flex-col justify-center items-center relative px-2">
+        <div className="my-8 flex flex-1 h-screen max-w-7xl mx-auto flex-col justify-center items-center relative px-2">
           <div className="h-full w-full pointer-events-none absolute">
             <div className="relative h-screen w-full">
               <Image

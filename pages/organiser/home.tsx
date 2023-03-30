@@ -7,13 +7,17 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/solid";
 
+import Events from "@components/Organiser/home/Events";
 import Layout from "@components/Organiser/Layout/Layout";
+import Overview from "@components/Organiser/home/Overview";
 
 const Home = () => {
   return (
     <Layout>
-      <div className="py-8 xl:py-10">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-3">
+      <div className="py-8 xl:py-10 space-y-12">
+        <Overview />
+        <Events />
+        {/* <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-3">
           <div className="xl:col-span-2 xl:pr-8 xl:border-r xl:border-gray-200">
             <div>
               <div>
@@ -204,10 +208,10 @@ const Home = () => {
                             />
 
                             <span className="absolute -bottom-0.5 -right-1 bg-white rounded-tl px-0.5 py-px">
-                              {/* <ChatAltIcon
+                               <ChatAltIcon
                                       className="h-5 w-5 text-gray-400"
                                       aria-hidden="true"
-                                    /> */}
+                                    />
                             </span>
                           </div>
                         </div>
@@ -266,10 +270,10 @@ const Home = () => {
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                {/* <ChatAltIcon
+                <ChatAltIcon
                         className="h-5 w-5 text-gray-400"
                         aria-hidden="true"
-                      /> */}
+                      /> 
                 <span className="text-gray-900 text-sm font-medium">
                   4 comments
                 </span>
@@ -343,7 +347,7 @@ const Home = () => {
               </div>
             </div>
           </aside>
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

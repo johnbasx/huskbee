@@ -1,9 +1,9 @@
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
-import React, { Dispatch } from "react";
 
 import { BOOKING_BASE_URL } from "@constants/api-urls";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import React from "react";
 import useDebounce from "@hooks/useDebounce";
 import { useRouter } from "next/router";
 
@@ -11,25 +11,28 @@ export interface SearchEventsprops {
   id: string;
   name: string;
 }
+
 const SearchEvents = () => {
   const router = useRouter();
-
   const [searchBar, setSearchBar] = useState(false);
   const [query, setQuery] = useState("");
   const debouncedSearch = useDebounce(query, 500);
-  const [citizens, setCitizens] = useState<SearchEventsprops[]>([]);
+  const [events, setEvents] = useState<SearchEventsprops[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       if (query == "") {
         return;
       } else {
         const data = await fetch(
           BOOKING_BASE_URL + "search-event/?q=" + debouncedSearch
         ).then((res) => res.json());
-        setCitizens(data);
-        console.log(data);
+        setEvents(data);
+        // console.log(data);
       }
+      setLoading(false);
     };
     if (debouncedSearch) {
       fetchData();
@@ -37,7 +40,7 @@ const SearchEvents = () => {
   }, [debouncedSearch]);
 
   const keyDownEvent = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log("event.code");
+    // console.log("event.code");
   };
 
   return (
@@ -106,26 +109,32 @@ const SearchEvents = () => {
                   className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
                   aria-hidden="true"
                 />
+                {loading && (
+                  <svg
+                    className="motion-reduce:hidden animate-spin text-blue-500 h-6 w-6"
+                    viewBox="0 0 24 24"
+                  ></svg>
+                )}
 
                 <Combobox.Input
                   className="w-full h-12 pr-4 text-sm text-gray-800 placeholder-gray-400 bg-transparent border-0 pl-11 focus:ring-0"
-                  placeholder="Search by citizen name and email"
+                  placeholder="Search by event name"
                   onChange={(event) => setQuery(event.target.value)}
                 />
               </div>
 
-              {citizens.length > 0 && (
+              {events.length > 0 && (
                 <Combobox.Options
                   static
                   className="py-2 overflow-y-auto text-sm text-gray-800 max-h-72 scroll-py-2"
                 >
-                  {citizens.map((citizen) => (
-                    <Combobox.Option key={citizen.id} value={citizen}>
+                  {events.map((event) => (
+                    <Combobox.Option key={event.id} value={event}>
                       {({ active }) => (
                         <div
                           onKeyDown={keyDownEvent}
                           onClick={() =>
-                            router.push("/event-detail/" + citizen.id)
+                            router.push("/event-detail/" + event.id)
                           }
                           className={`space-x-1 px-4 py-2 cursor-pointer ${
                             active ? "bg-indigo-600" : "bg-white"
@@ -136,14 +145,14 @@ const SearchEvents = () => {
                               active ? "text-white" : "text-gray-900"
                             }`}
                           >
-                            {citizen.name}
+                            {event.name}
                           </span>
                           <span
                             className={
                               active ? "text-indigo-200" : "text-gray-400"
                             }
                           >
-                            {citizen.name}
+                            {event.name}
                           </span>
                         </div>
                       )}
@@ -152,8 +161,8 @@ const SearchEvents = () => {
                 </Combobox.Options>
               )}
 
-              {citizens.length === 0 && (
-                <p className="p-4 text-sm text-gray-500">No citizen found.</p>
+              {events.length === 0 && (
+                <p className="p-4 text-sm text-gray-500">No event found.</p>
               )}
             </Combobox>
           </Transition.Child>

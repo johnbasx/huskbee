@@ -17,7 +17,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import NotifiHead from "./NotifiHead";
-import SearchButton from "./SearchButton";
 import SearchEvents from "./SearchEvents";
 import { authStatus } from "@store/index";
 import axios from "axios";
@@ -56,7 +55,7 @@ export default function Navbar() {
           <nav className="px-4 mx-auto max-w-7xl sm:px-6" aria-label="Global">
             <div className="flex items-center justify-between py-4 md:justify-between md:space-x-2">
               <div className="flex items-center justify-between w-full md:w-auto lg:w-0 lg:flex-1">
-                <a href="#" className="flex items-center justify-start flex-1">
+                <Link href="/" className="flex items-center justify-start flex-1">
                   <span className="sr-only">HuskBee</span>
                   <div className="relative w-auto h-8 sm:h-10">
                     <Image
@@ -71,7 +70,7 @@ export default function Navbar() {
                   <span className="ml-2 text-3xl font-extrabold tracking-tight text-white">
                     HuskBee
                   </span>
-                </a>
+                </Link>
 
                 {/* Hamburger menu for mobile menu popover */}
                 <div className="flex items-center -mr-2 md:hidden">
