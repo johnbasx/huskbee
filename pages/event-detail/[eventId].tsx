@@ -9,6 +9,7 @@ import ProductImage from "@components/eventDetail/ProductImage";
 import React from "react";
 import ShareOnSocial from "@components/eventDetail/ShareOnSocial";
 import { useRouter } from "next/router";
+import Moment from "react-moment";
 
 export interface OrganiserProps {
   id: string;

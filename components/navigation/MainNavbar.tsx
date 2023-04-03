@@ -30,6 +30,7 @@ export default function Navbar() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [openState, setOpenState] = useState(false);
 
+  console.log("mainNav ", status);
   const toggleMenu = (open: boolean) => {
     setOpenState(!open);
     buttonRef.current?.click();
@@ -55,7 +56,10 @@ export default function Navbar() {
           <nav className="px-4 mx-auto max-w-7xl sm:px-6" aria-label="Global">
             <div className="flex items-center justify-between py-4 md:justify-between md:space-x-2">
               <div className="flex items-center justify-between w-full md:w-auto lg:w-0 lg:flex-1">
-                <Link href="/" className="flex items-center justify-start flex-1">
+                <Link
+                  href="/"
+                  className="flex items-center justify-start flex-1"
+                >
                   <span className="sr-only">HuskBee</span>
                   <div className="relative w-auto h-8 sm:h-10">
                     <Image

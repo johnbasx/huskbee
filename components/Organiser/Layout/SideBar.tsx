@@ -3,18 +3,34 @@ import {
   ClockIcon,
   HomeIcon,
   ListBulletIcon,
-  UserCircleIcon as UserCircleIconOutline,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Dialog, Transition } from "@headlessui/react";
-import { Dispatch, Fragment, useState } from "react";
+import { Dispatch, Fragment } from "react";
+
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const navigation = [
-  { name: "All Issues", href: "#", icon: HomeIcon, current: true },
-  { name: "My Events", href: "#", icon: ListBulletIcon, current: false },
-  // { name: "Assigned", href: "#", icon: UserCircleIconOutline, current: false },
-  { name: "Upcoming Events", href: "#", icon: ClockIcon, current: false },
-  { name: "Finished Events", href: "#", icon: ArchiveBoxIcon, current: false },
+  { name: "Home", href: "/organiser/home", icon: HomeIcon, current: true },
+  {
+    name: "My Events",
+    href: "/organiser/events",
+    icon: ListBulletIcon,
+    current: false,
+  },
+  {
+    name: "Upcoming Events",
+    href: "/organiser/upcoming-events",
+    icon: ClockIcon,
+    current: false,
+  },
+  {
+    name: "Finished Events",
+    href: "/organiser/finished-events",
+    icon: ArchiveBoxIcon,
+    current: false,
+  },
 ];
 const settings = [{ id: 1, name: "Profile", href: "#" }];
 
@@ -29,6 +45,8 @@ const SideBar = ({
   sidebarOpen: boolean;
   setSidebarOpen: Dispatch<boolean>;
 }) => {
+  const router = useRouter();
+
   return (
     <>
       {/* Mobile SideNav */}
@@ -160,33 +178,38 @@ const SideBar = ({
             <nav className="flex-1 px-2 py-4">
               <div className="space-y-1">
                 {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    <item.icon
-                      className={classNames(
-                        item.current
-                          ? "text-gray-300"
-                          : "text-gray-400 group-hover:text-gray-300",
-                        "mr-3 flex-shrink-0 h-6 w-6"
-                      )}
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
+                  <Link key={item.name} href={item.href}>
+                    <span
+                      className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                        router.pathname == item.href
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white "
+                      }`}
+                      // className={classNames(
+                      //   item.current
+                      //     ? "bg-gray-900 text-white"
+                      //     : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      //   "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                      // )}
+                      aria-current={item.current ? "page" : undefined}
+                    >
+                      <item.icon
+                        className={classNames(
+                          item.current
+                            ? "text-gray-300"
+                            : "text-gray-400 group-hover:text-gray-300",
+                          "mr-3 flex-shrink-0 h-6 w-6"
+                        )}
+                        aria-hidden="true"
+                      />
+                      {item.name}
+                    </span>
+                  </Link>
                 ))}
               </div>
               <div className="mt-10">
                 <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                  Projects
+                  Settings
                 </p>
                 <div className="mt-2 space-y-1">
                   {settings.map((item) => (

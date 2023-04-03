@@ -5,6 +5,8 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
     extend: {
@@ -24,5 +26,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("flowbite/plugin"), require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("flowbite/plugin"),
+    require("@tailwindcss/line-clamp"),
+    require("tw-elements/dist/plugin"),
+  ],
 };

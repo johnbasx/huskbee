@@ -24,3 +24,20 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.851) inset;
   background-color: rgb(63 63 70 / 0.5);
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+  color-scheme: white;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+}

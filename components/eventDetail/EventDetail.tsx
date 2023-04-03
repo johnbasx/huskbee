@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Moment from "react-moment";
 import React from "react";
 
 export interface EventDetailProps {
@@ -17,6 +18,7 @@ const EventDetail = ({
   endDate,
   description,
 }: EventDetailProps) => {
+  const start_date = new Date(startDate);
   return (
     <>
       <div className="flex flex-col-reverse">
@@ -29,7 +31,7 @@ const EventDetail = ({
             Product information
           </h2>
           <p className="text-sm text-gray-300 mt-2">
-            Event starts on {startDate} at {startTime}
+            Event starts on <Moment date={start_date} /> at {startTime}
             {/* Version {version} (Updated <time dateTime={datetime}>{date}</time>) */}
           </p>
         </div>
