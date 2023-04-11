@@ -9,6 +9,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment } from "react";
 
 import Link from "next/link";
+import { MdEventAvailable } from "react-icons/Md";
 import { useRouter } from "next/router";
 
 const navigation = [
@@ -29,6 +30,12 @@ const navigation = [
     name: "Finished Events",
     href: "/organiser/finished-events",
     icon: ArchiveBoxIcon,
+    current: false,
+  },
+  {
+    name: "Create Event",
+    href: "/organiser/create-event",
+    icon: MdEventAvailable,
     current: false,
   },
 ];

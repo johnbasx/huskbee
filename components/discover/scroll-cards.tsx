@@ -21,7 +21,7 @@ const ScrollCards = () => {
   const { events } = upcomingEvents();
 
   const BookButton = ({ link }: { link: string }) => (
-    <Link href={link}>
+    <Link href={link} className="w-full">
       <button className="flex justify-center text-center text-lg bg-purple-600 hover:bg-purple-700 w-full transition duration-200 border-purple-500 border rounded-lg py-1 px-3 font-bold">
         Book Now
       </button>

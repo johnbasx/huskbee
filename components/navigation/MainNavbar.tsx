@@ -30,7 +30,6 @@ export default function Navbar() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [openState, setOpenState] = useState(false);
 
-  console.log("mainNav ", status);
   const toggleMenu = (open: boolean) => {
     setOpenState(!open);
     buttonRef.current?.click();
