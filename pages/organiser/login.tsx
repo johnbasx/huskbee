@@ -1,9 +1,36 @@
+import React, { FormEvent, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
+
 import Image from "next/image";
-import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async (e: FormEvent) => {
+    e.preventDefault();
+    const data = {
+      username: username,
+      password: password,
+    };
+    console.log(data);
+    try {
+      const response = await axios.post("/api/organiserSignin", data);
+      console.log(response.data);
+      localStorage.setItem("user", response.data.user);
+      toast.success("Successfully Login");
+      router.push("/organiser/home");
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
+      <Toaster />
       <div className="min-h-full flex max-w-7xl mx-auto py-8">
         <div className="hidden lg:block relative w-0 flex-1">
           <img
@@ -126,7 +153,12 @@ const Login = () => {
               </div>
 
               <div className="mt-6">
-                <form action="#" method="POST" className="space-y-6">
+                <form
+                  onSubmit={(e) => {
+                    login(e);
+                  }}
+                  className="space-y-6"
+                >
                   <div>
                     <label
                       htmlFor="email"
@@ -136,12 +168,13 @@ const Login = () => {
                     </label>
                     <div className="mt-1">
                       <input
+                        onChange={(e) => setUsername(e.target.value)}
                         id="email"
                         name="email"
                         type="email"
                         autoComplete="email"
                         required
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                       />
                     </div>
                   </div>
@@ -155,12 +188,13 @@ const Login = () => {
                     </label>
                     <div className="mt-1">
                       <input
+                        onChange={(e) => setPassword(e.target.value)}
                         id="password"
                         name="password"
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                       />
                     </div>
                   </div>

@@ -4,7 +4,7 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/solid";
 import { Menu, Transition } from "@headlessui/react";
-import React, { Dispatch, Fragment } from "react";
+import React, { Dispatch, Fragment, useState } from "react";
 
 import { FaSearch } from "react-icons/fa";
 
@@ -13,6 +13,8 @@ function classNames(...classes: any) {
 }
 
 const NavBar = ({ setSidebarOpen }: { setSidebarOpen: Dispatch<boolean> }) => {
+  const [user, setUser] = useState(localStorage.getItem("user"));
+
   return (
     <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-gray-900 border-b border-gray-900">
       <button
@@ -62,8 +64,8 @@ const NavBar = ({ setSidebarOpen }: { setSidebarOpen: Dispatch<boolean> }) => {
                   alt=""
                 />
                 <span className="hidden ml-3 text-gray-200 text-sm font-medium lg:block">
-                  <span className="sr-only">Open user menu for </span>Emilia
-                  Birch
+                  <span className="sr-only">Open user menu for </span>
+                  {user}
                 </span>
                 <ChevronDownIcon
                   className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-200 lg:block"

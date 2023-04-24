@@ -1,12 +1,12 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { RequestCookie } from "next/dist/server/web/spec-extension/cookies";
 
 export const BASE_URL = "http://localhost:3000";
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token");
   const login = request.cookies.get("login");
+  const org_login = request.cookies.get("Org_login");
 
   const { pathname } = request.nextUrl;
 
@@ -27,13 +27,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(BASE_URL));
   }
 
-  // pathname
-  // const searchParams = request.nextUrl.searchParams;
-  // console.log(searchParams);
   if (pathname.startsWith("/book-event")) {
-    // console.log("Login", login);
     if (login?.value === "true") {
-      // console.log(pathname);
       return NextResponse.next();
     } else {
       return NextResponse.redirect(
@@ -42,24 +37,32 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // if (authStatus === "true") {
-  //   return NextResponse.rewrite(new URL("/about-2", request.url));
-  // }
+  // ORGANISER AUTHENTICATE PAGE
+  if (pathname.startsWith("/organiser")) {
+    if (
+      org_login?.value === "true" ||
+      pathname.startsWith("/organiser/login")
+    ) {
+      return NextResponse.next();
+    } else {
+      return NextResponse.redirect(new URL(BASE_URL));
+    }
+  }
 
   const response = NextResponse.next();
   return response;
 }
 
-const CheckParamContent = async (
-  request: NextRequest,
-  login?: RequestCookie
-) => {
-  const { pathname } = request.nextUrl;
-  const redirect = request.nextUrl.searchParams.get("q");
+// const CheckParamContent = async (
+//   request: NextRequest,
+//   login?: RequestCookie
+// ) => {
+//   const { pathname } = request.nextUrl;
+//   const redirect = request.nextUrl.searchParams.get("q");
 
-  let status =
-    pathname.startsWith("/login") && login?.value == "true" && redirect
-      ? true
-      : false;
-  return status ? redirect : undefined;
-};
+//   let status =
+//     pathname.startsWith("/login") && login?.value == "true" && redirect
+//       ? true
+//       : false;
+//   return status ? redirect : undefined;
+// };

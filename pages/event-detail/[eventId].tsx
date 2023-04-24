@@ -1,15 +1,29 @@
 import { BOOKING_BASE_URL } from "@constants/api-urls";
 import EventDescription from "@components/eventDetail/EventDetail";
-import { Fragment } from "react";
 import Layout from "@components/layout/Layout";
-import Link from "next/link";
 import { NextPageContext } from "next";
 import Organisers from "@components/eventDetail/Organisers";
 import ProductImage from "@components/eventDetail/ProductImage";
 import React from "react";
 import ShareOnSocial from "@components/eventDetail/ShareOnSocial";
 import { useRouter } from "next/router";
-import Moment from "react-moment";
+
+export interface TicketVariantProps {
+  id: string;
+  available_tickets: number;
+  original_price: number;
+  offer_price: number;
+  type: string;
+  total_tickets: number;
+  event: string;
+}
+export interface EventPartnersProps {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+  hero_image: string;
+}
 
 export interface OrganiserProps {
   id: string;
@@ -23,7 +37,9 @@ export interface OrganiserProps {
 
 export interface EventDetailProps {
   id: string;
-  organiser: OrganiserProps[];
+  organiser: OrganiserProps;
+  partners: EventPartnersProps[];
+  ticket_variants: TicketVariantProps[];
   name: string;
   tag_line: string;
   description: string;
@@ -78,7 +94,7 @@ const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
                 </div>
               </div> */}
 
-              <Organisers organisers={event_detail.organiser} />
+              <Organisers organiser={event_detail.organiser} />
 
               <ShareOnSocial />
             </div>

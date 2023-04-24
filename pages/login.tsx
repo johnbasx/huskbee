@@ -21,10 +21,10 @@ const LoginPage = () => {
       username: username,
       password: password,
     };
-    console.log(data);
+    // console.log(data);
     try {
       const response = await axios.post("/api/signin", data);
-      console.log(response.status);
+      // console.log(response.status);
       toast.success("Successfully Login");
       // router.push("/");
     } catch (e: any) {

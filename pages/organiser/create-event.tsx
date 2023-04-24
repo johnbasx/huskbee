@@ -69,7 +69,7 @@ const CreateEvent = ({ token }: { token: string }) => {
     //   console.log(typeof i, myArray[i]);
     // }
     for (let key in data) {
-      let k: keyof typeof data = key as keyof typeof data
+      let k: keyof typeof data = key as keyof typeof data;
       // console.log(typeof data[key][0]);
       // if('File' in window && input instanceof )
       if (k == "logo" || k == "hero_image") {
@@ -192,7 +192,7 @@ export default CreateEvent;
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req;
   const res = context.res;
-  const token = getCookie("access_token", { req, res });
+  const token = getCookie("org_token", { req, res });
   return {
     props: { token },
   };

@@ -12,6 +12,17 @@ import { useEffect } from "react";
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
 
+  const [initialRenderComplete, setInitialRenderComplete] =
+    React.useState<boolean>(false);
+
+  useEffect(() => {
+    setInitialRenderComplete(true);
+  }, []);
+
+  if (!initialRenderComplete) {
+    return <></>;
+  }
+
   // useEffect(() => {
   //   const importTE = async () => {
   //     (await import("tw-elements")).default;
