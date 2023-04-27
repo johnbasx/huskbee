@@ -6,6 +6,8 @@ import {
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 
+import Image from "next/image";
+
 const eventTypes = {
   applied: { icon: UserIcon, bgColorClass: "bg-gray-400" },
   advanced: { icon: HandThumbUpIcon, bgColorClass: "bg-blue-500" },
@@ -153,7 +155,7 @@ const MorePartners = ({ morePartners }: { morePartners: number }) => {
                     id="style-1"
                   >
                     {partners.map((item, itemIdx) => (
-                      <Partner />
+                      <Partner key={item.id} />
                     ))}
                   </div>
                 </div>
@@ -174,11 +176,18 @@ const Partner = () => {
       <div className="w-0 flex-1 p-4">
         <div className="flex items-start">
           <div className="flex-shrink-0 pt-0.5">
-            <img
+            <Image
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+              width={50}
+              height={50}
+              alt="partner-logo"
+              className="rounded-full"
+            />
+            {/* <img
               className="h-10 w-10 rounded-full"
               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
               alt=""
-            />
+            /> */}
           </div>
           <div className="ml-3 w-0 flex-1">
             <p className="text-sm font-medium text-gray-50">Partner name</p>

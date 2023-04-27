@@ -119,6 +119,7 @@ const ScrollCards = () => {
         {events &&
           events.map((event) => (
             <Card
+              key={event.id}
               imageSrc={event.hero_image}
               title={event.name}
               date={event.start_date}

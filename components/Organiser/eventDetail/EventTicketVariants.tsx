@@ -35,8 +35,8 @@ const EventTicketVariants = ({
                           ) : (
                             <span>
                               {" "}
-                              ticket.available_tickets "tickets available out
-                              of" ticket.total_tickets
+                              ticket.available_tickets &quot;tickets available
+                              out of&quot; ticket.total_tickets
                             </span>
                           )}
                         </p>

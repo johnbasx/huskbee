@@ -202,7 +202,7 @@ export const EventHeroImage = ({
   );
 };
 
-export const SelectEventType = React.forwardRef<
+const SelectEventType = React.forwardRef<
   HTMLSelectElement,
   { label: string } & ReturnType<UseFormRegister<IFormValues>>
 >(({ onChange, onBlur, name, label }, ref) => (
@@ -220,3 +220,5 @@ export const SelectEventType = React.forwardRef<
     </select>
   </>
 ));
+
+export default SelectEventType;

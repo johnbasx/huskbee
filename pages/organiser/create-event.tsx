@@ -4,7 +4,6 @@ import {
   EventHeroImage,
   EventLogo,
   EventName,
-  SelectEventType,
   StartDate,
   StartTime,
   Tagline,
@@ -15,6 +14,7 @@ import { BOOKING_BASE_URL } from "@constants/api-urls";
 import Layout from "@components/Organiser/Layout/Layout";
 import { NextPageContext } from "next";
 import React from "react";
+import SelectEventType from "@components/Organiser/createEvent/FormInputs";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useMutation } from "react-query";
