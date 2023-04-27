@@ -43,7 +43,7 @@ const Overview = () => {
               <div className="text-sm">
                 <a
                   href={item.href}
-                  className="font-medium text-cyan-700 hover:text-cyan-900"
+                  className="font-medium text-blue-300 hover:text-blue-300"
                 >
                   View all
                 </a>

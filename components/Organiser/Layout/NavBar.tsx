@@ -7,6 +7,7 @@ import { Menu, Transition } from "@headlessui/react";
 import React, { Dispatch, Fragment, useState } from "react";
 
 import { FaSearch } from "react-icons/fa";
+import Link from "next/link";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -85,15 +86,15 @@ const NavBar = ({ setSidebarOpen }: { setSidebarOpen: Dispatch<boolean> }) => {
               <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
+                    <Link
+                      href="/organiser/profile"
                       className={classNames(
                         active ? "bg-gray-900" : "",
                         "block px-4 py-2 text-sm text-gray-100"
                       )}
                     >
                       Your Profile
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
                 <Menu.Item>
