@@ -29,6 +29,7 @@ import {
 import Layout from "@components/Organiser/Layout/Layout";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import TablePageOption from "@components/common/TablePageOption";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -185,15 +186,19 @@ export default function App() {
           placeholder="Search all columns..."
         />
       </div>
-      <div className="p-2 max-w-7xl mx-auto overflow-x-auto">
+      <div className="">
         <div className="h-2 " />
-        <table className="">
-          <thead>
+        <table className="p-2 max-w-7xl mx-auto overflow-x-auto">
+          <thead className="min-w-full divide-y divide-gray-200">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <th key={header.id} colSpan={header.colSpan}>
+                    <th
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       {header.isPlaceholder ? null : (
                         <>
                           <div
@@ -226,13 +231,16 @@ export default function App() {
               </tr>
             ))}
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-700">
             {table.getRowModel().rows.map((row) => {
               return (
                 <tr key={row.id}>
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <td key={cell.id}>
+                      <td
+                        key={cell.id}
+                        className="px-6 py-4 whitespace-nowrap text-sm"
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -294,14 +302,21 @@ export default function App() {
               className="border p-1 rounded w-16"
             />
           </span>
+          dgxgx
+          {/* <TablePageOption /> */}
           <select
             value={table.getState().pagination.pageSize}
             onChange={(e) => {
               table.setPageSize(Number(e.target.value));
             }}
+            className="bg-transparent rounded-lg"
           >
             {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
+              <option
+                key={pageSize}
+                value={pageSize}
+                className="bg-black absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
                 Show {pageSize}
               </option>
             ))}
