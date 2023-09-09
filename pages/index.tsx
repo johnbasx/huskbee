@@ -88,7 +88,8 @@ export async function getServerSideProps(context: NextPageContext) {
   const login = login_status ? login_status == true : false;
 
   const response = await fetch(BOOKING_BASE_URL + "upcoming-events");
-  const events = await response.json();
+  const instance = await response.json();
+  const events= instance.results
 
   return {
     props: { login, events },

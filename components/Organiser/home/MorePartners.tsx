@@ -6,6 +6,8 @@ import {
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 
+import { BASE_URL } from "@constants/api-urls";
+import { EventPartnersProps } from "../../../pages/event-detail/[eventId]";
 import Image from "next/image";
 
 const eventTypes = {
@@ -88,7 +90,13 @@ const partners = [
     datetime: "2020-10-04",
   },
 ];
-const MorePartners = ({ morePartners }: { morePartners: number }) => {
+const MorePartners = ({
+  partners,
+  morePartners,
+}: {
+  partners: EventPartnersProps[];
+  morePartners: number;
+}) => {
   const [open, setOpen] = useState(false);
 
   const cancelButtonRef = useRef(null);
@@ -154,8 +162,17 @@ const MorePartners = ({ morePartners }: { morePartners: number }) => {
                     className="mt-2 max-h-96 scroll-py-3 overflow-y-auto scrollbar-1 "
                     id="style-1"
                   >
-                    {partners.map((item, itemIdx) => (
-                      <Partner key={item.id} />
+                    {partners.map((partner, itemIdx) => (
+                      <>
+                        {itemIdx > 0 && (
+                          <Partner
+                            key={partner.id}
+                            logo={partner.logo}
+                            name={partner.name}
+                            description={partner.description}
+                          />
+                        )}
+                      </>
                     ))}
                   </div>
                 </div>
@@ -170,17 +187,26 @@ const MorePartners = ({ morePartners }: { morePartners: number }) => {
 
 export default MorePartners;
 
-const Partner = () => {
+const Partner = ({
+  logo,
+  name,
+  description,
+}: {
+  logo: string;
+  name: string;
+  description: string;
+}) => {
   return (
     <div className=" w-full bg-transparent shadow-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5">
       <div className="w-0 flex-1 p-4">
         <div className="flex items-start">
           <div className="flex-shrink-0 pt-0.5">
             <Image
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+              src={BASE_URL + logo}
+              // "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
               width={50}
               height={50}
-              alt="partner-logo"
+              alt={name}
               className="rounded-full"
             />
             {/* <img
@@ -190,8 +216,8 @@ const Partner = () => {
             /> */}
           </div>
           <div className="ml-3 w-0 flex-1">
-            <p className="text-sm font-medium text-gray-50">Partner name</p>
-            <p className="mt-1 text-sm text-gray-400">Description</p>
+            <p className="text-sm font-medium text-gray-50">{name}</p>
+            {/* <p className="mt-1 text-sm text-gray-400">{description}</p> */}
           </div>
         </div>
       </div>

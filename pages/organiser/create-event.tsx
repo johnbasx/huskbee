@@ -1,5 +1,6 @@
 import {
   EndDate,
+  EndTime,
   EventDescription,
   EventHeroImage,
   EventLogo,
@@ -30,6 +31,7 @@ export interface IFormValues {
   start_date: Date | "";
   end_date: Date | "";
   start_time: "";
+  end_time: "";
   event_type: "";
   logo: File | null;
   hero_image: File | null;
@@ -43,18 +45,22 @@ export type InputProps = {
 };
 
 const CreateEvent = ({ token }: { token: string }) => {
-  console.log(token);
-  console.log(typeof token);
   const { register, handleSubmit } = useForm<IFormValues>();
 
   const [message, setMessage] = React.useState("");
 
+  const [formData, setFormData] = React.useState<object>({});
+
   const { isLoading, isError, error, mutate } = useMutation(createEvent);
 
   async function createEvent() {
-    const response = await axios.post(BOOKING_BASE_URL + "create-event", {
-      headers: { Authorization: "Bearer " + token },
-    });
+    const response = await axios.post(
+      BOOKING_BASE_URL + "list-create-event",
+      formData,
+      {
+        headers: { Authorization: "Bearer " + token },
+      }
+    );
     setMessage(response.data);
   }
 
@@ -64,6 +70,7 @@ const CreateEvent = ({ token }: { token: string }) => {
 
   const onSubmit: SubmitHandler<IFormValues> = (data) => {
     let form_data = new FormData();
+    console.log("check_form_data: ", data);
 
     // for (let i = 0; i < data.; i++) {
     //   console.log(typeof i, myArray[i]);
@@ -78,8 +85,9 @@ const CreateEvent = ({ token }: { token: string }) => {
         form_data.append(k, data[k]);
       }
     }
-    // mutate(data);
-    // const url = BOOKING_BASE_URL + "create-event";
+    setFormData(form_data);
+    mutate();
+    // const url = BOOKING_BASE_URL + "list-create-event";
     // axios.post(url, form_data, {
     //   headers: {
     //     Authorization: `Bearer ${token}`,
@@ -152,6 +160,15 @@ const CreateEvent = ({ token }: { token: string }) => {
             <StartTime
               label="Start time"
               name="start_time"
+              register={register}
+              required
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <EndTime
+              label="End time"
+              name="end_time"
               register={register}
               required
             />

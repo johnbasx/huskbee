@@ -3,8 +3,13 @@ import { ScaleIcon } from "@heroicons/react/24/solid";
 
 const data = [
   { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
-  { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
-  { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
+  { name: "Monthly revenue", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
+  {
+    name: "Total transaction",
+    href: "#",
+    icon: ScaleIcon,
+    amount: "$30,659.45",
+  },
 ];
 const Overview = () => {
   return (

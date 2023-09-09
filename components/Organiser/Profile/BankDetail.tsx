@@ -1,14 +1,65 @@
-import React, { useState } from "react";
+import React, { ReactNode } from "react";
 
-import { BankDetailProps } from "../../../pages/organiser/profile";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import { OrganiserProfileStore } from "@store/organiser-profile-store";
 import { ProfileContent } from "../../../pages/organiser/profile";
 import { Tab } from "@headlessui/react";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
-const BankDetail = ({ bankDetail }: { bankDetail: BankDetailProps[] }) => {
+const BankDetail = () => {
+  const { bankDetail } = OrganiserProfileStore();
+  return (
+    <Wrapper>
+      {bankDetail.map((detail, idx) => (
+        <Tab.Panel
+          key={idx}
+          className={classNames(
+            "rounded-xl bg-transparent p-3",
+            "ring-white ring-opacity-60 ring-offset-2  focus:outline-none "
+          )}
+        >
+          <ProfileContent
+            lookUp={detail.id}
+            name="acc_name"
+            label="Account name"
+            value={detail.acc_name}
+            link="sample-link"
+          />
+          <ProfileContent
+            lookUp={detail.id}
+            name="acc_number"
+            label="Acc number"
+            value={detail.acc_number}
+            link="sample-link"
+          />
+
+          <ProfileContent
+            lookUp={detail.id}
+            name="ifsc"
+            label="IFSC"
+            value={detail.ifsc}
+            link="sample-link"
+          />
+          <ProfileContent
+            lookUp={detail.id}
+            name="branch"
+            label="Branch"
+            value={detail.branch}
+            link="sample-link"
+          />
+        </Tab.Panel>
+      ))}
+    </Wrapper>
+  );
+};
+
+export default BankDetail;
+
+const Wrapper = ({ children }: { children: ReactNode }) => {
+  const { bankDetail } = OrganiserProfileStore();
+
   return (
     <div className="w-full max-w-full px-2 py-4 sm:px-0">
       <Tab.Group>
@@ -18,7 +69,7 @@ const BankDetail = ({ bankDetail }: { bankDetail: BankDetailProps[] }) => {
               key={detail.id}
               className={({ selected }) =>
                 classNames(
-                  "w-full py-2.5 text-lg font-medium leading-5 text-gray-50",
+                  "w-full py-2.5 text-sm font-medium leading-5 text-gray-50",
                   "ring-white focus:outline-none",
                   selected
                     ? "border-b-2 border-white  shadow"
@@ -35,42 +86,8 @@ const BankDetail = ({ bankDetail }: { bankDetail: BankDetailProps[] }) => {
             </Tab>
           ))}
         </Tab.List>
-        <Tab.Panels className="mt-2">
-          {bankDetail.map((detail, idx) => (
-            <Tab.Panel
-              key={idx}
-              className={classNames(
-                "rounded-xl bg-transparent p-3",
-                "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
-              )}
-            >
-              <ProfileContent
-                label="Account name"
-                value={detail.acc_name}
-                link="sample-link"
-              />
-              <ProfileContent
-                label="Acc number"
-                value={detail.acc_number}
-                link="sample-link"
-              />
-
-              <ProfileContent
-                label="IFSC"
-                value={detail.ifsc}
-                link="sample-link"
-              />
-              <ProfileContent
-                label="Branch"
-                value={detail.branch}
-                link="sample-link"
-              />
-            </Tab.Panel>
-          ))}
-        </Tab.Panels>
+        <Tab.Panels className="mt-2">{children}</Tab.Panels>
       </Tab.Group>
     </div>
   );
 };
-
-export default BankDetail;

@@ -1,434 +1,347 @@
 import {
-  Column,
-  ColumnDef,
-  ColumnFiltersState,
-  FilterFn,
-  FilterFns,
-  SortingFn,
-  Table,
-  flexRender,
-  getCoreRowModel,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  sortingFns,
-  useReactTable,
-} from "@tanstack/react-table";
-import { Person, makeData } from "@constants/sample-table-data";
-import {
-  RankingInfo,
-  compareItems,
-  rankItem,
-} from "@tanstack/match-sorter-utils";
+  ArrowLongLeftIcon,
+  ArrowLongRightIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
+import { EventListStore, orgTokenStore } from "@store/index";
+import React, { useEffect, useState } from "react";
 
+import { BOOKING_BASE_URL } from "@constants/api-urls";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { EventDetailProps } from "../event-detail/[eventId]";
 import Layout from "@components/Organiser/Layout/Layout";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import TablePageOption from "@components/common/TablePageOption";
+import { NextPageContext } from "next";
+import { TableStore } from "@store/table-store";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 
-declare module "@tanstack/table-core" {
-  interface FilterFns {
-    fuzzy: FilterFn<unknown>;
-  }
-  interface FilterMeta {
-    itemRank: RankingInfo;
-  }
+export interface EventsProps {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: EventDetailProps[];
 }
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  // Rank the item
-  const itemRank = rankItem(row.getValue(columnId), value);
+const Events = ({ token, events }: { token: string; events: EventsProps }) => {
+  const { eventsObj, setEventObj } = EventListStore();
+  const { setOrgToken } = orgTokenStore();
+  const { pageNumberList, setPageNumberList } = TableStore();
+  const [eventList, setEventList] = useState<EventDetailProps[]>();
+  const [prev, setPrev] = useState<string | null>("");
+  const [next, setNext] = useState<string | null>("");
 
-  // Store the itemRank info
-  addMeta({
-    itemRank,
-  });
+  const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 
-  // Return if the item should be filtered in/out
-  return itemRank.passed;
-};
+  useEffect(() => {
+    setOrgToken(token);
+    setEventObj(events);
+  }, []);
 
-const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
-  let dir = 0;
+  useEffect(() => {
+    setPageNumberList(pageNumbers);
+  }, [pageNumbers, pageNumberList]);
 
-  // Only sort by rank if the column has ranking information
-  if (rowA.columnFiltersMeta[columnId]) {
-    dir = compareItems(
-      rowA.columnFiltersMeta[columnId]?.itemRank!,
-      rowB.columnFiltersMeta[columnId]?.itemRank!
-    );
-  }
-
-  // Provide an alphanumeric fallback for when the item ranks are equal
-  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
-};
-
-export default function Events() {
-  const rerender = React.useReducer(() => ({}), {})[1];
-
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [globalFilter, setGlobalFilter] = React.useState("");
-
-  const columns = React.useMemo<ColumnDef<Person, any>[]>(
-    () => [
-      {
-        header: "Name",
-        footer: (props) => props.column.id,
-        columns: [
-          {
-            accessorKey: "firstName",
-            cell: (info) => info.getValue(),
-            footer: (props) => props.column.id,
-          },
-          {
-            accessorFn: (row) => row.lastName,
-            id: "lastName",
-            cell: (info) => info.getValue(),
-            header: () => <span>Last Name</span>,
-            footer: (props) => props.column.id,
-          },
-          {
-            accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-            id: "fullName",
-            header: "Full Name",
-            cell: (info) => info.getValue(),
-            footer: (props) => props.column.id,
-            filterFn: "fuzzy",
-            sortingFn: fuzzySort,
-          },
-        ],
-      },
-      {
-        header: "Info",
-        footer: (props) => props.column.id,
-        columns: [
-          {
-            accessorKey: "age",
-            header: () => "Age",
-            footer: (props) => props.column.id,
-          },
-          {
-            header: "More Info",
-            columns: [
-              {
-                accessorKey: "visits",
-                header: () => <span>Visits</span>,
-                footer: (props) => props.column.id,
-              },
-              {
-                accessorKey: "status",
-                header: "Status",
-                footer: (props) => props.column.id,
-              },
-              {
-                accessorKey: "progress",
-                header: "Profile Progress",
-                footer: (props) => props.column.id,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    []
-  );
-
-  const [data, setData] = React.useState<Person[]>(() => makeData(50000));
-  const refreshData = () => setData((old) => makeData(50000));
-
-  const table = useReactTable({
-    data,
-    columns,
-    filterFns: {
-      fuzzy: fuzzyFilter,
-    },
-    state: {
-      columnFilters,
-      globalFilter,
-    },
-    onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: fuzzyFilter,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false,
-  });
-
-  React.useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === "fullName") {
-      if (table.getState().sorting[0]?.id !== "fullName") {
-        table.setSorting([{ id: "fullName", desc: false }]);
-      }
+  useEffect(() => {
+    if (eventsObj != null) {
+      setEventList(eventsObj.results);
+      setPrev(eventsObj.previous);
+      setNext(eventsObj.next);
     }
-  }, [table.getState().columnFilters[0]?.id]);
+  }, [eventsObj]);
+
+  const SearchPartner = (query: string) => {
+    if (eventsObj != null) {
+      const filteredList = query
+        ? eventsObj.results &&
+          eventsObj.results.filter((event) =>
+            event.name.toLowerCase().includes(query.toLowerCase())
+          )
+        : events.results;
+      setEventList(filteredList);
+    }
+  };
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto py-6 ">
-        <div className="flex w-4xl  py-6">
-          <DebouncedInput
-            value={globalFilter ?? ""}
-            onChange={(value) => setGlobalFilter(String(value))}
-            className="w-full p-2 font-lg shadow border border-gray-700 bg-gray-900 rounded-lg focus:outline-none"
-            placeholder="Search all columns..."
-          />
-          <TablePageOption
-            pageValue={table.getState().pagination.pageSize}
-            setPageSize={table.setPageSize}
-          />
+      <div className="w-5xl mx-auto">
+        <div className="mt-2 p-8 sm:ml-6">
+          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md">
+            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
+              <MagnifyingGlassIcon className="h-6 w-6" />
+            </span>
+            <input
+              onChange={(event) => {
+                SearchPartner(event.target.value);
+              }}
+              type="text"
+              name="username"
+              id="username"
+              autoComplete="username"
+              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              placeholder="Search in this page"
+            />
+          </div>
         </div>
-        <div
-          id="style-1"
-          className="min-w-full overflow-hidden overflow-x-auto align-middle mx-auto"
-        >
-          <div className="h-2  " />
-          <table className="p-2">
-            <thead className=" divide-y divide-gray-700">
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <th
-                        key={header.id}
-                        colSpan={header.colSpan}
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                      >
-                        {header.isPlaceholder ? null : (
-                          <>
-                            <div
-                              {...{
-                                className: header.column.getCanSort()
-                                  ? "cursor-pointer select-none"
-                                  : "",
-                                onClick:
-                                  header.column.getToggleSortingHandler(),
-                              }}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: " 🔼",
-                                desc: " 🔽",
-                              }[header.column.getIsSorted() as string] ?? null}
-                            </div>
-                            {header.column.getCanFilter() ? (
-                              <div>
-                                <Filter column={header.column} table={table} />
-                              </div>
-                            ) : null}
-                          </>
-                        )}
-                      </th>
-                    );
-                  })}
-                </tr>
-              ))}
-            </thead>
-            <tbody className="divide-y divide-gray-700">
-              {table.getRowModel().rows.map((row) => {
-                return (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => {
-                      return (
-                        <td
-                          key={cell.id}
-                          className="px-6 py-4 whitespace-nowrap text-sm"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      );
-                    })}
+
+        <div className=" overflow-x-auto sm:mx-6 pt-2 sm:pt-10 pb-10">
+          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="shadow overflow-hidden border-b border-gray-400 ">
+              <table className="min-w-full divide-y divide-gray-400">
+                <thead className="bg-transparent">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                    >
+                      Type
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                    >
+                      Start date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                    >
+                      End date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                    >
+                      Start time
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                    >
+                      End time
+                    </th>
+                    <th
+                      scope="col"
+                      className=" px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                    >
+                      <span className="sr-only">Edit</span>Action
+                    </th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="h-2" />
-          <div className="flex items-center gap-2 space-y-2">
-            <button
-              className="border rounded p-1"
-              onClick={() => table.setPageIndex(0)}
-              disabled={!table.getCanPreviousPage()}
-            >
-              {"<<"}
-            </button>
-            <button
-              className="border rounded p-1"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              {"<"}
-            </button>
-            <button
-              className="border rounded p-1"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              {">"}
-            </button>
-            <button
-              className="border rounded p-1"
-              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-              disabled={!table.getCanNextPage()}
-            >
-              {">>"}
-            </button>
-            <span className="flex items-center gap-1">
-              <div>Page</div>
-              <strong>
-                {table.getState().pagination.pageIndex + 1} of{" "}
-                {table.getPageCount()}
-              </strong>
-            </span>
-            <span className="flex items-center gap-1">
-              | Go to page:
-              <input
-                type="number"
-                defaultValue={table.getState().pagination.pageIndex + 1}
-                onChange={(e) => {
-                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                  table.setPageIndex(page);
-                }}
-                className="border p-1 rounded w-16 text-gary-50 bg-gray-900"
-              />
-            </span>
-          </div>
-          <div className="py-2">
-            {table.getPrePaginationRowModel().rows.length} Rows
+                </thead>
+                <tbody>
+                  {eventList &&
+                    eventList.map((event, Idx) => (
+                      <tr
+                        key={event.id}
+                        className={
+                          Idx % 2 === 0 ? "bg-transparent" : "bg-transparent"
+                        }
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200">
+                          {event.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                          {event.event_type}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                          {event.start_date}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                          {event.end_date}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                          {event.start_time}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                          {event.end_time}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <a
+                            href="#"
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            Detail
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+        <Pagination prev={prev} next={next} />
       </div>
     </Layout>
   );
+};
+
+export default Events;
+
+export async function getServerSideProps(context: NextPageContext) {
+  const req = context.req;
+  const res = context.res;
+  const token = getCookie("org_token", { req, res });
+
+  const login_status = getCookie("login", { req, res });
+  const login = login_status ? login_status == true : false;
+
+  const response = await fetch(BOOKING_BASE_URL + "list-create-event", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const events = await response.json();
+  console.log(events);
+
+  return {
+    props: { token, login, events },
+  };
 }
 
-function Filter({
-  column,
-  table,
+const Pagination = ({
+  prev,
+  next,
 }: {
-  column: Column<any, unknown>;
-  table: Table<any>;
-}) {
-  const firstValue = table
-    .getPreFilteredRowModel()
-    .flatRows[0]?.getValue(column.id);
+  prev: string | null;
+  next: string | null;
+}) => {
+  const { eventsObj, setEventObj } = EventListStore();
 
-  const columnFilterValue = column.getFilterValue();
+  const { token } = orgTokenStore();
+  const [gotoUrl, setGotoUrl] = useState("");
+  const { pageNumberList, setPageNumberList } = TableStore();
+  const [pageNumbers, setPageNumbers] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>();
 
-  const sortedUniqueValues = React.useMemo(
-    () =>
-      typeof firstValue === "number"
-        ? []
-        : Array.from(column.getFacetedUniqueValues().keys()).sort(),
-    [column.getFacetedUniqueValues()]
-  );
+  const getData = async (url: string | null) => {
+    if (url != null) {
+      try {
+        const response = await axios(url, {
+          headers: { Authorization: "Bearer " + token },
+        });
+        setEventObj(response.data);
+      } catch (e: any) {
+        console.log(e);
+      }
+    }
+  };
 
-  return typeof firstValue === "number" ? (
-    <div>
-      <div className="flex space-x-2">
-        <DebouncedInput
-          type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-          value={(columnFilterValue as [number, number])?.[0] ?? ""}
-          onChange={(value) =>
-            column.setFilterValue((old: [number, number]) => [value, old?.[1]])
-          }
-          placeholder={`Min ${
-            column.getFacetedMinMaxValues()?.[0]
-              ? `(${column.getFacetedMinMaxValues()?.[0]})`
-              : ""
-          }`}
-          className="w-24 border shadow rounded mt-1"
-        />
-        <DebouncedInput
-          type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-          value={(columnFilterValue as [number, number])?.[1] ?? ""}
-          onChange={(value) =>
-            column.setFilterValue((old: [number, number]) => [old?.[0], value])
-          }
-          placeholder={`Max ${
-            column.getFacetedMinMaxValues()?.[1]
-              ? `(${column.getFacetedMinMaxValues()?.[1]})`
-              : ""
-          }`}
-          className="w-24 border shadow rounded"
-        />
-      </div>
-      <div className="h-1" />
-    </div>
-  ) : (
-    <>
-      <datalist id={column.id + "list"}>
-        {sortedUniqueValues.slice(0, 5000).map((value: any) => (
-          <option value={value} key={value} />
-        ))}
-      </datalist>
-      <DebouncedInput
-        type="text"
-        value={(columnFilterValue ?? "") as string}
-        onChange={(value) => column.setFilterValue(value)}
-        placeholder={`Search... (${column.getFacetedUniqueValues().size})`}
-        className="w-36 border shadow rounded text-black"
-        list={column.id + "list"}
-      />
-      <div className="h-1" />
-    </>
-  );
-}
+  const PageClickHandler = (url: string, currentPageNumber: number) => {
+    getData(url);
+    setCurrentPage(currentPageNumber);
+  };
 
-// A debounced input react component
-function DebouncedInput({
-  value: initialValue,
-  onChange,
-  debounce = 500,
-  ...props
-}: {
-  value: string | number;
-  onChange: (value: string | number) => void;
-  debounce?: number;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">) {
-  const [value, setValue] = React.useState(initialValue);
+  useEffect(() => {
+    if (eventsObj?.count != undefined) {
+      if (eventsObj?.count > 0 && eventsObj.count < 6) {
+        let list: number[] = [];
+        for (let i = 1; i <= eventsObj.count; i++) {
+          list = list.concat(i);
+        }
+        // console.log("list", list);
 
-  React.useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+        setPageNumbers(list);
+        setPageNumberList(list);
+      }
+      // else {
+      //   const new_list: number[] = pageNumbers.concat(1, 2, 3, 4, 5, 6);
+      //   console.log("list", new_list);
+      //   setPageNumbers(new_list);
 
-  React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      onChange(value);
-    }, debounce);
-
-    return () => clearTimeout(timeout);
-  }, [value]);
+      //   setPageNumberList(new_list);
+      // }
+    }
+  }, [pageNumbers]);
 
   return (
-    <>
-      <input
-        className="bg-gray-900"
-        {...props}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-    </>
+    <nav
+      className="grid grid-cols-6 gap-2 mx-1 sm:mx-16 px-4 sm:px-0 mt-2"
+      aria-label="Pagination"
+    >
+      <div className="col-span-6 sm:col-span-4 max-w-3xl flex items-center justify-between">
+        <div className="-mt-px w-0 flex-1 flex">
+          <button
+            disabled={prev == null ? true : false}
+            onClick={() => getData(prev)}
+            className={`border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-300 cursor-pointer disabled:text-gray-500 disabled:cursor-not-allowed `}
+          >
+            <ArrowLongLeftIcon
+              className="mr-3 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+            Previous
+          </button>
+        </div>
+        <div className="hidden md:-mt-px md:flex">
+          {pageNumberList &&
+            pageNumberList.map((content) => (
+              <a
+                onClick={() => {
+                  PageClickHandler(
+                    BOOKING_BASE_URL + "list-create-event?page=" + content,
+                    content
+                  );
+                }}
+                key={content}
+                className={`cursor-pointer border-transparent text-gray-500 hover:text-gray-400 hover:border-gray-200 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium ${
+                  content == currentPage
+                    ? "border-t-1 border-t-purple-500 text-purple-600"
+                    : ""
+                }`}
+              >
+                {content}
+              </a>
+            ))}
+        </div>
+        <div className="-mt-px w-0 flex-1 flex justify-end">
+          <button
+            disabled={next == null ? true : false}
+            onClick={() => getData(next)}
+            className="border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-300 cursor-pointer disabled:text-gray-500 disabled:cursor-not-allowed "
+          >
+            Next
+            <ArrowLongRightIcon
+              className="ml-3 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+      </div>
+
+      <div className="col-span-6 sm:col-span-2 mt-4 ">
+        <div className="flex gap-x-2 float-right">
+          <span className="mt-1 text-gray-400 text-sm ">Go to page</span>
+          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md px-2 ">
+            <input
+              onChange={(e) =>
+                setGotoUrl(
+                  BOOKING_BASE_URL + "list-create-event?page=" + e.target.value
+                )
+              }
+              type="text"
+              name="gotopage"
+              id="gotopage"
+              autoComplete="gotopage"
+              className="w-28 sm:w-24 block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-200 placeholder:text-gray-500 focus:ring-0 sm:text-sm sm:leading-6"
+              placeholder="Pagenumber"
+            />
+          </div>
+
+          <button
+            onClick={() => getData(gotoUrl)}
+            // type="submit"
+            className="rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <ChevronRightIcon className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+    </nav>
   );
-}
+};

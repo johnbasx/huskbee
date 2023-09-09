@@ -11,15 +11,20 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     password,
   };
 
-  const response = await fetch(
-    "http://127.0.0.1:8000/api/user/organiser-login",
-    {
-      method: "POST",
-      body: JSON.stringify(credential),
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-  const data = await response.json();
+  let data;
+  try {
+    const response = await fetch(
+      "http://127.0.0.1:8000/api/user/organiser-login",
+      {
+        method: "POST",
+        body: JSON.stringify(credential),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    data = await response.json();
+  } catch (e: any) {
+    console.log("error: ", e);
+  }
 
   let date = new Date().toString();
   const d = new Date(date);
@@ -30,7 +35,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       httpOnly: true,
       path: "/",
     }),
-    serialize("expires_on", expire_date.toString(), {
+    serialize("org_token_expires_on", expire_date.toString(), {
       httpOnly: true,
       path: "/",
     }),

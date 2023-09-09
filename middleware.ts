@@ -7,6 +7,7 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token");
   const login = request.cookies.get("login");
   const org_login = request.cookies.get("Org_login");
+  const admin_login = request.cookies.get("admin_login");
 
   const { pathname } = request.nextUrl;
 
@@ -41,8 +42,17 @@ export function middleware(request: NextRequest) {
   if (pathname.startsWith("/organiser")) {
     if (
       org_login?.value === "true" ||
-      pathname.startsWith("/organiser/login")
+      pathname.startsWith("/organiser/login") ||
+      pathname.startsWith("/organiser/registration")
     ) {
+      return NextResponse.next();
+    } else {
+      return NextResponse.redirect(new URL(BASE_URL));
+    }
+  }
+
+  if (pathname.startsWith("/admin")) {
+    if (admin_login?.value === "true" || pathname.startsWith("/admin/login")) {
       return NextResponse.next();
     } else {
       return NextResponse.redirect(new URL(BASE_URL));

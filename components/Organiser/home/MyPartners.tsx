@@ -1,3 +1,4 @@
+import { OrgPartnersStore } from "@store/index";
 import React from "react";
 
 const partners = [
@@ -34,6 +35,7 @@ const partners = [
 ];
 
 const MyPartners = () => {
+  const { orgPartners } = OrgPartnersStore();
   return (
     <div className="bg-transparent ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -41,9 +43,10 @@ const MyPartners = () => {
           Partners added by me
         </h2>
         <div className="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-          {partners.map((item) => (
-            <Partner key={item.id} img={item.img} name={item.name} />
-          ))}
+          {orgPartners &&
+            orgPartners.map((item) => (
+              <Partner key={item.id} img={item.logo} name={item.name} />
+            ))}
         </div>
       </div>
     </div>
@@ -54,14 +57,17 @@ export default MyPartners;
 
 const Partner = ({ img, name }: { img: string; name: string }) => {
   return (
-    <div className="p-6 bg-white rounded-lg">
-      <img
-        className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
-        src={img}
-        alt={name}
-        width={158}
-        height={48}
-      />{" "}
+    <div className="space-y-4">
+      <div className="p-6 bg-white rounded-lg">
+        <img
+          className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
+          src={img}
+          alt={name}
+          width={158}
+          height={48}
+        />{" "}
+      </div>
+      <span className="pt-8 text-sm capitalize cursor-pointer">{name}</span>
     </div>
   );
 };

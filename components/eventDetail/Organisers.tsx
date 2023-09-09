@@ -29,7 +29,7 @@ const Organisers = ({ organiser }: { organiser: OrganiserProps }) => {
               </span>
             </dt>
             <dd className="mt-1 text-sm text-gray-500">
-              Some detial about the organiser
+              Some description about the organiser
             </dd>
           </div>
           {/* ))} */}

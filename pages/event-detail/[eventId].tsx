@@ -1,10 +1,12 @@
+import React, { useEffect, useState } from "react";
+
 import { BOOKING_BASE_URL } from "@constants/api-urls";
 import EventDescription from "@components/eventDetail/EventDetail";
+import { EventNameStore } from "@store/index";
 import Layout from "@components/layout/Layout";
 import { NextPageContext } from "next";
 import Organisers from "@components/eventDetail/Organisers";
 import ProductImage from "@components/eventDetail/ProductImage";
-import React from "react";
 import ShareOnSocial from "@components/eventDetail/ShareOnSocial";
 import { useRouter } from "next/router";
 
@@ -17,6 +19,7 @@ export interface TicketVariantProps {
   total_tickets: number;
   event: string;
 }
+
 export interface EventPartnersProps {
   id: string;
   name: string;
@@ -50,6 +53,7 @@ export interface EventDetailProps {
   logo: string;
   event_type: string;
   hero_image: string;
+  start_on: string;
 }
 
 function classNames(...classes: any) {
@@ -57,9 +61,15 @@ function classNames(...classes: any) {
 }
 
 const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
+  const { setEventName } = EventNameStore();
   const router = useRouter();
   const { eventid } = router.query;
   // console.log(event_detail);
+
+  useEffect(() => {
+    setEventName(event_detail.name);
+  }, []);
+
   return (
     <Layout>
       <div className="border-none bg-transparent">
@@ -77,7 +87,7 @@ const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
               <EventDescription
                 event={event_detail.id}
                 name={event_detail.name}
-                startDate={event_detail.start_date}
+                startDate={event_detail.start_on}
                 startTime={event_detail.start_time}
                 endDate={event_detail.end_date}
                 description={event_detail.description}
@@ -111,6 +121,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const { eventId } = context.query;
   const response = await fetch(BOOKING_BASE_URL + "event-detail/" + eventId);
   const event_detail = await response.json();
+  console.log(event_detail);
   return {
     props: { event_detail },
   };

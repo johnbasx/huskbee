@@ -1,7 +1,7 @@
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { EventNameStore, PaymentAmountStore } from "@store/index";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
-import AvailableTickets from "@components/bookEvent/AvailableTickets";
 import { BOOKING_BASE_URL } from "@constants/api-urls";
 import BookedBy from "@components/bookEvent/BookedBy";
 import BookingSummary from "@components/bookEvent/BookingSummary";
@@ -26,12 +26,13 @@ export interface SelectedTicketsProps {
 }
 
 const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
+  const { eventName } = EventNameStore();
+  const { setAmt } = PaymentAmountStore();
+
   const router = useRouter();
   const [subtotal, setSubtotal] = useState(0);
   const [gst, setGst] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
-
-  // console.log("Available Tickets: ", eventTickets);
 
   const [selected_tickets, setSelected_tickets] = useState<
     SelectedTicketsProps[]
@@ -82,14 +83,18 @@ const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
     setSubtotal(total);
     setGst(0.05 * subtotal);
     setOrderTotal(subtotal + gst);
+    setAmt(subtotal + gst);
   }, [selected_tickets, subtotal, gst]);
 
   return (
     <Layout title="event-book">
       <div className="bg-white">
         <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Available Tickets
+          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+            Available Tickets for{" "}
+            <span className="text-indigo-700 font-base text-xl">
+              {eventName}
+            </span>
           </h1>
           <form className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
             <section aria-labelledby="cart-heading" className="lg:col-span-7">
@@ -242,7 +247,8 @@ export async function getServerSideProps(context: NextPageContext) {
     headers: { Authorization: "Bearer " + token },
   });
 
-  const eventTickets = await response.json();
+  const instance = await response.json();
+  const eventTickets = instance.results;
   console.log(eventTickets);
   return {
     props: { eventTickets },

@@ -1,8 +1,10 @@
 import {
   ArchiveBoxIcon,
+  BanknotesIcon,
   ClockIcon,
   HomeIcon,
   ListBulletIcon,
+  RectangleGroupIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Dialog, Transition } from "@headlessui/react";
@@ -21,6 +23,12 @@ const navigation = [
     current: false,
   },
   {
+    name: "My Partners",
+    href: "/organiser/partners",
+    icon: RectangleGroupIcon,
+    current: false,
+  },
+  {
     name: "Upcoming Events",
     href: "/organiser/upcoming-events",
     icon: ClockIcon,
@@ -36,6 +44,12 @@ const navigation = [
     name: "Create Event",
     href: "/organiser/create-event",
     icon: MdEventAvailable,
+    current: false,
+  },
+  {
+    name: "Fundraiser",
+    href: "/organiser/fundraiser",
+    icon: BanknotesIcon,
     current: false,
   },
 ];
@@ -119,7 +133,7 @@ const SideBar = ({
                 <nav className="px-2">
                   <div className="space-y-1">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -140,7 +154,7 @@ const SideBar = ({
                           aria-hidden="true"
                         />
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                   <div className="mt-10">

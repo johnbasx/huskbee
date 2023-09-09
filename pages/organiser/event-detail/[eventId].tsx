@@ -1,28 +1,45 @@
 import { BASE_URL, BOOKING_BASE_URL } from "@constants/api-urls";
+import { EventTicketStore, orgTokenStore } from "@store/index";
+import React, { useEffect } from "react";
 
 import { EventDetailProps } from "../../event-detail/[eventId]";
 import EventMainDetail from "@components/Organiser/eventDetail/EventMainDetail";
-import EventTicketVariants from "@components/Organiser/eventDetail/EventTicketVariants";
 import Layout from "@components/Organiser/Layout/Layout";
 import { NextPageContext } from "next";
-import Organisers from "@components/Organiser/eventDetail/Organisers";
-import React from "react";
+import Partners from "@components/Organiser/eventDetail/Organisers";
+import TicketVariants from "@components/Organiser/eventDetail/TicketVariants";
+import { eventPartnersStore } from "@store/index";
 import { getCookie } from "cookies-next";
 
-const EventDetail = ({ detail }: { detail: EventDetailProps }) => {
+const EventDetail = ({
+  token,
+  detail,
+}: {
+  token: string;
+  detail: EventDetailProps;
+}) => {
+  const { setPartners } = eventPartnersStore();
+
+  const { setOrgToken } = orgTokenStore();
+  const { setEventTickets } = EventTicketStore();
+  useEffect(() => {
+    setOrgToken(token);
+    setPartners(detail.partners);
+    setEventTickets(detail.ticket_variants);
+  }, []);
+
   return (
     <Layout>
       <main className="py-10">
-        {/* Page header */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex items-center space-x-5">
             <div className="flex-shrink-0">
               <div className="relative">
-                <img
+                {/* <img
                   className="h-16 w-16 rounded-full"
                   src={detail.logo}
                   alt={detail.name}
-                />
+                /> */}
                 <span
                   className="absolute inset-0 shadow-inner rounded-full"
                   aria-hidden="true"
@@ -52,9 +69,9 @@ const EventDetail = ({ detail }: { detail: EventDetailProps }) => {
         <div className="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <div className="space-y-6 lg:col-start-1 lg:col-span-2">
             <EventMainDetail eventDetail={detail} />
-            <EventTicketVariants ticketVariants={detail.ticket_variants} />
+            <TicketVariants eventId={detail.id} />
           </div>
-          <Organisers eventPartners={detail.partners} />
+          <Partners eventId={detail.id} />
         </div>
       </main>
     </Layout>
@@ -88,6 +105,6 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
   return {
-    props: { detail },
+    props: { token, detail },
   };
 }

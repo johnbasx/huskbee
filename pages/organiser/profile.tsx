@@ -1,11 +1,14 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import AddressInfo from "@components/Organiser/Profile/AddressInfo";
 import BankDetail from "@components/Organiser/Profile/BankDetail";
 import Layout from "@components/Organiser/Layout/Layout";
 import { NextPageContext } from "next";
+import { OrganiserProfileStore } from "@store/organiser-profile-store";
 import { USER_BASE_URL } from "@constants/api-urls";
+import UpdateProfile from "@components/Organiser/Profile/UpdateProfile";
 import { getCookie } from "cookies-next";
+import { orgTokenStore } from "@store/index";
 
 export interface AddressProps {
   id: string;
@@ -30,14 +33,18 @@ export interface BankDetailProps {
   default: boolean;
 }
 export interface OrganiserProfileProps {
+  id: string;
+  user_id: string;
   name: string;
   email: string;
+  status: boolean;
   logo: string;
   phone: string;
   organisation_name: string;
+  description: string;
   organiser_type: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   user: number;
 }
 
@@ -46,40 +53,68 @@ export interface ExOrganiserProfileProps extends OrganiserProfileProps {
   bank_detail: BankDetailProps[];
 }
 
-const Profile = ({ profile }: { profile: ExOrganiserProfileProps }) => {
+const Profile = ({
+  token,
+  profile,
+}: {
+  token: string;
+  profile: ExOrganiserProfileProps;
+}) => {
+  const { setOrgToken } = orgTokenStore();
+
+  const { orgProfile, setOrgProfile, setAddresses, setBankDetail } =
+    OrganiserProfileStore();
+
+  useEffect(() => {
+    setOrgToken(token);
+  }, []);
+
+  useEffect(() => {
+    setOrgProfile(profile);
+    setAddresses(profile.address);
+    setBankDetail(profile.bank_detail);
+  }, [orgProfile]);
+
   return (
     <Layout>
       <div className="max-w-5xl mx-auto py-12">
-        {/* Profile */}
         <Wrapper title="Profile">
           <ProfileContent
+            lookUp={orgProfile.id}
+            name="name"
             label="Full name"
-            value={profile.name}
-            link="sample-link"
+            value={orgProfile.name}
+            link="update-organiser-profile/"
           />
           <ProfileContent
+            lookUp={orgProfile.id}
+            name="email"
             label="Email"
-            value={profile.email}
-            link="sample-link"
+            value={orgProfile.email}
+            link="update-organiser-profile/"
           />
           <ProfileContent
+            lookUp={orgProfile.id}
+            name="phone"
             label="Phone"
-            value={profile.phone}
-            link="sample-link"
+            value={orgProfile.phone}
+            link="update-organiser-profile/"
           />
           <ProfileContent
+            lookUp={orgProfile.id}
+            name="organiser_type"
             label="Organisation type"
-            value={profile.organiser_type}
-            link="sample-link"
+            value={orgProfile.organiser_type}
+            link="update-organiser-profile/"
           />
         </Wrapper>
 
         <Wrapper title="Bank Detail">
-          <BankDetail bankDetail={profile.bank_detail} />
+          <BankDetail />
         </Wrapper>
 
         <Wrapper title="Address info">
-          <AddressInfo addresses={profile.address} />
+          <AddressInfo />
         </Wrapper>
       </div>
     </Layout>
@@ -98,7 +133,7 @@ export async function getServerSideProps(context: NextPageContext) {
     },
   });
   const profile = await response.json();
-  // console.log(profile);
+
   if (!profile) {
     return {
       redirect: {
@@ -109,19 +144,30 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
   return {
-    props: { profile },
+    props: { token, profile },
   };
 }
 
-export const ProfileContent = ({
-  label,
-  value,
-  link,
-}: {
+type ProfileContentProp = {
+  lookUp: string;
+  name: string;
   label: string;
   value: string;
   link: string;
-}) => {
+};
+export const ProfileContent = ({
+  lookUp,
+  name,
+  label,
+  value,
+  link,
+}: ProfileContentProp) => {
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    setContent(value);
+  }, []);
+
   return (
     <div className="bg-transparent py-6 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
       <dl className="grid grid-cols-1 sm:gap-6 text-base sm:grid-cols-2 md:gap-x-8 lg:col-span-6">
@@ -129,15 +175,19 @@ export const ProfileContent = ({
           <dt className=" font-bold text-gray-200">{label}</dt>
         </div>
         <div>
-          <dt className="font-medium text-gray-300">{value}</dt>
+          <dt className="font-medium text-gray-300">
+            {content == "" ? value : content}
+          </dt>
         </div>
       </dl>
 
-      <dl className="mt-8 divide-y divide-gray-200 text-sm lg:mt-0 lg:col-span-6">
-        <div className="pb-4 flex items-end justify-end">
-          <dd className="font-medium text-blue-300 cursor-pointer">Edit</dd>
-        </div>
-      </dl>
+      <UpdateProfile
+        setContent={setContent}
+        lookUp={lookUp}
+        name={name}
+        label={label}
+        link={link}
+      />
     </div>
   );
 };

@@ -31,7 +31,9 @@ const EventDetail = ({
             Product information
           </h2>
           <p className="text-sm text-gray-300 mt-2">
-            Event starts on <Moment date={start_date} /> at {startTime}
+            Event starts on {startDate}&#32;{/* <Moment date={start_date} /> */}
+            at 6:30 AM
+            {/*{startTime} */}
             {/* Version {version} (Updated <time dateTime={datetime}>{date}</time>) */}
           </p>
         </div>

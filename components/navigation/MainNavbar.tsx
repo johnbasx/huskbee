@@ -59,7 +59,7 @@ export default function Navbar() {
                   href="/"
                   className="flex items-center justify-start flex-1"
                 >
-                  <span className="sr-only">HuskBee</span>
+                  <span className="sr-only">Foxbeta</span>
                   <div className="relative w-auto h-8 sm:h-10">
                     <Image
                       src="/logo/axewhy-colorful-logo.png"
@@ -71,7 +71,7 @@ export default function Navbar() {
                     />
                   </div>
                   <span className="ml-2 text-3xl font-extrabold tracking-tight text-white">
-                    HuskBee
+                    Foxbeta
                   </span>
                 </Link>
 

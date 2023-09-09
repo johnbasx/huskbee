@@ -9,22 +9,27 @@ const Login = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const login = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const data = {
       username: username,
       password: password,
     };
-    console.log(data);
+
     try {
       const response = await axios.post("/api/organiserSignin", data);
-      console.log(response.data);
+      // console.log(response.data);
       localStorage.setItem("user", response.data.user);
       toast.success("Successfully Login");
       router.push("/organiser/home");
+      setLoading(false);
     } catch (e: any) {
       console.log(e);
+      toast.error("Cannot Login");
+      setLoading(false);
     }
   };
 
@@ -57,8 +62,8 @@ const Login = () => {
                 </h2>
                 <p className="mt-2 text-sm text-gray-200">
                   Organiser Login
-                  {/* Or{" "} */}
-                  {/* <a
+                  {/* Or{" "}
+                  <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
@@ -230,7 +235,7 @@ const Login = () => {
                       type="submit"
                       className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                      Sign in
+                      {loading ? "Signing in..." : "Sign in"}
                     </button>
                   </div>
                 </form>

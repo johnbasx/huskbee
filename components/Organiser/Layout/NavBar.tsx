@@ -8,6 +8,8 @@ import React, { Dispatch, Fragment, useState } from "react";
 
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -15,6 +17,18 @@ function classNames(...classes: any) {
 
 const NavBar = ({ setSidebarOpen }: { setSidebarOpen: Dispatch<boolean> }) => {
   const [user, setUser] = useState(localStorage.getItem("user"));
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      const response = await axios.post("/api/org-logout");
+      console.log("successfully logout");
+      router.push("/organiser/login");
+    } catch (e: any) {
+      console.log(e);
+    }
+    console.log("logout");
+  };
 
   return (
     <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-gray-900 border-b border-gray-900">
@@ -114,6 +128,7 @@ const NavBar = ({ setSidebarOpen }: { setSidebarOpen: Dispatch<boolean> }) => {
                   {({ active }) => (
                     <a
                       href="#"
+                      onClick={() => handleSignOut()}
                       className={classNames(
                         active ? "bg-gray-900" : "",
                         "block px-4 py-2 text-sm text-gray-100"

@@ -3,20 +3,23 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
- 
   const access_token = req.body.access_token;
 
   const credential = {
-    access_token
+    access_token,
   };
 
-  const response = await fetch("http://127.0.0.1:8000/api/user/loginWithGoogle", {
-    method: "POST",
-    body: JSON.stringify(credential),
-    headers: { "Content-Type": "application/json" },
-  });
+  const response = await fetch(
+    "http://127.0.0.1:8000/api/user/loginWithGoogle",
+    {
+      method: "POST",
+      body: JSON.stringify(credential),
+      headers: { "Content-Type": "application/json" },
+    }
+  );
   const data = await response.json();
 
+  console.log("Google ", data);
   let date = new Date().toString();
   const d = new Date(date);
   const expire_date = addSeconds(d, data.expires_in).toString();

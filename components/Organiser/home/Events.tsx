@@ -57,7 +57,7 @@ const Events = ({ events }: { events: EventDetailProps[] }) => {
                     <div className="flex flex-shrink-0 -space-x-1">
                       {event.partners.map((detail, idx) => (
                         <>
-                          {idx < 1 && (
+                          {idx < 5 && (
                             <Link href="#!">
                               <img
                                 key={detail.id}
@@ -72,7 +72,10 @@ const Events = ({ events }: { events: EventDetailProps[] }) => {
                     </div>
 
                     {event.partners.length > 1 ? (
-                      <MorePartners morePartners={event.partners.length - 1} />
+                      <MorePartners
+                        partners={event.partners}
+                        morePartners={event.partners.length - 1}
+                      />
                     ) : (
                       <></>
                     )}

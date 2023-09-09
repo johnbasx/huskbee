@@ -26,7 +26,7 @@ const LoginPage = () => {
       const response = await axios.post("/api/signin", data);
       // console.log(response.status);
       toast.success("Successfully Login");
-      // router.push("/");
+      router.push("/");
     } catch (e: any) {
       console.log(e);
     }
@@ -85,7 +85,7 @@ const LoginPage = () => {
               <h2 className="text-2xl font-bold text-center text-white">
                 HuskBee
               </h2>
-              <p className="text-xs text-center">
+              <p className="text-base text-center">
                 by <span className="font-black tracking-tighter">Foxbeta</span>
               </p>
               <p className="mt-4 text-xl text-center text-gray-200">
