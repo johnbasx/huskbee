@@ -23,12 +23,17 @@ export interface FundraiserEventsProps extends FundraiserEventProps {
 }
 
 export interface DonationProps {
+  id: string;
+  donor_id: string;
   donated_to: string;
   donated_by: string;
   amount: number;
-  donar_photo_url: string;
-  donar_name: string;
-  donar_email: string;
+  fundraiser_title: string;
+  organise_by: string;
+  donor_name: string;
+  donor_email: string;
+  organiser_email: string;
+  donor_photo_url: string;
   created_at: string;
 }
 
@@ -39,12 +44,12 @@ const FunraiserDetail = ({
   token,
   fundraiserId,
   detail,
-  donars,
+  donors,
 }: {
   token: string;
   fundraiserId: string;
   detail: FundraiserEventsProps;
-  donars: DonationProps[];
+  donors: DonationProps[];
 }) => {
   const [photo, setPhoto] = useState<PhotoType>();
   const { setOrgToken } = orgTokenStore();
@@ -112,37 +117,37 @@ const FunraiserDetail = ({
         <div className="mx-auto py-20">
           <div className="px-4 sm:px-0 mb-10">
             <h3 className="text-2xl font-semibold leading-7 text-gray-200">
-              Donars
+              Donors
             </h3>
           </div>
           <ul
             role="list"
             className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           >
-            {donars &&
-              donars.map((donar) => (
+            {donors &&
+              donors.map((donor) => (
                 <li
-                  key={donar.created_at}
+                  key={donor.created_at}
                   className="col-span-1 flex flex-col text-center bg-white rounded-lg  divide-y divide-gray-200 shadow-xl"
                 >
                   <div className="flex-1 flex flex-col p-8">
                     <img
                       className="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
-                      src={BASE_URL + donar.donar_photo_url}
+                      src={BASE_URL + donor.donor_photo_url}
                       alt=""
                     />
                     <h3 className="mt-6 text-gray-900 text-sm font-medium">
-                      {donar.donar_email}
+                      {donor.donor_email}
                     </h3>
                     <dl className="mt-1 flex-grow flex flex-col justify-between">
                       <dt className="sr-only">Title</dt>
                       <dd className="text-gray-500 text-sm">
-                        {donar.donar_name}
+                        {donor.donor_name}
                       </dd>
                       <dt className="sr-only">Role</dt>
                       <dd className="mt-3">
                         <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-                          {"Donated ₹" + donar.amount}
+                          {"Donated ₹" + donor.amount}
                         </span>
                       </dd>
                     </dl>
@@ -204,17 +209,17 @@ export async function getServerSideProps(context: NextPageContext) {
   );
   const detail = await response.json();
 
-  const donars_res = await fetch(
-    CRAWDFUNDING_BASE_URL + "donars/" + fundraiserId,
+  const donors_res = await fetch(
+    CRAWDFUNDING_BASE_URL + "donors/" + fundraiserId,
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }
   );
-  const donars = await donars_res.json();
+  const donors = await donors_res.json();
 
-  if (!detail || !donars) {
+  if (!detail || !donors) {
     return {
       redirect: {
         destination: "/home",
@@ -224,6 +229,6 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
   return {
-    props: { token, fundraiserId, detail, donars },
+    props: { token, fundraiserId, detail, donors },
   };
 }

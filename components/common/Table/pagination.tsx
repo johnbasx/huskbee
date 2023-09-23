@@ -5,7 +5,6 @@ import {
 } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
 import { RootUrlStore } from "@store/table-store";
 
 const Pagination = ({

@@ -13,6 +13,7 @@ import Layout from "@components/Admin/Layout/Layout";
 import Link from "next/link";
 import type { NextPageContext } from "next";
 import Overview from "@components/Admin/home/overview";
+import RecentList from "@components/Admin/home/RecentList";
 import { USER_BASE_URL } from "@constants/api-urls";
 import { getCookie } from "cookies-next";
 
@@ -31,7 +32,7 @@ type AdminOverview = {
   total_user: number;
   total_organiser: number;
 };
-export default function Example({
+export default function Home({
   organiser_list,
   overview,
 }: {
@@ -39,7 +40,7 @@ export default function Example({
   overview: AdminOverview;
 }) {
   return (
-    <Layout>
+    <Layout pageTitle="Home">
       {/* Overview */}
       <div className="px-4 mt-6 sm:px-6 lg:px-8 ">
         <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
@@ -170,7 +171,7 @@ export default function Example({
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {organiser_list.map((organiser) => (
-                <tr key={organiser.email}>
+                <tr key={organiser.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link href={`/admin/organiser-detail/${organiser.id}`}>
                       <span className="flex organisers-center">
@@ -227,6 +228,8 @@ export default function Example({
           </table>
         </div>
       </div>
+
+      <RecentList />
     </Layout>
   );
 }

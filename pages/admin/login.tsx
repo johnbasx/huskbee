@@ -27,7 +27,7 @@ const login = () => {
     try {
       const response = await axios.post("/api/officeAdminSignin", data);
       console.log(response.data);
-      localStorage.setItem("user", response.data.user);
+      localStorage.setItem("off_username", response.data.user);
       toast.success("Successfully Login");
       router.push("/admin/home");
       setLoading(false);
@@ -123,7 +123,7 @@ const login = () => {
                       id="remember-me"
                       name="remember-me"
                       type="checkbox"
-                      className="text-black h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      className=" h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                     />
                     <label
                       htmlFor="remember-me"

@@ -32,7 +32,7 @@ const OganiserDetail = ({
   );
 
   return (
-    <Layout>
+    <Layout pageTitle="Organiser detail">
       <div className="space-y-6 mb-20 mx-auto max-w-7xl py-6">
         {organiser_detail ? (
           <OrganisationInfo

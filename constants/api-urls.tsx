@@ -1,6 +1,8 @@
+// export const BASE_URL = "http://192.168.29.199:8000/";
 export const BASE_URL = "http://127.0.0.1:8000/";
-export const USER_BASE_URL = "http://127.0.0.1:8000/api/user/";
 
-export const BOOKING_BASE_URL = "http://127.0.0.1:8000/api/booking/";
+export const USER_BASE_URL = BASE_URL + "api/user/";
 
-export const CRAWDFUNDING_BASE_URL = "http://127.0.0.1:8000/api/crowdfunding/";
+export const BOOKING_BASE_URL = BASE_URL + "api/booking/";
+
+export const CRAWDFUNDING_BASE_URL = BASE_URL + "api/crowdfunding/";
