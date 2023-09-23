@@ -5,7 +5,7 @@ import { Path, SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import axios from "axios";
 
 export interface FundraiserFormValues {
@@ -36,7 +36,7 @@ const CreateFundraiser = () => {
 
     try {
       const response = await axios.post(
-        CRAWDFUNDING_BASE_URL + "create-fundraiser-event",
+        CROWDFUNDING_BASE_URL + "create-fundraiser-event",
         newData,
         {
           headers: { Authorization: "Bearer " + token },

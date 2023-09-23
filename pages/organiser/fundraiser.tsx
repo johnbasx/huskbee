@@ -1,7 +1,7 @@
 import { FundraiserStore, orgTokenStore } from "@store/index";
 import React, { useEffect, useState } from "react";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import CreateFundraiser from "@components/Organiser/fundraiser/CreateFundraiser";
 import Layout from "@components/Organiser/Layout/Layout";
 import Link from "next/link";
@@ -112,7 +112,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const token = getCookie("org_token", { req, res });
 
   const response = await fetch(
-    CRAWDFUNDING_BASE_URL + "create-fundraiser-event",
+    CROWDFUNDING_BASE_URL + "create-fundraiser-event",
     {
       headers: {
         Authorization: `Bearer ${token}`,

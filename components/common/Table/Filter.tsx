@@ -2,7 +2,7 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import React from "react";
 import { RootUrlStore } from "@store/table-store";
 
@@ -26,8 +26,8 @@ const Filter = ({
     option: string
   ) => {
     setSelected(e);
-    setRootUrl(CRAWDFUNDING_BASE_URL + "fundraiser-list/" + e.value + "?page=");
-    getFilteredList(CRAWDFUNDING_BASE_URL + "fundraiser-list/" + e.value);
+    setRootUrl(CROWDFUNDING_BASE_URL + "fundraiser-list/" + e.value + "?page=");
+    getFilteredList(CROWDFUNDING_BASE_URL + "fundraiser-list/" + e.value);
     setCurrentPage(1);
   };
 
@@ -69,8 +69,7 @@ const Filter = ({
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                     }`
                   }
                   value={option}
@@ -80,9 +79,8 @@ const Filter = ({
                     // onChange={() => getSelectedOptionData(option.value)}
                     >
                       <span
-                        className={`block truncate text-black ${
-                          selected ? "font-medium" : "font-normal"
-                        }`}
+                        className={`block truncate text-black ${selected ? "font-medium" : "font-normal"
+                          }`}
                       >
                         {option.name}
                       </span>
