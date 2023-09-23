@@ -47,12 +47,21 @@ export const ApprovedStatus = ({ value }: { value: string }) => {
   );
 };
 
-export const TableWrapper = ({ children }: { children: React.ReactNode }) => {
+export const TableWrapper = ({
+  children,
+  totalItem,
+}: {
+  children: React.ReactNode;
+  totalItem: string;
+}) => {
   return (
     <div className=" overflow-x-auto sm:mx-6 pt-2 sm:pt-10 pb-10">
-      <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div className="shadow overflow-hidden border-b border-gray-400 ">
-          <table className="min-w-full divide-y divide-gray-400 ">
+      <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 shadow-lg bg-white rounded-lg">
+        <div className="overflow-hidden rounded-lg py-2 ">
+          <span className="text-lg font-medium sm:text-base text-gray-700">
+            {totalItem}
+          </span>
+          <table className="mt-3 min-w-full divide-y divide-gray-400 ">
             {children}
           </table>
         </div>

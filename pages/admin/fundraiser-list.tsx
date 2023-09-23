@@ -15,6 +15,7 @@ import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import Filter from "@components/common/Table/Filter";
 import { FundraiserEventProps } from "../organiser/fundraiser";
 import Layout from "@components/Admin/Layout/Layout";
+import Link from "next/link";
 import { NextPageContext } from "next";
 import Pagination from "@components/common/Table/pagination";
 import { RootUrlStore } from "@store/table-store";
@@ -121,15 +122,15 @@ const FundraiserList = ({
   };
 
   return (
-    <Layout>
+    <Layout pageTitle="Fundraiser List">
       <div className="w-5xl mx-auto">
         <div className="mt-2 p-8 sm:ml-6 block sm:flex justify-between space-y-4 sm:space-y-0">
           <SearchInPage SearchPartner={SearchPartner} />
           <Filter filterOptions={fundraiser_filter} getFilteredList={getData} />
         </div>
 
-        <TableWrapper>
-          <thead className="bg-transparent">
+        <TableWrapper totalItem={`${fundraisersIns?.count} Total fundraisers`}>
+          <thead className="bg-white">
             <tr>
               {off_admin_table_col_names.map((item) => (
                 <TableHead key={item.name} title={item.name} />
@@ -142,9 +143,7 @@ const FundraiserList = ({
               fundraisers.map((fundraiser, Idx) => (
                 <tr
                   key={fundraiser.id}
-                  className={
-                    Idx % 2 === 0 ? "bg-transparent" : "bg-transparent"
-                  }
+                  className={Idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
                 >
                   <TableValue value={fundraiser.title} />
                   <TableValue value={fundraiser.goal} />
@@ -153,12 +152,11 @@ const FundraiserList = ({
                   <TableValue value={fundraiser.created_at} />
                   <TableValue value={fundraiser.organiser_name} />
                   <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-                    <a
-                      href="#"
-                      className="text-indigo-600 hover:text-indigo-900"
-                    >
-                      Detail
-                    </a>
+                    <Link href={`/admin/fundraiser-detail/${fundraiser.id}`}>
+                      <span className="text-indigo-600 hover:text-indigo-900">
+                        Detail
+                      </span>
+                    </Link>
                   </td>
                 </tr>
               ))}

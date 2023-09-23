@@ -14,10 +14,11 @@ export interface FundraiserEventProps {
   goal: string;
   description: string;
   open_status: boolean;
+  approved_status: string;
+  target_amount: number;
   created_at: string;
   organiser: string;
   organiser_name: string;
-  approved_status: string;
 }
 
 const Fundraiser = ({
