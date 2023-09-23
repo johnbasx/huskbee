@@ -1,6 +1,6 @@
 import { Toaster, toast } from "react-hot-toast";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import { FundraiserDetailStore } from "@store/office-admin-store";
 import React from "react";
 import axios from "axios";
@@ -19,7 +19,7 @@ const Actions = ({ fundraiserId }: { fundraiserId: string }) => {
   const OnClickHandler = async ({ e, data, msg }: onClickParamType) => {
     e.preventDefault();
 
-    const url = CRAWDFUNDING_BASE_URL + "approve-crowd-funding/" + fundraiserId;
+    const url = CROWDFUNDING_BASE_URL + "approve-crowd-funding/" + fundraiserId;
     try {
       const response = await axios.put(url, data, {
         headers: {
