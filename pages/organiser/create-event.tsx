@@ -25,16 +25,16 @@ import { useMutation } from "react-query";
 // }
 
 export interface IFormValues {
-  name: "";
-  tag_line: "";
-  description: "";
-  start_date: Date | "";
-  end_date: Date | "";
-  start_time: "";
-  end_time: "";
-  event_type: "";
-  logo: File | null;
-  hero_image: File | null;
+  name: string;
+  tag_line: string;
+  description: string;
+  start_date: Date | string;
+  end_date: Date | string;
+  start_time: string;
+  end_time: string;
+  event_type: string;
+  logo: File[] | null;
+  hero_image: File[] | null;
 }
 
 export type InputProps = {
@@ -72,27 +72,26 @@ const CreateEvent = ({ token }: { token: string }) => {
     let form_data = new FormData();
     console.log("check_form_data: ", data);
 
-    // for (let i = 0; i < data.; i++) {
-    //   console.log(typeof i, myArray[i]);
-    // }
     for (let key in data) {
       let k: keyof typeof data = key as keyof typeof data;
-      // console.log(typeof data[key][0]);
-      // if('File' in window && input instanceof )
-      if (k == "logo" || k == "hero_image") {
-        form_data.append(k, data[k][0]);
-      } else {
-        form_data.append(k, data[k]);
+
+      if (key == "logo" && data["logo"] != null) {
+        form_data.append(key, data["logo"][0]);
+      } else if (key == "hero_image" && data["hero_image"] != null) {
+        form_data.append(key, data["hero_image"][0]);
+      } else if (data[key as keyof IFormValues] != undefined) {
+        form_data.append(key, data[key as keyof IFormValues] as string);
       }
+
+      // if (k == "logo" || k == "hero_image") {
+      //   let val = Object.values(data)[0]
+      //   form_data.append(k,val);
+      // } else {
+      //   form_data.append(k, data[k]);
+      // }
     }
     setFormData(form_data);
     mutate();
-    // const url = BOOKING_BASE_URL + "list-create-event";
-    // axios.post(url, form_data, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
   };
 
   return (

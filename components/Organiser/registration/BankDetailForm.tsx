@@ -15,7 +15,6 @@ import {
 import { Toaster, toast } from "react-hot-toast";
 
 import Selectbank from "./BankDetailFormInputs";
-import { Switch } from "@headlessui/react";
 import { USER_BASE_URL } from "@constants/api-urls";
 import axios from "axios";
 
@@ -61,7 +60,7 @@ const BankDetailForm = () => {
 
     const final_main_detail = {
       ...mainDetail,
-      logo: mainDetail?.logo[0], //TODO: FIX TYPE ERROR
+      logo: mainDetail?.logo[0],
       phone: "+91" + mainDetail["phone"],
     };
 

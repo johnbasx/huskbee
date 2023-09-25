@@ -12,7 +12,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   };
 
   const response = await fetch(
-    "http://127.0.0.1:8000/api/user/office-admin-login",
+    "http://192.168.29.199:8000/api/user/office-admin-login",
     {
       method: "POST",
       body: JSON.stringify(credential),

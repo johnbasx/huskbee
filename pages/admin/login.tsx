@@ -42,7 +42,7 @@ const login = () => {
     <>
       <Toaster />
       <div className="min-h-full bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
-        <div className="border shadow-xl rounded-lg">
+        <div className="">
           <div className="sm:mx-auto sm:w-full sm:max-w-md bg-white">
             <img
               className="mx-auto h-12 w-auto"
@@ -64,7 +64,7 @@ const login = () => {
           </div>
 
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div className="bg-white py-8 px-4 sm:px-10">
               <form
                 onSubmit={(e) => {
                   login(e);

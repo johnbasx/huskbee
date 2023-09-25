@@ -109,7 +109,7 @@ const org_detail: OrgDetailFormValues = {
   organisation_name: "",
   email: "",
   phone: "",
-  logo: null,
+  logo: "",
   description: "",
   organiser_type: "",
 };

@@ -36,7 +36,7 @@ export interface OrgDetailFormValues {
   organisation_name: string;
   email: string;
   phone: string;
-  logo: File | null;
+  logo: File[] | string;
   description: string;
   organiser_type: string;
 }

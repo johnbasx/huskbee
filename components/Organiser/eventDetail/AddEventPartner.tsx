@@ -42,7 +42,7 @@ const AddEventPartner = ({ eventId }: { eventId: string }) => {
         );
 
         // console.log(response.data);
-        setAllPartners(response.data);
+        setAllPartners(response.data.results);
       } catch (e: any) {
         console.log(e);
       }
@@ -55,13 +55,13 @@ const AddEventPartner = ({ eventId }: { eventId: string }) => {
   }, [allPartners]);
 
   const FilteredPartners = async () => {
-    console.log("All partner ", allPartners);
-    console.log("Event partners", partners);
+    // console.log("All partner ", allPartners);
+    // console.log("Event partners", partners);
     if (partners && partners.length === 0) {
-      console.log("zero");
+      // console.log("zero");
       setFilteredList(allPartners);
     } else {
-      console.log("One");
+      // console.log("One");
       const filteredList = allPartners.filter((partner) => {
         return partners?.some((el) => {
           return el.id !== partner.id;
@@ -73,7 +73,7 @@ const AddEventPartner = ({ eventId }: { eventId: string }) => {
 
   useEffect(() => {
     setNotEventPartners(filteredList);
-    console.log("filteredList ", filteredList);
+    // console.log("filteredList ", filteredList);
   }, [filteredList, allPartners]);
 
   return (
@@ -149,18 +149,29 @@ const AddEventPartner = ({ eventId }: { eventId: string }) => {
                         </Tab.List>
                         <Tab.Panels className="mt-2">
                           {/* {Object.values(categories).map((posts, idx) => ( */}
-                          {Object.keys(categories).map((category, idx) => (
-                            <Tab.Panel
-                              key={idx}
-                              className={classNames(
-                                "rounded-xl bg-transparent p-3",
-                                "focus:outline-none "
-                              )}
-                            >
-                              {categories[category]}
-                              <div></div>
-                            </Tab.Panel>
-                          ))}
+                          {/* {Object.keys(categories).map((category, idx) => ( */}
+                          <Tab.Panel
+                            // key={idx}
+                            className={classNames(
+                              "rounded-xl bg-transparent p-3",
+                              "focus:outline-none "
+                            )}
+                          >
+                            <AssignExistingPartner
+                              eventId={eventId}
+                              filteredList={filteredList}
+                              setOpen={setOpen}
+                            />
+                          </Tab.Panel>
+                          <Tab.Panel>
+                            <AddNewPartner
+                              eventId={eventId}
+                              setOpen={setOpen}
+                            />
+                            {/* {categories[category]} */}
+                            <div></div>
+                          </Tab.Panel>
+                          {/* ))} */}
                         </Tab.Panels>
                       </Tab.Group>
                     </div>

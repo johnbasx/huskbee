@@ -16,8 +16,8 @@ import { toast } from "react-hot-toast";
 export interface PartnerFormValues {
   name: string;
   description: string;
-  logo: File | null;
-  hero_image: File | null;
+  logo: File[] | null;
+  hero_image: File[] | null;
   event_input: string;
 }
 
@@ -45,22 +45,22 @@ const AddNewPartner = ({
 
   // Add Partner
   const onSubmit: SubmitHandler<PartnerFormValues> = async (data) => {
-    let form_data = new FormData();
+    let form_data: any = new FormData();
     const newdata = {
       ...data,
       event_input: eventId,
     };
 
-    Object.entries(newdata).forEach((entry) => {
-      const [key, value] = entry;
-
-      if (key == "logo" || key == "hero_image") {
-        form_data.append(key, data[key][0]);
+    for (const key in newdata) {
+      if (key == "logo" && data["logo"] != null) {
+        form_data.append(key, data["logo"][0]);
+      } else if (key == "hero_image" && data["hero_image"] != null) {
+        form_data.append(key, data["hero_image"][0]);
       } else {
-        form_data.append(key, value!);
+        console.log("data: ", newdata[key as keyof PartnerFormValues]);
+        form_data.append(key, newdata[key as keyof PartnerFormValues]);
       }
-      // form_data.append(key, JSON.stringify(value));
-    });
+    }
 
     try {
       const response: Response = await axios.post(
