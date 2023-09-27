@@ -5,6 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import { RootUrlStore } from "@store/table-store";
 
 const Pagination = ({
@@ -70,11 +71,10 @@ const Pagination = ({
                   PageClickHandler(url + content, content);
                 }}
                 key={content}
-                className={`cursor-pointer border-transparent text-gray-900 hover:text-gray-400 hover:border-gray-200 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium ${
-                  content == currentPage
-                    ? "border-t-1 border-t-purple-500 text-purple-600"
-                    : ""
-                }`}
+                className={`cursor-pointer border-transparent text-gray-900 hover:text-gray-400 hover:border-gray-200 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium ${content == currentPage
+                  ? "border-t-1 border-t-purple-500 text-purple-600"
+                  : ""
+                  }`}
               >
                 {content}
               </a>

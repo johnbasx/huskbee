@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import axios from "axios";
 import { orgTokenStore } from "@store/index";
 
@@ -29,7 +29,7 @@ const UploadPhoto = ({ funraiserId }: { funraiserId: string }) => {
 
     try {
       const response = await axios.post(
-        CRAWDFUNDING_BASE_URL + "add-fundraiser-photo/",
+        CROWDFUNDING_BASE_URL + "add-fundraiser-photo/",
         form_data,
         {
           headers: { Authorization: "Bearer " + token },

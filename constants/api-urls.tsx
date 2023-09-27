@@ -5,4 +5,4 @@ export const USER_BASE_URL = BASE_URL + "api/user/";
 
 export const BOOKING_BASE_URL = BASE_URL + "api/booking/";
 
-export const CRAWDFUNDING_BASE_URL = BASE_URL + "api/crowdfunding/";
+export const CROWDFUNDING_BASE_URL = BASE_URL + "api/crowdfunding/";

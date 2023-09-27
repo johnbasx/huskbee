@@ -11,7 +11,7 @@ import {
   off_admin_table_col_names,
 } from "@constants/list-items";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import Filter from "@components/common/Table/Filter";
 import { FundraiserEventProps } from "../organiser/fundraiser";
 import Layout from "@components/Admin/Layout/Layout";
@@ -47,7 +47,7 @@ const FundraiserList = ({
   const { rootUrl, setRootUrl } = RootUrlStore();
   const [fundraisers, setfundraisers] = useState<FundraiserEventProps[]>();
 
-  // const [rootUrl, setRootUrl] = useState(CRAWDFUNDING_BASE_URL +
+  // const [rootUrl, setRootUrl] = useState(CROWDFUNDING_BASE_URL +
   //   "fundraiser-list/ALL?page=")
   const [prev, setPrev] = useState<string | null>("");
   const [next, setNext] = useState<string | null>("");
@@ -55,7 +55,7 @@ const FundraiserList = ({
   useEffect(() => {
     setOfficeAdminToken(token);
     setFundraisersIns(fundraisers_obj);
-    setRootUrl(CRAWDFUNDING_BASE_URL + "fundraiser-list/ALL?page=");
+    setRootUrl(CROWDFUNDING_BASE_URL + "fundraiser-list/ALL?page=");
   }, []);
 
   useEffect(() => {
@@ -70,9 +70,9 @@ const FundraiserList = ({
     if (fundraisersIns != null) {
       const filteredList = query
         ? fundraisersIns.results &&
-          fundraisersIns.results.filter((fundraiser) =>
-            fundraiser.title.toLowerCase().includes(query.toLowerCase())
-          )
+        fundraisersIns.results.filter((fundraiser) =>
+          fundraiser.title.toLowerCase().includes(query.toLowerCase())
+        )
         : fundraisers_obj.results;
       setfundraisers(filteredList);
     }
@@ -182,7 +182,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const login_status = getCookie("login", { req, res });
   const login = login_status ? login_status == true : false;
 
-  const response = await fetch(CRAWDFUNDING_BASE_URL + "fundraiser-list/ALL", {
+  const response = await fetch(CROWDFUNDING_BASE_URL + "fundraiser-list/ALL", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
