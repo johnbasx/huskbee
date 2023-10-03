@@ -1,3 +1,4 @@
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import React, { FormEvent, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -15,6 +16,8 @@ const login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [togglePassword, setTogglePassword] = useState(false);
+  const [passwordInputType, setPasswordInputType] = useState("password");
 
   const login = async (e: FormEvent) => {
     e.preventDefault();
@@ -23,20 +26,25 @@ const login = () => {
       username: username,
       password: password,
     };
-    console.log(data);
+
     try {
       const response = await axios.post("/api/officeAdminSignin", data);
-      console.log(response.data);
       localStorage.setItem("off_username", response.data.user);
       toast.success("Successfully Login");
       router.push("/admin/home");
       setLoading(false);
     } catch (e: any) {
-      // console.log(e);
+      console.log(e);
       toast.error("Cannot Login");
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    togglePassword
+      ? setPasswordInputType("text")
+      : setPasswordInputType("password");
+  }, [togglePassword]);
 
   return (
     <>
@@ -87,7 +95,7 @@ const login = () => {
                       }}
                       id="username"
                       name="username"
-                      type="username"
+                      type="text"
                       autoComplete="username"
                       required
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
@@ -103,22 +111,34 @@ const login = () => {
                     Password
                   </label>
                   <div className="mt-1">
-                    <input
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      className="appearance-none text-black block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
+                    <div className="mt-1 flex rounded-md shadow-sm">
+                      <input
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                        id="password"
+                        name="password"
+                        type={passwordInputType}
+                        autoComplete="current-password"
+                        required
+                        className="appearance-none text-black block w-full px-3 py-2 border  border-r-0 border-gray-300 rounded-l-md shadow-sm placeholder-gray-400  sm:text-sm"
+                      />
+                      <span
+                        onClick={(e) => setTogglePassword(!togglePassword)}
+                        className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"
+                      >
+                        {togglePassword ? (
+                          <EyeIcon className="h-6 w-6" />
+                        ) : (
+                          <EyeSlashIcon className="h-6 w-6" />
+                        )}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <input
                       id="remember-me"
                       name="remember-me"
@@ -131,7 +151,7 @@ const login = () => {
                     >
                       Remember me
                     </label>
-                  </div>
+                  </div> */}
 
                   {/* <div className="text-sm">
                 <a

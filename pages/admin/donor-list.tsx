@@ -81,7 +81,7 @@ const DonorList = () => {
 
   return (
     <Layout pageTitle="Donors List">
-      <div className="bg-white">
+      <div className="max-w-7xl mx-auto bg-white">
         <div className=" py-12 px-4  sm:px-6 lg:px-8 lg:py-12 ">
           <div className="space-y-8 sm:space-y-12">
             <div className="space-y-5 sm:mx-auto sm:max-w-6xl sm:space-y-4 lg:max-w-6xl">

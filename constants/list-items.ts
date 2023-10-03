@@ -1,3 +1,10 @@
+import {
+  Bars4Icon,
+  ClockIcon,
+  HomeIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
+
 export const OrganiserTypes = [
   {
     id: 1,
@@ -27,7 +34,7 @@ export const off_admin_table_col_names = [
     name: "Open Status",
   },
   {
-    name: "Created At",
+    name: "Created on",
   },
   {
     name: "Organiser",
@@ -85,4 +92,48 @@ export const donors_filter = [
   { name: "Recent", value: "ALL" },
   { name: "Highest amount", value: "H_M" },
   { name: "Lowest amount", value: "L_M" },
+];
+
+// SIDE NAV LIST
+
+export const navigation = [
+  { name: "Home", href: "/admin/home", icon: HomeIcon, current: true },
+  {
+    name: "Organiser List",
+    href: "/admin/organiser-list",
+    icon: Bars4Icon,
+    current: false,
+  },
+  {
+    name: "Huskbee Users",
+    href: "/admin/users",
+    icon: UsersIcon,
+    current: false,
+  },
+  {
+    name: "Recent activity",
+    href: "/admin/rcent-activity",
+    icon: ClockIcon,
+    current: false,
+  },
+];
+
+export const crowd_funding = [
+  {
+    name: "Fundraiser List",
+    href: "/admin/fundraiser-list",
+    bgColorClass: "bg-indigo-500",
+  },
+  { name: "Donors", href: "/admin/donor-list", bgColorClass: "bg-green-500" },
+  {
+    name: "All donations",
+    href: "/admin/all-donations",
+    bgColorClass: "bg-red-500",
+  },
+  { name: "Issues and Report", href: "#", bgColorClass: "bg-yellow-500" },
+  {
+    name: "Analytics",
+    href: "/admin/analytics",
+    bgColorClass: "bg-blue-700",
+  },
 ];

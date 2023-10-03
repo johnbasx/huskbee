@@ -11,7 +11,7 @@ import {
   donors_filter,
 } from "@constants/list-items";
 
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import { DonationObjStore } from "@store/office-admin-store";
 import { DonationProps } from "../organiser/fundraiser-detail/[fundraiserId]";
 import Filter from "@components/common/Table/Filter";
@@ -51,7 +51,7 @@ const AllDonations = ({
   useEffect(() => {
     setOfficeAdminToken(token);
     setDonationIns(donation_obj);
-    setRootUrl(CRAWDFUNDING_BASE_URL + "all-donations?page=");
+    setRootUrl(CROWDFUNDING_BASE_URL + "all-donations?page=");
   }, []);
 
   useEffect(() => {
@@ -117,13 +117,22 @@ const AllDonations = ({
   }, [donationIns]);
   return (
     <Layout pageTitle="All Donations">
-      <div className="w-5xl mx-auto">
-        <div className="mt-2 p-8 sm:ml-6 block sm:flex justify-between space-y-4 sm:space-y-0">
-          <SearchInPage SearchPartner={SearchPartner} />
+      <div className="max-w-7xl mx-auto">
+        <div className="mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0">
+          {/* <SearchInPage SearchPartner={SearchPartner} /> */}
+          <button
+            type="button"
+            className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Search from all donations
+          </button>
           <Filter filterOptions={donors_filter} getFilteredList={getData} />
         </div>
 
-        <TableWrapper totalItem={`${donationIns?.count} Total donations`}>
+        <TableWrapper
+          totalItem={`${donationIns?.count} Total donations`}
+          SearchPartner={SearchPartner}
+        >
           <thead className="bg-transparent">
             <tr>
               {donations_table_col_names.map((item) => (
@@ -176,7 +185,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const res = context.res;
   const token = getCookie("admin_token", { req, res });
 
-  const response = await fetch(CRAWDFUNDING_BASE_URL + "all-donations", {
+  const response = await fetch(CROWDFUNDING_BASE_URL + "all-donations", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

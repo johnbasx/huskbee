@@ -12,7 +12,7 @@ function classNames(...classes: any) {
 const TopNavbar = ({ pageTitle }: { pageTitle: string }) => {
   const [user, setUser] = useState(localStorage.getItem("off_username"));
   return (
-    <div className="hidden border-b border-gray-200 px-4 py-2 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 shadow-lg bg-white">
+    <div className="hidden border-b border-gray-200 px-4 py-2 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 shadow-md bg-white">
       <div className="flex-1 min-w-0">
         {/* <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate"> */}
         <h1 className="text-xl font-medium sm:text-lg text-gray-700">

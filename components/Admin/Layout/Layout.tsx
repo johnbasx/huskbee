@@ -1,63 +1,13 @@
-import {
-  Bars4Icon,
-  ChevronDownIcon,
-  ClockIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import {
-  ChevronDoubleRightIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/solid";
+import { Bars4Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import TopNavbar, { ProfileDropDownList } from "./TopNavbar";
+import { crowd_funding, navigation } from "@constants/list-items";
 
 import Head from "next/head";
 import Link from "next/link";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
-
-const navigation = [
-  { name: "Home", href: "/admin/home", icon: HomeIcon, current: true },
-  {
-    name: "Organiser List",
-    href: "/admin/organiser-list",
-    icon: Bars4Icon,
-    current: false,
-  },
-  {
-    name: "Huskbee Users",
-    href: "/admin/users",
-    icon: UsersIcon,
-    current: false,
-  },
-  {
-    name: "Recent activity",
-    href: "/admin/rcent-activity",
-    icon: ClockIcon,
-    current: false,
-  },
-];
-const crowd_funding = [
-  {
-    name: "Fundraiser List",
-    href: "/admin/fundraiser-list",
-    bgColorClass: "bg-indigo-500",
-  },
-  { name: "Donors", href: "/admin/donor-list", bgColorClass: "bg-green-500" },
-  {
-    name: "All donations",
-    href: "/admin/all-donations",
-    bgColorClass: "bg-red-500",
-  },
-  { name: "Issues and Report", href: "#", bgColorClass: "bg-yellow-500" },
-  {
-    name: "Analytics",
-    href: "/admin/all-donations",
-    bgColorClass: "bg-red-500",
-  },
-];
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -74,9 +24,8 @@ const Layout = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log(router.pathname);
     const el = document.querySelector("html") as HTMLElement | null;
-    el != null ? el.classList.add("bg-gray-100") : "";
+    el != null ? el.classList.add("bg-gray-50") : "";
   }, []);
   return (
     <>
@@ -93,7 +42,7 @@ const Layout = ({
         {/* <meta name="apple-mobile-web-app-status-bar" content="#0f172a" /> */}
         <meta name="apple-mobile-web-app-status-bar" content="#0f172a" />
       </Head>
-      <div className="min-h-full bg-gray-100">
+      <div className="min-h-full bg-gray-50">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"

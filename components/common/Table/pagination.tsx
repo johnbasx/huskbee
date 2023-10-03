@@ -46,7 +46,7 @@ const Pagination = ({
 
   return (
     <nav
-      className="grid grid-cols-6 gap-2 mx-1 sm:mx-16 px-4 sm:px-0 mt-2"
+      className="grid grid-cols-6 gap-2 mx-1 sm:mx-6 sm:px-0 mt-2"
       aria-label="Pagination"
     >
       <div className="col-span-6 sm:col-span-4 max-w-3xl flex items-center justify-between">
@@ -71,10 +71,11 @@ const Pagination = ({
                   PageClickHandler(url + content, content);
                 }}
                 key={content}
-                className={`cursor-pointer border-transparent text-gray-900 hover:text-gray-400 hover:border-gray-200 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium ${content == currentPage
-                  ? "border-t-1 border-t-purple-500 text-purple-600"
-                  : ""
-                  }`}
+                className={`cursor-pointer border-transparent text-gray-900 hover:text-gray-400 hover:border-gray-200 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium ${
+                  content == currentPage
+                    ? "border-t-1 border-t-purple-500 text-purple-600"
+                    : ""
+                }`}
               >
                 {content}
               </a>
