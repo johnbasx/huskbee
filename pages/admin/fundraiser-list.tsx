@@ -12,6 +12,7 @@ import {
 } from "@constants/list-items";
 
 import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
+import CommandPallete from "@components/Admin/FundraisersList/CommandPellete";
 import Filter from "@components/common/Table/Filter";
 import { FormatDate } from "@utils/index";
 import { FundraiserEventProps } from "../organiser/fundraiser";
@@ -114,7 +115,6 @@ const FundraiserList = ({
           headers: { Authorization: "Bearer " + office_admin_token },
         });
         setFundraisersIns(response.data);
-        // console.log(response.data);
       } catch (e: any) {
         console.log(e);
       }
@@ -125,13 +125,12 @@ const FundraiserList = ({
     <Layout pageTitle="Fundraiser List">
       <div className="max-w-7xl mx-auto">
         <div className="mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0">
-          <button
-            type="button"
-            className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Search from all fundraisers
-          </button>
-          <Filter filterOptions={fundraiser_filter} getFilteredList={getData} />
+          <CommandPallete />
+          <Filter
+            linkPart={CROWDFUNDING_BASE_URL + "fundraiser-list/"}
+            filterOptions={fundraiser_filter}
+            getFilteredList={getData}
+          />
         </div>
 
         <TableWrapper

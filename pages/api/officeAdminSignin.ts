@@ -12,7 +12,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   };
 
   const response = await fetch(
-    "http://192.168.29.199:8000/api/user/office-admin-login",
+    "http://127.0.0.1:8000/api/user/office-admin-login",
     {
       method: "POST",
       body: JSON.stringify(credential),
@@ -31,14 +31,17 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     serialize("admin_token", data.access_token, {
       httpOnly: true,
       path: "/",
+      maxAge: 31536000,
     }),
     serialize("admin_token_expires_on", expire_date.toString(), {
       httpOnly: true,
       path: "/",
+      maxAge: 31536000,
     }),
     serialize("admin_login", "true", {
       httpOnly: true,
       path: "/",
+      maxAge: 31536000,
     }),
   ]);
   res.status(200).json({ user: data.username });

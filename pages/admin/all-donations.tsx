@@ -7,11 +7,11 @@ import {
 } from "@components/common/Table/Others";
 import {
   donations_table_col_names,
-  donor_table_col_names,
   donors_filter,
 } from "@constants/list-items";
 
 import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
+import CommandPallete from "@components/Admin/AllDonations/CommandPelllete";
 import { DonationObjStore } from "@store/office-admin-store";
 import { DonationProps } from "../organiser/fundraiser-detail/[fundraiserId]";
 import Filter from "@components/common/Table/Filter";
@@ -19,7 +19,6 @@ import Layout from "@components/Admin/Layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
 import Pagination from "@components/common/Table/pagination";
-import SearchInPage from "@components/common/Table/SearchInPage";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
@@ -51,40 +50,38 @@ const AllDonations = ({
   useEffect(() => {
     setOfficeAdminToken(token);
     setDonationIns(donation_obj);
-    setRootUrl(CROWDFUNDING_BASE_URL + "all-donations?page=");
+    setRootUrl(CROWDFUNDING_BASE_URL + "all-donations/ALL?page=");
   }, []);
 
   useEffect(() => {
     if (donationIns != null) {
-      console.log("do: ", donationIns.results);
       setDonations(donationIns.results);
       setPrev(donationIns.previous);
       setNext(donationIns.next);
     }
   }, [donationIns]);
 
-  const SearchPartner = (query: string) => {
-    console.log("Search Donars");
-    // if (fundraisersIns != null) {
-    //   const filteredList = query
-    //     ? fundraisersIns.results &&
-    //       fundraisersIns.results.filter((fundraiser) =>
-    //         fundraiser.title.toLowerCase().includes(query.toLowerCase())
-    //       )
-    //     : fundraisers_obj.results;
-    //   setfundraisers(filteredList);
-    // }
+  const SearchDonation = (query: string) => {
+    if (donationIns != null) {
+      const filteredList = query
+        ? donationIns.results &&
+          donationIns.results.filter((donation) =>
+            donation.fundraiser_title
+              .toLowerCase()
+              .includes(query.toLowerCase())
+          )
+        : donation_obj.results;
+      setDonations(filteredList);
+    }
   };
 
   const getData = async (url: string | null) => {
-    console.log("get data");
     if (url != null) {
       try {
         const response = await axios(url, {
           headers: { Authorization: "Bearer " + office_admin_token },
         });
         setDonationIns(response.data);
-        // console.log(response.data);
       } catch (e: any) {
         console.log(e);
       }
@@ -119,19 +116,17 @@ const AllDonations = ({
     <Layout pageTitle="All Donations">
       <div className="max-w-7xl mx-auto">
         <div className="mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0">
-          {/* <SearchInPage SearchPartner={SearchPartner} /> */}
-          <button
-            type="button"
-            className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Search from all donations
-          </button>
-          <Filter filterOptions={donors_filter} getFilteredList={getData} />
+          <CommandPallete />
+          <Filter
+            linkPart={CROWDFUNDING_BASE_URL + "all-donations/"}
+            filterOptions={donors_filter}
+            getFilteredList={getData}
+          />
         </div>
 
         <TableWrapper
           totalItem={`${donationIns?.count} Total donations`}
-          SearchPartner={SearchPartner}
+          SearchPartner={SearchDonation}
         >
           <thead className="bg-transparent">
             <tr>
@@ -156,7 +151,9 @@ const AllDonations = ({
                   <TableValue value={donation.created_at} />
                   <TableValue value={donation.amount.toString()} />
                   <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-                    <Link href={`/admin/fundraiser-detail/${donation.id}`}>
+                    <Link
+                      href={`/admin/fundraiser-detail/${donation.donated_to}`}
+                    >
                       <span className="text-indigo-600 hover:text-indigo-900">
                         Detail
                       </span>
@@ -185,14 +182,14 @@ export async function getServerSideProps(context: NextPageContext) {
   const res = context.res;
   const token = getCookie("admin_token", { req, res });
 
-  const response = await fetch(CROWDFUNDING_BASE_URL + "all-donations", {
+  const response = await fetch(CROWDFUNDING_BASE_URL + "all-donations/ALL", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
   const donation_obj = await response.json();
 
-  // console.log("object: ", donation_obj);
   return {
     props: { token, donation_obj },
   };

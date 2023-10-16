@@ -11,7 +11,7 @@ export const Title = ({
       <div className="sm:col-span-4">
         <label
           htmlFor="title"
-          className="block text-sm font-medium leading-6 text-gray-100"
+          className="block text-sm font-semibold leading-6 text-black"
         >
           {label}
         </label>
@@ -23,8 +23,8 @@ export const Title = ({
               name="title"
               id="title"
               autoComplete="title"
-              className="block w-full px-4 py-2 text-gray-200 border rounded-md border-gray-500 bg-gray-800 focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
-              placeholder="janesmith"
+              className="block w-full px-4 py-2 text-black border rounded-md border-gray-500  focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+              placeholder="Fundraiser title"
             />
           </div>
         </div>
@@ -43,7 +43,7 @@ export const Goal = ({
     <>
       <label
         htmlFor="goal"
-        className="block text-sm font-semibold leading-6 text-gray-200"
+        className="block text-sm font-semibold leading-6 text-black"
       >
         {label}
       </label>
@@ -54,7 +54,7 @@ export const Goal = ({
           name="goal"
           id="goal"
           autoComplete="goal"
-          className="block w-full px-4 py-2 text-gray-200 border rounded-md border-gray-500 bg-gray-800 focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+          className="block w-full px-4 py-2 text-black border rounded-md border-gray-500  focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
         />
       </div>
     </>
@@ -71,7 +71,7 @@ export const Description = ({
     <>
       <label
         htmlFor="description"
-        className="block text-sm font-semibold leading-6 text-gray-200"
+        className="block text-sm font-semibold leading-6 text-black"
       >
         {label}
       </label>
@@ -80,8 +80,9 @@ export const Description = ({
           {...register(name, { required })}
           name="description"
           id="description"
+          placeholder="Write about your fundraiser event"
           rows={4}
-          className="block w-full px-4 py-2 text-gray-200 border rounded-md border-gray-500 bg-gray-800 focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+          className="block w-full px-4 py-2 text-black border rounded-md border-gray-500  focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
           defaultValue={""}
         />
       </div>

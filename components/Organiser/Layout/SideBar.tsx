@@ -184,68 +184,74 @@ const SideBar = ({
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:flex lg:w-64 lg:fixed lg:inset-y-0">
+      <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-gray-200 lg:pt-5 lg:pb-4 lg:bg-white">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900 gap-x-4">
+        <div className="items-center flex-shrink-0 px-6">
+          <div className="flex gap-x-2">
             <img
               className="h-8 w-auto"
               src="/logo/axewhy-colorful-logo.png"
               alt="HuskBee"
             />
-            <span className="font-base text-2xl">HuskBee</span>
+            <span className="text-gray-800 text-3xl font-bold uppercase">
+              huskbee
+            </span>
           </div>
-          <div className="flex-1 flex flex-col overflow-y-auto bg-gray-800">
-            <nav className="flex-1 px-2 py-4">
-              <div className="space-y-1">
-                {navigation.map((item) => (
-                  <Link key={item.name} href={item.href}>
-                    <span
-                      className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                        router.pathname == item.href
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white "
-                      }`}
-                      // className={classNames(
-                      //   item.current
-                      //     ? "bg-gray-900 text-white"
-                      //     : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      //   "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                      // )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      <item.icon
-                        className={classNames(
-                          item.current
-                            ? "text-gray-300"
-                            : "text-gray-400 group-hover:text-gray-300",
-                          "mr-3 flex-shrink-0 h-6 w-6"
-                        )}
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </span>
-                  </Link>
+          <span className="items-center text-sm ml-14 text-blue-700">
+            (For organiser)
+          </span>
+        </div>
+        <div className="mt-1 h-0 flex-1 flex flex-col overflow-y-auto">
+          <nav className="flex-1 px-2 py-4">
+            <div className="space-y-1">
+              {navigation.map((item) => (
+                <Link key={item.name} href={item.href}>
+                  <span
+                    className={classNames(
+                      router.pathname === item.href
+                        ? "bg-gray-200 text-gray-900"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-50",
+                      "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                    )}
+                    // className={classNames(
+                    //   item.current
+                    //     ? "bg-gray-900 text-white"
+                    //     : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    //   "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                    // )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    <item.icon
+                      className={classNames(
+                        router.pathname === item.href
+                          ? "text-gray-500"
+                          : "text-gray-400 group-hover:text-gray-500",
+                        "mr-3 flex-shrink-0 h-6 w-6"
+                      )}
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </span>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-10">
+              <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                Settings
+              </p>
+              <div className="mt-2 space-y-1">
+                {settings.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    className="group flex items-center px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700"
+                  >
+                    <span className="truncate">{item.name}</span>
+                  </a>
                 ))}
               </div>
-              <div className="mt-10">
-                <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                  Settings
-                </p>
-                <div className="mt-2 space-y-1">
-                  {settings.map((item) => (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      className="group flex items-center px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-white hover:bg-gray-700"
-                    >
-                      <span className="truncate">{item.name}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          </div>
+            </div>
+          </nav>
         </div>
       </div>
     </>

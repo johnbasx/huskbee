@@ -43,23 +43,6 @@ export const off_admin_table_col_names = [
     name: "Action",
   },
 ];
-export const donor_table_col_names = [
-  {
-    name: "Name",
-  },
-  {
-    name: "Email",
-  },
-  {
-    name: "Phone",
-  },
-  {
-    name: "Total events donated",
-  },
-  {
-    name: "Total amount donated",
-  },
-];
 
 export const donations_table_col_names = [
   {
@@ -90,8 +73,8 @@ export const fundraiser_filter = [
 
 export const donors_filter = [
   { name: "Recent", value: "ALL" },
-  { name: "Highest amount", value: "H_M" },
-  { name: "Lowest amount", value: "L_M" },
+  { name: "Highest amount", value: "H_A" },
+  { name: "Lowest amount", value: "L_A" },
 ];
 
 // SIDE NAV LIST
@@ -135,5 +118,27 @@ export const crowd_funding = [
     name: "Analytics",
     href: "/admin/analytics",
     bgColorClass: "bg-blue-700",
+  },
+];
+
+export const org_dropdown_list = [
+  {
+    name: "Your Profile",
+    href: "/organiser/profile",
+  },
+  {
+    name: "Settings",
+    href: "/organiser/settings",
+  },
+];
+
+export const off_admin_dropdown_list = [
+  {
+    name: "Your Profile",
+    href: "/admin/profile",
+  },
+  {
+    name: "Settings",
+    href: "/admin/settings",
   },
 ];

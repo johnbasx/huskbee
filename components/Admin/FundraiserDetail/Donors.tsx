@@ -6,7 +6,7 @@ import React from "react";
 const Donors = ({ donors }: { donors: DonationProps[] }) => {
   return (
     <section aria-labelledby="recent-hires-title">
-      <div className="rounded-lg bg-white overflow-hidden shadow">
+      <div className="rounded-lg bg-white overflow-hidden shadow border">
         <div className="p-6">
           <h2
             className="text-base font-medium text-gray-900"

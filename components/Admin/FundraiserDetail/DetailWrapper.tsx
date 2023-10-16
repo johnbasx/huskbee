@@ -10,7 +10,7 @@ const DetailWrapper = ({
   return (
     <div className="space-y-6 lg:col-start-1 lg:col-span-2">
       <section aria-labelledby="applicant-information-title">
-        <div className="bg-white shadow sm:rounded-lg">
+        <div className="bg-white shadow sm:rounded-lg border">
           <div className="px-4 py-5 sm:px-6 flex justify-between">
             <div>
               <h2

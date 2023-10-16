@@ -31,7 +31,6 @@ export const TableValue = ({ value }: { value: string | Boolean }) => {
 
 export const ApprovedStatus = ({ value }: { value: string }) => {
   return (
-    // <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
     <>
       {value == "AP" ? (
         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-500 text-white">
@@ -47,7 +46,6 @@ export const ApprovedStatus = ({ value }: { value: string }) => {
         </span>
       )}
     </>
-    // </td>
   );
 };
 

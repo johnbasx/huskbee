@@ -62,7 +62,7 @@ export async function getServerSideProps(context: NextPageContext) {
   );
   const instance = await org_partner_res.json();
   const orgPartners = instance.results;
-  console.log(instance.results);
+  // console.log(instance.results);
 
   if (!events || !orgPartners) {
     return {

@@ -26,7 +26,6 @@ const Pagination = ({
 
   useEffect(() => {
     setUrl(rootUrl);
-    // console.log("rootUrl: ", rootUrl);
   }, [rootUrl]);
 
   const PageClickHandler = (url: string, currentPageNumber: number) => {
@@ -64,7 +63,7 @@ const Pagination = ({
           </button>
         </div>
         <div className=" md:-mt-px md:flex">
-          {pagenumberList &&
+          {/* {pagenumberList &&
             pagenumberList.map((content) => (
               <a
                 onClick={() => {
@@ -79,7 +78,7 @@ const Pagination = ({
               >
                 {content}
               </a>
-            ))}
+            ))} */}
         </div>
         <div className="-mt-px w-0 flex-1 flex justify-end">
           <button

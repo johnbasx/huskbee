@@ -2,7 +2,7 @@ import { Head, Html, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html lang="en" className="bg-black antialiased">
+    <Html lang="en" className="bg-gray-50 antialiased">
       <Head>
         {/* favicon */}
         <link
@@ -38,7 +38,8 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body className="bg-gradient-to-b from-black via-slate-900 to-black text-slate-100 antialiased">
+      {/* <body className="bg-gradient-to-b from-black via-slate-900 to-black text-slate-100 antialiased"> */}
+      <body className=" text-slate-100 antialiased">
         <Main />
         <NextScript />
       </body>

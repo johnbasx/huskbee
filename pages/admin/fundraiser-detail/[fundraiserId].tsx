@@ -17,8 +17,6 @@ import { Toaster } from "react-hot-toast";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
 
-// import
-
 const attachments = [
   { name: "resume_front_end_developer.pdf", href: "#" },
   { name: "coverletter_front_end_developer.pdf", href: "#" },
@@ -174,7 +172,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const token = getCookie("admin_token", { req, res });
 
   const response = await fetch(
-    CROWDFUNDING_BASE_URL + "fundraiser-detail/" + fundraiserId,
+    CROWDFUNDING_BASE_URL + "a-fundraiser-detail/" + fundraiserId,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -184,7 +182,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const detail = await response.json();
 
   const donors_res = await fetch(
-    CROWDFUNDING_BASE_URL + "donors/" + fundraiserId,
+    CROWDFUNDING_BASE_URL + "a-fund-donors/" + fundraiserId,
     {
       headers: {
         Authorization: `Bearer ${token}`,

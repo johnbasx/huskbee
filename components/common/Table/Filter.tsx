@@ -11,13 +11,13 @@ type FilterOptionType = {
   value: string;
 };
 
-const Filter = ({
-  filterOptions,
-  getFilteredList,
-}: {
+interface FilterProp {
+  linkPart: string;
   filterOptions: FilterOptionType[];
   getFilteredList: (url: string | null) => {};
-}) => {
+}
+
+const Filter = ({ linkPart, filterOptions, getFilteredList }: FilterProp) => {
   const [selected, setSelected] = useState(filterOptions[0]);
   const { rootUrl, setRootUrl, currentPage, setCurrentPage } = RootUrlStore();
 
@@ -26,8 +26,8 @@ const Filter = ({
     option: string
   ) => {
     setSelected(e);
-    setRootUrl(CROWDFUNDING_BASE_URL + "fundraiser-list/" + e.value + "?page=");
-    getFilteredList(CROWDFUNDING_BASE_URL + "fundraiser-list/" + e.value);
+    setRootUrl(linkPart + e.value + "?page=");
+    getFilteredList(linkPart + e.value);
     setCurrentPage(1);
   };
 
