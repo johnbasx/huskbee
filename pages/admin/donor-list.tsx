@@ -1,9 +1,9 @@
 import { BASE_URL, CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import React, { useEffect, useState } from "react";
 
-import Layout from "@components/Admin/Layout/Layout";
+import Layout from "@components/admin/layout/Layout";
 import { NextPageContext } from "next";
-import Pagination from "@components/common/Table/pagination";
+import Pagination from "@components/common/table/pagination";
 import { RootUrlStore } from "@store/table-store";
 import axios from "axios";
 import { donorsListStore } from "@store/office-admin-store";
@@ -60,28 +60,28 @@ const DonorList = ({
     }
   };
   return (
-    <Layout pageTitle="Donors List">
-      <div className="max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-12 space-y-12">
-        <div className="space-y-8 sm:space-y-12">
+    <Layout pageTitle='Donors List'>
+      <div className='max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-12 space-y-12'>
+        <div className='space-y-8 sm:space-y-12'>
           <ul
-            role="list"
-            className=" grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6  lg:gap-x-8 lg:gap-y-12 xl:grid-cols-6"
+            role='list'
+            className=' grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6  lg:gap-x-8 lg:gap-y-12 xl:grid-cols-6'
           >
             {donorsList.map((donor) => (
               <li key={donor.donor_username}>
-                <div className="space-y-4">
+                <div className='space-y-4'>
                   <img
-                    className="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24 shadow-lg"
+                    className='mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24 shadow-lg'
                     src={BASE_URL + "media/" + donor.donor_photo}
-                    alt=""
+                    alt=''
                   />
-                  <div className="space-y-2">
-                    <div className="text-xs font-medium lg:text-sm space-y-2">
-                      <h3 className="text-gray-800 text-base font-bold">
+                  <div className='space-y-2'>
+                    <div className='text-xs font-medium lg:text-sm space-y-2'>
+                      <h3 className='text-gray-800 text-base font-bold'>
                         {donor.donor_fullname}
                       </h3>
 
-                      <p className="text-gray-600">
+                      <p className='text-gray-600'>
                         Donated {"₹" + donor.total_donation_amount}
                         &nbsp;at&nbsp;{donor.total_donation}
                         {donor.total_donation > 1

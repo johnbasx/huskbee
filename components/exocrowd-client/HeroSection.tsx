@@ -22,7 +22,7 @@ const HeroSection = () => {
               and manage all the transactions.
             </p>
             <Link
-              className='mt-10 px-6 py-3 text-slate-50 font-semibold text-lg bg-slate-950 rounded-full inline-flex items-center gap-2'
+              className='mt-10 px-6 py-3 text-slate-50 font-semibold text-lg bg-black rounded-full inline-flex items-center gap-2'
               href='#!'
             >
               Start a fundraiser for free

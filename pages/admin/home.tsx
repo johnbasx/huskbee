@@ -6,12 +6,12 @@ import {
 } from "react-icons/fc";
 import RecentList, { HuskbeeUserList } from "@components/Admin/home/RecentList";
 
-import { ApprovedStatus } from "@components/common/Table/Others";
+import { ApprovedStatus } from "@components/common/table/Others";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import { FormatDate } from "@utils/index";
 import { FundraiserEventProps } from "../organiser/fundraisers";
 import { HuskbeeUserProp } from "./users";
-import Layout from "@components/Admin/Layout/Layout";
+import Layout from "@components/admin/layout/Layout";
 import Link from "next/link";
 import type { NextPageContext } from "next";
 import Overview from "@components/Admin/home/overview";
@@ -49,70 +49,70 @@ export default function Home({
   table_datas: HomeTableDatasType;
 }) {
   return (
-    <Layout pageTitle="Home">
-      <div className="space-y-12 py-8 max-w-7xl mx-auto px-4">
+    <Layout pageTitle='Home'>
+      <div className='space-y-12 py-8 max-w-7xl mx-auto px-4'>
         {/* Overview */}
-        <div className="">
+        <div className=''>
           <ul
-            role="list"
-            className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-3"
+            role='list'
+            className='grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-3'
           >
             <Overview
               icon={FcMultipleInputs}
-              title="Fundraiser"
+              title='Fundraiser'
               total={overview.total_fundraiser}
-              color="border-l-[#4e73df]"
-              link="/admin/fundraiser-list"
+              color='border-l-[#4e73df]'
+              link='/admin/fundraiser-list'
             />
             <Overview
               icon={FcPlanner}
-              title="Events"
+              title='Events'
               total={overview.total_events}
-              color="border-l-[#1cc88a]"
-              link="/admin/events-list"
+              color='border-l-[#1cc88a]'
+              link='/admin/events-list'
             />
             <Overview
               icon={FcBusinessman}
-              title="Users"
+              title='Users'
               total={overview.total_user}
-              color="border-l-[#20c9a6]"
-              link="/admin/users"
+              color='border-l-[#20c9a6]'
+              link='/admin/users'
             />
             <Overview
               icon={FcConferenceCall}
-              title="Organiser"
+              title='Organiser'
               total={overview.total_organiser}
-              color="border-l-[#f6c23e]"
-              link="/admin/organiser-list"
+              color='border-l-[#f6c23e]'
+              link='/admin/organiser-list'
             />
           </ul>
         </div>
 
-        <div className="">
-          <div className="max-w-lg md:max-w-none md:grid md:grid-cols-2 md:gap-8">
+        <div className=''>
+          <div className='max-w-lg md:max-w-none md:grid md:grid-cols-2 md:gap-8'>
             <RecentList organisers={table_datas.organisers_list} />
             <HuskbeeUserList huskbee_users={table_datas.huskbee_users_list} />
           </div>
         </div>
 
         {/* Organiser list (only on smallest breakpoint) */}
-        <div className=" sm:hidden bg-white">
-          <div className="px-4 sm:px-6">
-            <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+        <div className=' sm:hidden bg-white'>
+          <div className='px-4 sm:px-6'>
+            <h2 className='text-gray-500 text-xs font-medium uppercase tracking-wide'>
               Recently Crowdfunding events
             </h2>
           </div>
           <ul
-            role="list"
-            className="mt-3 border-t border-gray-200 divide-y divide-gray-100"
+            role='list'
+            className='mt-3 border-t border-gray-200 divide-y divide-gray-100'
           >
             {table_datas.fundraisers_list.map((data) => (
               <li key={data.id}>
                 <a
-                  href="#"
-                  className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
+                  href='#'
+                  className='group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6'
                 >
-                  <span className="flex items-center truncate space-x-3">
+                  <span className='flex items-center truncate space-x-3'>
                     {/* <span
                     className={classNames(
                       data.bgColorClass,
@@ -121,7 +121,7 @@ export default function Home({
                     aria-hidden="true"
                   /> */}
                     <span>
-                      <div className="flex-shrink-0 h-10 w-10">
+                      <div className='flex-shrink-0 h-10 w-10'>
                         {data.title}
                         {/* <img
                         className="h-10 w-10 rounded-full"
@@ -130,14 +130,14 @@ export default function Home({
                       /> */}
                       </div>
                     </span>
-                    <span className="flex gap-x-4 font-medium truncate text-sm leading-6 text-gray-800">
+                    <span className='flex gap-x-4 font-medium truncate text-sm leading-6 text-gray-800'>
                       {data.organiser_name}{" "}
                       <ApprovedStatus value={data.approved_status} />
                     </span>
                   </span>
                   <ChevronRightIcon
-                    className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                    aria-hidden="true"
+                    className='ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500'
+                    aria-hidden='true'
                   />
                 </a>
               </li>
@@ -146,49 +146,49 @@ export default function Home({
         </div>
 
         {/* Organisers table (small breakpoint and up) */}
-        <div className="hidden sm:block rounded-lg shadow-md border p-6 bg-white">
-          <div className="align-middle inline-block min-w-full border-b border-gray-200 ">
-            <div className="py-4 px-4 text-2xl font-bold text-gray-900 sm:text-2xl">
+        <div className='hidden sm:block rounded-lg shadow-md border p-6 bg-white'>
+          <div className='align-middle inline-block min-w-full border-b border-gray-200 '>
+            <div className='py-4 px-4 text-2xl font-bold text-gray-900 sm:text-2xl'>
               Recent Crowdfunding events
             </div>
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-100">
+            <table className='min-w-full divide-y divide-gray-200'>
+              <thead className='bg-gray-100'>
                 <tr>
                   <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide "
+                    scope='col'
+                    className='px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide '
                   >
                     Title
                   </th>
                   <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide"
+                    scope='col'
+                    className='px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide'
                   >
                     Organiser
                   </th>
                   <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide"
+                    scope='col'
+                    className='px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide'
                   >
                     Approved Status
                   </th>
                   <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide"
+                    scope='col'
+                    className='px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide'
                   >
                     Created at
                   </th>
-                  <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only">Edit</span>
+                  <th scope='col' className='relative px-6 py-3'>
+                    <span className='sr-only'>Edit</span>
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className='bg-white divide-y divide-gray-200'>
                 {table_datas.fundraisers_list.map((data) => (
                   <tr key={data.id}>
-                    <td className="px-6 py-6 whitespace-nowrap">
+                    <td className='px-6 py-6 whitespace-nowrap'>
                       <Link href={`/admin/fundraiser-detail/${data.id}`}>
-                        <span className="flex organisers-center">
+                        <span className='flex organisers-center'>
                           {/* <div className="flex-shrink-0 h-10 w-10">
                           <img
                             className="h-10 w-10 rounded-full"
@@ -196,8 +196,8 @@ export default function Home({
                             alt=""
                           />
                         </div> */}
-                          <div className="ml-4">
-                            <div className=" font-medium whitespace-nowrap text-sm text-gray-800 capitalize">
+                          <div className='ml-4'>
+                            <div className=' font-medium whitespace-nowrap text-sm text-gray-800 capitalize'>
                               {data.title}
                             </div>
                             {/* <div className="text-sm text-gray-500">
@@ -207,23 +207,23 @@ export default function Home({
                         </span>
                       </Link>
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap">
-                      <div className="text-sm whitespace-nowrap text-gray-800">
+                    <td className='px-6 py-6 whitespace-nowrap'>
+                      <div className='text-sm whitespace-nowrap text-gray-800'>
                         {data.organiser_name}
                       </div>
                       {/* <div className="text-sm text-gray-500">
                       {data.department}
                     </div> */}
                     </td>
-                    <td className="px-6 py-2 whitespace-nowrap">
+                    <td className='px-6 py-2 whitespace-nowrap'>
                       <ApprovedStatus value={data.approved_status} />
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-800">
+                    <td className='px-6 py-6 whitespace-nowrap text-sm text-gray-800'>
                       {FormatDate(data.created_at)}
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap text-right text-sm font-medium">
+                    <td className='px-6 py-6 whitespace-nowrap text-right text-sm font-medium'>
                       <Link href={`/admin/fundraiser-detail/${data.id}`}>
-                        <span className="text-indigo-600 hover:text-indigo-900">
+                        <span className='text-indigo-600 hover:text-indigo-900'>
                           Detail
                         </span>
                       </Link>

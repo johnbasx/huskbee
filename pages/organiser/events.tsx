@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { BOOKING_BASE_URL } from "@constants/api-urls";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { EventDetailProps } from "../event-detail/[eventId]";
-import Layout from "@components/Organiser/Layout/Layout";
+import Layout from "@components/organiser/layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
 import { TableStore } from "@store/table-store";
@@ -64,73 +64,73 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
 
   return (
     <Layout>
-      <div className="w-5xl mx-auto">
-        <div className="mt-2 p-8 sm:ml-6">
-          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md">
-            <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
-              <MagnifyingGlassIcon className="h-6 w-6" />
+      <div className='w-5xl mx-auto'>
+        <div className='mt-2 p-8 sm:ml-6'>
+          <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md'>
+            <span className='flex select-none items-center pl-3 text-gray-500 sm:text-sm'>
+              <MagnifyingGlassIcon className='h-6 w-6' />
             </span>
             <input
               onChange={(event) => {
                 SearchPartner(event.target.value);
               }}
-              type="text"
-              name="username"
-              id="username"
-              autoComplete="username"
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-              placeholder="Search in this page"
+              type='text'
+              name='username'
+              id='username'
+              autoComplete='username'
+              className='block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
+              placeholder='Search in this page'
             />
           </div>
         </div>
 
-        <div className=" overflow-x-auto sm:mx-6 pt-2 sm:pt-10 pb-10">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-400 ">
-              <table className="min-w-full divide-y divide-gray-400">
-                <thead className="bg-transparent">
+        <div className=' overflow-x-auto sm:mx-6 pt-2 sm:pt-10 pb-10'>
+          <div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
+            <div className='shadow overflow-hidden border-b border-gray-400 '>
+              <table className='min-w-full divide-y divide-gray-400'>
+                <thead className='bg-transparent'>
                   <tr>
                     <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
                     >
                       Name
                     </th>
                     <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
                     >
                       Type
                     </th>
                     <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
                     >
                       Start date
                     </th>
                     <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
                     >
                       End date
                     </th>
                     <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
                     >
                       Start time
                     </th>
                     <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
                     >
                       End time
                     </th>
                     <th
-                      scope="col"
-                      className=" px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider"
+                      scope='col'
+                      className=' px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
                     >
-                      <span className="sr-only">Edit</span>Action
+                      <span className='sr-only'>Edit</span>Action
                     </th>
                   </tr>
                 </thead>
@@ -143,27 +143,27 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
                           Idx % 2 === 0 ? "bg-transparent" : "bg-transparent"
                         }
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200">
+                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200'>
                           {event.name}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
                           {event.event_type}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
                           {event.start_date}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
                           {event.end_date}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
                           {event.start_time}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
+                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
                           {event.end_time}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
                           <Link href={`/organiser/event-detail/${event.id}`}>
-                            <span className="text-indigo-600 hover:text-indigo-900">
+                            <span className='text-indigo-600 hover:text-indigo-900'>
                               Detail
                             </span>
                           </Link>
@@ -260,24 +260,24 @@ const Pagination = ({
 
   return (
     <nav
-      className="grid grid-cols-6 gap-2 mx-1 sm:mx-16 px-4 sm:px-0 mt-2"
-      aria-label="Pagination"
+      className='grid grid-cols-6 gap-2 mx-1 sm:mx-16 px-4 sm:px-0 mt-2'
+      aria-label='Pagination'
     >
-      <div className="col-span-6 sm:col-span-4 max-w-3xl flex items-center justify-between">
-        <div className="-mt-px w-0 flex-1 flex">
+      <div className='col-span-6 sm:col-span-4 max-w-3xl flex items-center justify-between'>
+        <div className='-mt-px w-0 flex-1 flex'>
           <button
             disabled={prev == null ? true : false}
             onClick={() => getData(prev)}
             className={`border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-300 cursor-pointer disabled:text-gray-500 disabled:cursor-not-allowed `}
           >
             <ArrowLongLeftIcon
-              className="mr-3 h-5 w-5 text-gray-400"
-              aria-hidden="true"
+              className='mr-3 h-5 w-5 text-gray-400'
+              aria-hidden='true'
             />
             Previous
           </button>
         </div>
-        <div className="hidden md:-mt-px md:flex">
+        <div className='hidden md:-mt-px md:flex'>
           {pageNumberList &&
             pageNumberList.map((content) => (
               <a
@@ -298,46 +298,46 @@ const Pagination = ({
               </a>
             ))}
         </div>
-        <div className="-mt-px w-0 flex-1 flex justify-end">
+        <div className='-mt-px w-0 flex-1 flex justify-end'>
           <button
             disabled={next == null ? true : false}
             onClick={() => getData(next)}
-            className="border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-300 cursor-pointer disabled:text-gray-500 disabled:cursor-not-allowed "
+            className='border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-300 cursor-pointer disabled:text-gray-500 disabled:cursor-not-allowed '
           >
             Next
             <ArrowLongRightIcon
-              className="ml-3 h-5 w-5 text-gray-400"
-              aria-hidden="true"
+              className='ml-3 h-5 w-5 text-gray-400'
+              aria-hidden='true'
             />
           </button>
         </div>
       </div>
 
-      <div className="col-span-6 sm:col-span-2 mt-4 ">
-        <div className="flex gap-x-2 float-right">
-          <span className="mt-1 text-gray-400 text-sm ">Go to page</span>
-          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md px-2 ">
+      <div className='col-span-6 sm:col-span-2 mt-4 '>
+        <div className='flex gap-x-2 float-right'>
+          <span className='mt-1 text-gray-400 text-sm '>Go to page</span>
+          <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md px-2 '>
             <input
               onChange={(e) =>
                 setGotoUrl(
                   BOOKING_BASE_URL + "list-create-event?page=" + e.target.value
                 )
               }
-              type="text"
-              name="gotopage"
-              id="gotopage"
-              autoComplete="gotopage"
-              className="w-28 sm:w-24 block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-200 placeholder:text-gray-500 focus:ring-0 sm:text-sm sm:leading-6"
-              placeholder="Pagenumber"
+              type='text'
+              name='gotopage'
+              id='gotopage'
+              autoComplete='gotopage'
+              className='w-28 sm:w-24 block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-200 placeholder:text-gray-500 focus:ring-0 sm:text-sm sm:leading-6'
+              placeholder='Pagenumber'
             />
           </div>
 
           <button
             onClick={() => getData(gotoUrl)}
             // type="submit"
-            className="rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className='rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
           >
-            <ChevronRightIcon className="h-5 w-5" />
+            <ChevronRightIcon className='h-5 w-5' />
           </button>
         </div>
       </div>

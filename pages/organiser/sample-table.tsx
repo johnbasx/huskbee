@@ -26,7 +26,7 @@ import {
   rankItem,
 } from "@tanstack/match-sorter-utils";
 
-import Layout from "@components/Organiser/Layout/Layout";
+import Layout from "@components/organiser/layout/Layout";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import TablePageOption from "@components/common/TablePageOption";
@@ -178,18 +178,18 @@ export default function App() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto">
+      <div className='max-w-7xl mx-auto'>
         <DebouncedInput
           value={globalFilter ?? ""}
           onChange={(value) => setGlobalFilter(String(value))}
-          className="p-2 font-lg shadow border border-block text-black"
-          placeholder="Search all columns..."
+          className='p-2 font-lg shadow border border-block text-black'
+          placeholder='Search all columns...'
         />
       </div>
-      <div className="">
-        <div className="h-2 " />
-        <table className="p-2 max-w-7xl mx-auto overflow-x-auto">
-          <thead className="min-w-full divide-y divide-gray-200">
+      <div className=''>
+        <div className='h-2 ' />
+        <table className='p-2 max-w-7xl mx-auto overflow-x-auto'>
+          <thead className='min-w-full divide-y divide-gray-200'>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -197,7 +197,7 @@ export default function App() {
                     <th
                       key={header.id}
                       colSpan={header.colSpan}
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
                     >
                       {header.isPlaceholder ? null : (
                         <>
@@ -231,7 +231,7 @@ export default function App() {
               </tr>
             ))}
           </thead>
-          <tbody className="divide-y divide-gray-700">
+          <tbody className='divide-y divide-gray-700'>
             {table.getRowModel().rows.map((row) => {
               return (
                 <tr key={row.id}>
@@ -239,7 +239,7 @@ export default function App() {
                     return (
                       <td
                         key={cell.id}
-                        className="px-6 py-4 whitespace-nowrap text-sm"
+                        className='px-6 py-4 whitespace-nowrap text-sm'
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -253,53 +253,53 @@ export default function App() {
             })}
           </tbody>
         </table>
-        <div className="h-2" />
-        <div className="flex items-center gap-2">
+        <div className='h-2' />
+        <div className='flex items-center gap-2'>
           <button
-            className="border rounded p-1"
+            className='border rounded p-1'
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
             {"<<"}
           </button>
           <button
-            className="border rounded p-1"
+            className='border rounded p-1'
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
             {"<"}
           </button>
           <button
-            className="border rounded p-1"
+            className='border rounded p-1'
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
             {">"}
           </button>
           <button
-            className="border rounded p-1"
+            className='border rounded p-1'
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
             {">>"}
           </button>
-          <span className="flex items-center gap-1">
+          <span className='flex items-center gap-1'>
             <div>Page</div>
             <strong>
               {table.getState().pagination.pageIndex + 1} of{" "}
               {table.getPageCount()}
             </strong>
           </span>
-          <span className="flex items-center gap-1">
+          <span className='flex items-center gap-1'>
             | Go to page:
             <input
-              type="number"
+              type='number'
               defaultValue={table.getState().pagination.pageIndex + 1}
               onChange={(e) => {
                 const page = e.target.value ? Number(e.target.value) - 1 : 0;
                 table.setPageIndex(page);
               }}
-              className="border p-1 rounded w-16"
+              className='border p-1 rounded w-16'
             />
           </span>
           dgxgx
@@ -309,13 +309,13 @@ export default function App() {
             onChange={(e) => {
               table.setPageSize(Number(e.target.value));
             }}
-            className="bg-transparent rounded-lg"
+            className='bg-transparent rounded-lg'
           >
             {[10, 20, 30, 40, 50].map((pageSize) => (
               <option
                 key={pageSize}
                 value={pageSize}
-                className="bg-black absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                className='bg-black absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
               >
                 Show {pageSize}
               </option>
@@ -358,9 +358,9 @@ function Filter({
 
   return typeof firstValue === "number" ? (
     <div>
-      <div className="flex space-x-2">
+      <div className='flex space-x-2'>
         <DebouncedInput
-          type="number"
+          type='number'
           min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
           max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
           value={(columnFilterValue as [number, number])?.[0] ?? ""}
@@ -372,10 +372,10 @@ function Filter({
               ? `(${column.getFacetedMinMaxValues()?.[0]})`
               : ""
           }`}
-          className="w-24 border shadow rounded"
+          className='w-24 border shadow rounded'
         />
         <DebouncedInput
-          type="number"
+          type='number'
           min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
           max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
           value={(columnFilterValue as [number, number])?.[1] ?? ""}
@@ -387,10 +387,10 @@ function Filter({
               ? `(${column.getFacetedMinMaxValues()?.[1]})`
               : ""
           }`}
-          className="w-24 border shadow rounded"
+          className='w-24 border shadow rounded'
         />
       </div>
-      <div className="h-1" />
+      <div className='h-1' />
     </div>
   ) : (
     <>
@@ -400,14 +400,14 @@ function Filter({
         ))}
       </datalist>
       <DebouncedInput
-        type="text"
+        type='text'
         value={(columnFilterValue ?? "") as string}
         onChange={(value) => column.setFilterValue(value)}
         placeholder={`Search... (${column.getFacetedUniqueValues().size})`}
-        className="w-36 border shadow rounded text-black"
+        className='w-36 border shadow rounded text-black'
         list={column.id + "list"}
       />
-      <div className="h-1" />
+      <div className='h-1' />
     </>
   );
 }

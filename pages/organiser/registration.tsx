@@ -1,9 +1,9 @@
-import AddressForm from "@components/Organiser/registration/AddressForm";
-import BankDetailForm from "@components/Organiser/registration/BankDetailForm";
-import HeadSection from "@components/Organiser/registration/HeadSection";
+import AddressForm from "@components/organiser/registration/AddressForm";
+import BankDetailForm from "@components/organiser/registration/BankDetailForm";
+import HeadSection from "@components/organiser/registration/HeadSection";
 import { NextPageContext } from "next";
-import OrganisationDetail from "@components/Organiser/registration/OrganisationDetail";
-import ProgressStepsBar from "@components/Organiser/registration/ProgressStepsBar";
+import OrganisationDetail from "@components/organiser/registration/OrganisationDetail";
+import ProgressStepsBar from "@components/organiser/registration/ProgressStepsBar";
 import { RegistrationFormsStore } from "@store/index";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
@@ -20,9 +20,9 @@ const Registration = ({ token }: { token: string }) => {
   // }, []);
 
   return (
-    <div className=" max-w-7xl mx-auto isolate bg-white px-6 py-24 sm:py-12 lg:px-8">
+    <div className=' max-w-7xl mx-auto isolate bg-white px-6 py-24 sm:py-12 lg:px-8'>
       <HeadSection />
-      <div className="mt-12">
+      <div className='mt-12'>
         <ProgressStepsBar />
       </div>
       {orgDetailFormStatus && <OrganisationDetail />}

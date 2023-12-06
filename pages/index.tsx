@@ -1,17 +1,17 @@
-import ActionHero from "@components/hu/ActionHero";
-import AttractiveHero from "@components/hu/hero/AttractiveHero";
-import CardScrollWrapper from "@components/hu/CardScrollWrapper";
-import CausesSection from "@components/hu/CausesSection";
-import DisplacedStats from "@components/hu/DisplacedStats";
-import FunctionalitiesGrid from "@components/hu/sections/FunctionalitiesGrid";
-import FundraiserCardScroll from "@components/hu/scroll/FundraiserCardScroll";
-import FundraisersFor from "@components/hu/sections/FundraisersFor";
-import HeroFeature from "@components/hu/hero/HeroFeature";
-import Layout from "@components/hu/Layout";
-import MoreWaysScroll from "@components/hu/scroll/MoreWaysScroll";
-import RecommendCardScroll from "@components/hu/RecommendCardScroll";
-import StackedCards from "@components/hu/StackedCards";
-import TrustAndSafetySection from "@components/hu/sections/TrustAndSafetySection";
+import ActionHero from "@components/exocrowd-client/ActionHero";
+import AttractiveHero from "@components/exocrowd-client/hero/AttractiveHero";
+import CardScrollWrapper from "@components/exocrowd-client/CardScrollWrapper";
+import CausesSection from "@components/exocrowd-client/CausesSection";
+import DisplacedStats from "@components/exocrowd-client/DisplacedStats";
+import FunctionalitiesGrid from "@components/exocrowd-client/sections/FunctionalitiesGrid";
+import FundraiserCardScroll from "@components/exocrowd-client/scroll/FundraiserCardScroll";
+import FundraisersFor from "@components/exocrowd-client/sections/FundraisersFor";
+import HeroFeature from "@components/exocrowd-client/hero/HeroFeature";
+import Layout from "@components/exocrowd-client/Layout";
+import MoreWaysScroll from "@components/exocrowd-client/scroll/MoreWaysScroll";
+import RecommendCardScroll from "@components/exocrowd-client/RecommendCardScroll";
+import StackedCards from "@components/exocrowd-client/StackedCards";
+import TrustAndSafetySection from "@components/exocrowd-client/sections/TrustAndSafetySection";
 
 const IndexPage = ({
   login,
@@ -21,7 +21,7 @@ const IndexPage = ({
   // events: EventDetailProps[];
 }) => {
   return (
-    <Layout title="Exocrowd Home | We are stronger united">
+    <Layout title='Exocrowd Home | We are stronger united'>
       <AttractiveHero />
       <HeroFeature />
       {/* <DisplacedStats /> */}

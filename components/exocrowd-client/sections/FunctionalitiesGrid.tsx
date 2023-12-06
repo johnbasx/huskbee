@@ -2,12 +2,12 @@ import Link from "next/link";
 import React from "react";
 import {
   TbChartBar,
-  TbCircleFilled,
+  TbCircleDot,
   TbDeviceMobile,
   TbLockAccess,
-  TbMessageStar,
+  TbMessageDots,
   TbShield,
-  TbTimeDuration15,
+  TbClock2,
 } from "react-icons/tb";
 
 export const functionalitiesData = [
@@ -23,7 +23,7 @@ export const functionalitiesData = [
     title: "Simple setup",
     description:
       "You can personalize and share your Exocrowd in just a few minutes.",
-    Icon: TbTimeDuration15,
+    Icon: TbClock2,
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ export const functionalitiesData = [
     title: "Expert advice",
     description:
       "Our best-in-class Customer Care Specialists will answer your questions, day or night.",
-    Icon: TbMessageStar,
+    Icon: TbMessageDots,
   },
 ];
 
@@ -92,10 +92,10 @@ const FunctionalitiesGrid = () => {
         <div className='flex justify-center items-center mt-12 lg:mt-16'>
           <Link
             href='#!'
-            className='inline-flex items-center gap-2 rounded-full px-6 py-3 bg-slate-950 text-white font-semibold text-lg transition hover:bg-slate-900'
+            className='inline-flex items-center gap-2 rounded-full px-6 py-3 bg-black text-white font-semibold text-lg transition hover:bg-slate-900'
           >
             Start helping now
-            <TbCircleFilled className='h-4 w-4 text-blue-300 animate-pulse' />
+            <TbCircleDot className='h-4 w-4 text-blue-300 animate-pulse' />
           </Link>
         </div>
       </div>

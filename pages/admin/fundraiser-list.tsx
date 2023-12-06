@@ -3,7 +3,7 @@ import {
   TableHead,
   TableValue,
   TableWrapper,
-} from "@components/common/Table/Others";
+} from "@components/common/table/Others";
 import { FundraiserObjStore, TableStore } from "@store/office-admin-store";
 import React, { useEffect, useState } from "react";
 import {
@@ -12,14 +12,14 @@ import {
 } from "@constants/list-items";
 
 import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
-import CommandPallete from "@components/Admin/FundraisersList/CommandPellete";
-import Filter from "@components/common/Table/Filter";
+import CommandPallete from "@components/admin/fundraisers-list/CommandPellete";
+import Filter from "@components/common/table/Filter";
 import { FormatDate } from "@utils/index";
 import { FundraiserEventProps } from "../organiser/fundraisers";
-import Layout from "@components/Admin/Layout/Layout";
+import Layout from "@components/admin/layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
-import Pagination from "@components/common/Table/pagination";
+import Pagination from "@components/common/table/pagination";
 import { RootUrlStore } from "@store/table-store";
 import axios from "axios";
 import { getCookie } from "cookies-next";
@@ -122,9 +122,9 @@ const FundraiserList = ({
   };
 
   return (
-    <Layout pageTitle="Fundraiser List">
-      <div className="max-w-7xl mx-auto">
-        <div className="mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0">
+    <Layout pageTitle='Fundraiser List'>
+      <div className='max-w-7xl mx-auto'>
+        <div className='mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0'>
           <CommandPallete />
           <Filter
             linkPart={CROWDFUNDING_BASE_URL + "fundraiser-list/"}
@@ -137,7 +137,7 @@ const FundraiserList = ({
           totalItem={`${fundraisersIns?.count} Total fundraisers`}
           SearchPartner={SearchPartner}
         >
-          <thead className="bg-white">
+          <thead className='bg-white'>
             <tr>
               {off_admin_table_col_names.map((item) => (
                 <TableHead key={item.name} title={item.name} />
@@ -154,15 +154,15 @@ const FundraiserList = ({
                 >
                   <TableValue value={fundraiser.title} />
                   <TableValue value={fundraiser.goal} />
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                  <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-800'>
                     <ApprovedStatus value={fundraiser.approved_status} />
                   </td>
                   <TableValue value={fundraiser.open_status} />
                   <TableValue value={FormatDate(fundraiser.created_at)} />
                   <TableValue value={fundraiser.organiser_name} />
-                  <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
+                  <td className='px-6 py-4 whitespace-nowrap  text-sm font-medium'>
                     <Link href={`/admin/fundraiser-detail/${fundraiser.id}`}>
-                      <span className="text-indigo-600 hover:text-indigo-900">
+                      <span className='text-indigo-600 hover:text-indigo-900'>
                         Detail
                       </span>
                     </Link>

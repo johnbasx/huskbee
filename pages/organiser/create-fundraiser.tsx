@@ -6,7 +6,7 @@ import {
   TargetAmount,
   ThirdImage,
   Title,
-} from "@components/Organiser/fundraiser/FundraiserInputs";
+} from "@components/organiser/fundraiser/FundraiserInputs";
 import { Path, SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -14,7 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import { ConvertDatetoYMD } from "@utils/index";
 import { Datepicker } from "flowbite-react";
-import Layout from "@components/Organiser/Layout/Layout";
+import Layout from "@components/organiser/layout/Layout";
 import { NextPageContext } from "next";
 import axios from "axios";
 import { getCookie } from "cookies-next";
@@ -89,83 +89,83 @@ const CreateFundraiser = ({ token }: { token: string }) => {
   };
 
   return (
-    <Layout pageTitle="Create fundraiser">
+    <Layout pageTitle='Create fundraiser'>
       <Toaster />
-      <div className="py-10">
+      <div className='py-10'>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto max-w-5xl bg-white p-6 border rounded-lg shadow-lg"
+          className='mx-auto max-w-5xl bg-white p-6 border rounded-lg shadow-lg'
         >
-          <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-            <span className="text-black text-2xl font-bold">
+          <div className='grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2'>
+            <span className='text-black text-2xl font-bold'>
               Create Fundraiser for CrowdFunding
             </span>
-            <div className="sm:col-span-2">
+            <div className='sm:col-span-2'>
               {" "}
-              <Title label="Title" name="title" register={register} required />
+              <Title label='Title' name='title' register={register} required />
             </div>
-            <div className="sm:col-span-2">
-              <Goal label="Goal" name="goal" register={register} required />
+            <div className='sm:col-span-2'>
+              <Goal label='Goal' name='goal' register={register} required />
             </div>
-            <div className="sm:col-span-1">
+            <div className='sm:col-span-1'>
               <TargetAmount
-                label="Target Amount (₹)"
-                name="target_amount"
+                label='Target Amount (₹)'
+                name='target_amount'
                 register={register}
                 required
               />
             </div>
-            <div className="sm:col-span-1">
+            <div className='sm:col-span-1'>
               <label
-                htmlFor="target_amount"
-                className="block text-sm font-medium leading-6 text-gray-900 mb-2.5"
+                htmlFor='target_amount'
+                className='block text-sm font-medium leading-6 text-gray-900 mb-2.5'
               >
                 End Date
               </label>
               <Datepicker
-                name="selectedDate"
+                name='selectedDate'
                 onSelectedDateChanged={handleDatePickerChange}
               />
             </div>
 
-            <div className="sm:col-span-2">
+            <div className='sm:col-span-2'>
               <Description
-                label="Description"
-                name="description"
+                label='Description'
+                name='description'
                 register={register}
                 required
               />
             </div>
 
-            <div className="sm:col-span-2">
+            <div className='sm:col-span-2'>
               <FirstImage
-                label="First Image"
-                name="first_image"
+                label='First Image'
+                name='first_image'
                 register={register}
                 required
               />
             </div>
 
-            <div className="sm:col-span-2">
+            <div className='sm:col-span-2'>
               <SecondImage
-                label="Second Image"
-                name="second_image"
+                label='Second Image'
+                name='second_image'
                 register={register}
                 required
               />
             </div>
 
-            <div className="sm:col-span-2">
+            <div className='sm:col-span-2'>
               <ThirdImage
-                label="Third Image"
-                name="third_image"
+                label='Third Image'
+                name='third_image'
                 register={register}
                 required
               />
             </div>
           </div>
-          <div className="mt-10 px-20">
-            <button className="block w-full  rounded-md  px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500">
+          <div className='mt-10 px-20'>
+            <button className='block w-full  rounded-md  px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500'>
               Submit
             </button>
           </div>

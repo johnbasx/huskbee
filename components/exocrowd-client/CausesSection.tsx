@@ -105,7 +105,7 @@ const CausesSection = () => {
                   className='absolute inset-0 h-full w-full object-cover'
                 />
 
-                <div className='relative h-full text-white bg-gradient-to-t from-slate-950/90 to-slate-900/25'>
+                <div className='relative h-full text-white bg-gradient-to-t from-black/90 to-slate-900/25'>
                   <div className='p-4'>
                     <item.Icon className='h-6 w-6' />
 

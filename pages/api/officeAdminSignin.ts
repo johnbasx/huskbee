@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { serialize } from "cookie";
+import { BASE_URL } from "@constants/api-urls";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const username = req.body.username;
@@ -12,7 +13,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   };
 
   const response = await fetch(
-    "http://127.0.0.1:8000/api/user/office-admin-login",
+    `${BASE_URL}+api/user/office-admin-login}`,
     {
       method: "POST",
       body: JSON.stringify(credential),
