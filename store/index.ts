@@ -9,7 +9,7 @@ import {
 import { AddressFormValues } from "@components/Organiser/registration/AddressForm";
 import { BankDetailFormValues } from "@components/Organiser/registration/BankDetailForm";
 import { EventsProps } from "../pages/organiser/events";
-import { FundraiserEventProps } from "../pages/organiser/fundraiser";
+import { FundraiserEventProps } from "../pages/organiser/fundraisers";
 import { OrgDetailFormValues } from "@components/Organiser/registration/OrganisationDetail";
 import { create } from "zustand";
 

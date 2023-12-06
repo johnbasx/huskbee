@@ -1,97 +1,60 @@
-import { NextPage, NextPageContext } from "next";
-import { authStatus, upcomingEvents } from "@store/index";
-
-import { BOOKING_BASE_URL } from "@constants/api-urls";
-import Carousel from "@components/carousel/Carousel";
-import DigitalEvents from "@components/discover/digital-events";
-import DiscoverContainer from "@components/discover/container";
-import DiscoverTitle from "@components/discover/title";
-import { EventDetailProps } from "../pages/event-detail/[eventId]";
-import { FaGuitar } from "react-icons/fa";
-import Layout from "@components/layout/Layout";
-import Link from "next/link";
-import MenuCard from "@components/cards/MenuCard";
-import Movie from "@components/cards/Movie";
-import UpcomingEvents from "@components/discover/upcoming-events";
-import cookie from "cookie";
-import { getCookie } from "cookies-next";
-import { movieList } from "@constants/movies-data";
-import { useEffect } from "react";
-
-// import { EventDetailProps } from "@components/eventDetail/EventDetail";
+import ActionHero from "@components/hu/ActionHero";
+import AttractiveHero from "@components/hu/hero/AttractiveHero";
+import CardScrollWrapper from "@components/hu/CardScrollWrapper";
+import CausesSection from "@components/hu/CausesSection";
+import DisplacedStats from "@components/hu/DisplacedStats";
+import FunctionalitiesGrid from "@components/hu/sections/FunctionalitiesGrid";
+import FundraiserCardScroll from "@components/hu/scroll/FundraiserCardScroll";
+import FundraisersFor from "@components/hu/sections/FundraisersFor";
+import HeroFeature from "@components/hu/hero/HeroFeature";
+import Layout from "@components/hu/Layout";
+import MoreWaysScroll from "@components/hu/scroll/MoreWaysScroll";
+import RecommendCardScroll from "@components/hu/RecommendCardScroll";
+import StackedCards from "@components/hu/StackedCards";
+import TrustAndSafetySection from "@components/hu/sections/TrustAndSafetySection";
 
 const IndexPage = ({
   login,
-  events,
-}: {
+}: // events,
+{
   login: boolean;
-  events: EventDetailProps[];
+  // events: EventDetailProps[];
 }) => {
-  const { setAuthStatus } = authStatus();
-  const { setUpcomingEvents } = upcomingEvents();
-  // console.log("from_index: ", login);
-  // console.log("from_index: ", login === true);
-  useEffect(() => {
-    login == true ? setAuthStatus(true) : setAuthStatus(false);
-  }, []);
-
-  useEffect(() => {
-    setUpcomingEvents(events);
-  }, [events]);
-
   return (
-    <Layout title="HuskBee | All in one booking platform">
-      <Carousel />
+    <Layout title="Exocrowd Home | We are stronger united">
+      <AttractiveHero />
+      <HeroFeature />
+      {/* <DisplacedStats /> */}
+      <MoreWaysScroll />
+      <FunctionalitiesGrid />
+      <ActionHero />
 
-      <div className="relative flex flex-col items-center w-full py-4">
-        {/* <div className="w-full absolute top-24 shadow-lg px-4 rounded-3xl h-[10vh]">
-        <div className="w-full h-full border bg-zinc-900 border-zinc-800 rounded-3xl"></div>
-      </div> */}
+      {/* <StackedCards /> */}
+      {/* <HeroSection /> */}
+      {/* <CardScrollWrapper /> */}
+      {/* <RecommendCardScroll /> */}
+      <FundraiserCardScroll />
 
-        <MenuCard />
-      </div>
-      <UpcomingEvents />
-      <DigitalEvents />
-
-      {/* <div className="flex flex-wrap mt-2"> */}
-      <DiscoverContainer
-        className="mt-4 mb-0"
-        classNameChild="border-none bg-transparent"
-      >
-        <DiscoverTitle
-          title="Upcoming Events"
-          about="Come watch and enjoy all these upcomimg events hapenning around you."
-          icon={FaGuitar}
-        />
-      </DiscoverContainer>
-      <div className="grid grid-cols-1 mt-2 md:grid-cols-2 ">
-        {movieList.map((movie) => (
-          <Movie key={movie.id + movie.name} {...movie} />
-        ))}
-      </div>
-      {/* <h1>About</h1>
-
-    <p>This is the about page</p>
-    <p>
-      <Link href="/">Go home</Link>
-    </p> */}
+      {/* <CausesSection /> */}
+      <TrustAndSafetySection />
+      {/* <FundraisersFor /> */}
     </Layout>
   );
 };
 
 export default IndexPage;
 
-export async function getServerSideProps(context: NextPageContext) {
-  const req = context.req;
-  const res = context.res;
-  const login_status = getCookie("login", { req, res });
-  const login = login_status ? login_status == true : false;
+// export async function getServerSideProps(context: NextPageContext) {
+//   const req = context.req;
+//   const res = context.res;
+//   const login_status = getCookie("login", { req, res });
+//   const login = login_status ? login_status == true : false;
 
-  const response = await fetch(BOOKING_BASE_URL + "upcoming-events");
-  const instance = await response.json();
-  const events= instance.results
+//   const response = await fetch(BOOKING_BASE_URL + "upcoming-events");
+//   const instance = await response.json();
+//   const events= instance.results
 
-  return {
-    props: { login, events },
-  };
-}
+//   return {
+//     props: { login, events },
+//   };
+// }

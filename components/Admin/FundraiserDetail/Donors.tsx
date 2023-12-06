@@ -12,7 +12,7 @@ const Donors = ({ donors }: { donors: DonationProps[] }) => {
             className="text-base font-medium text-gray-900"
             id="recent-hires-title"
           >
-            Recent donors
+            Recent donations
           </h2>
           <div className="flow-root mt-6">
             <ul role="list" className="-my-5 divide-y divide-gray-200">

@@ -4,7 +4,7 @@ import React from "react";
 type OverviewType = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
-  total: number;
+  total: number | string;
   color: string;
   link: string;
 };

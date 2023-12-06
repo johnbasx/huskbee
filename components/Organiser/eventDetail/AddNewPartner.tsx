@@ -57,7 +57,7 @@ const AddNewPartner = ({
       } else if (key == "hero_image" && data["hero_image"] != null) {
         form_data.append(key, data["hero_image"][0]);
       } else {
-        console.log("data: ", newdata[key as keyof PartnerFormValues]);
+        // console.log("data: ", newdata[key as keyof PartnerFormValues]);
         form_data.append(key, newdata[key as keyof PartnerFormValues]);
       }
     }

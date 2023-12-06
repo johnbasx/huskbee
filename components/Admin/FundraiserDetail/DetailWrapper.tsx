@@ -1,11 +1,17 @@
+import { FcMultipleInputs } from "react-icons/fc";
 import React from "react";
+import { UsersIcon } from "@heroicons/react/24/outline";
 
 const DetailWrapper = ({
   children,
   status,
+  totalDonation,
+  totalDonors,
 }: {
   children: React.ReactNode;
   status: string;
+  totalDonation: number;
+  totalDonors: number;
 }) => {
   return (
     <div className="space-y-6 lg:col-start-1 lg:col-span-2">
@@ -13,14 +19,27 @@ const DetailWrapper = ({
         <div className="bg-white shadow sm:rounded-lg border">
           <div className="px-4 py-5 sm:px-6 flex justify-between">
             <div>
-              <h2
-                id="applicant-information-title"
-                className="text-lg leading-6 font-medium text-gray-900"
-              >
-                Fundraiser event Information
-              </h2>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Fundraiser application detail.
+              <div className="flex space-x-4">
+                <h2
+                  id="applicant-information-title"
+                  className="text-black text-xl font-bold"
+                  // className="text-lg leading-6 font-medium text-gray-900"
+                >
+                  Fundraiser event Information
+                </h2>
+
+                <dt>
+                  <span>
+                    <UsersIcon className="inline text-blue-700 h-5 w-5" />{" "}
+                  </span>
+                  <span className="mt-1 ml-1 max-w-2xl text-base text-blue-700">
+                    {totalDonors} Donors
+                  </span>
+                </dt>
+              </div>
+              <p className="mt-1 max-w-2xl text-sm text-blue-700">
+                Total donation ₹{totalDonation}
+                {/* {totalDonors} */}
               </p>
             </div>
             <div>
@@ -29,7 +48,7 @@ const DetailWrapper = ({
                   Approved
                 </span>
               ) : status == "PN" ? (
-                <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+                <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-indigo-100 text-blue-700">
                   Pending
                 </span>
               ) : status == "RE" ? (

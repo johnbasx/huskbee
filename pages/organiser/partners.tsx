@@ -13,7 +13,7 @@ const Partners = ({
   organiser_partners: EventPartnersProps[];
 }) => {
   return (
-    <Layout>
+    <Layout pageTitle="Partners">
       <div className="bg-transparent">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
           <div className="bg-transparent rounded-2xl px-6 py-16 sm:p-16">

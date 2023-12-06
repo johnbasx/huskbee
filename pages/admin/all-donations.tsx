@@ -15,6 +15,7 @@ import CommandPallete from "@components/Admin/AllDonations/CommandPelllete";
 import { DonationObjStore } from "@store/office-admin-store";
 import { DonationProps } from "../organiser/fundraiser-detail/[fundraiserId]";
 import Filter from "@components/common/Table/Filter";
+import { FormatDate } from "@utils/index";
 import Layout from "@components/Admin/Layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
@@ -148,7 +149,7 @@ const AllDonations = ({
                   <TableValue value={donation.fundraiser_title} />
                   <TableValue value={donation.organise_by} />
                   <TableValue value={donation.donor_name} />
-                  <TableValue value={donation.created_at} />
+                  <TableValue value={FormatDate(donation.created_at)} />
                   <TableValue value={donation.amount.toString()} />
                   <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
                     <Link

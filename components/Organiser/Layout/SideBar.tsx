@@ -9,50 +9,12 @@ import {
 } from "@heroicons/react/24/outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment } from "react";
+import { org_crowd_funding, org_navigation } from "@constants/list-items";
 
 import Link from "next/link";
 import { MdEventAvailable } from "react-icons/Md";
 import { useRouter } from "next/router";
 
-const navigation = [
-  { name: "Home", href: "/organiser/home", icon: HomeIcon, current: true },
-  {
-    name: "My Events",
-    href: "/organiser/events",
-    icon: ListBulletIcon,
-    current: false,
-  },
-  {
-    name: "My Partners",
-    href: "/organiser/partners",
-    icon: RectangleGroupIcon,
-    current: false,
-  },
-  {
-    name: "Upcoming Events",
-    href: "/organiser/upcoming-events",
-    icon: ClockIcon,
-    current: false,
-  },
-  {
-    name: "Finished Events",
-    href: "/organiser/finished-events",
-    icon: ArchiveBoxIcon,
-    current: false,
-  },
-  {
-    name: "Create Event",
-    href: "/organiser/create-event",
-    icon: MdEventAvailable,
-    current: false,
-  },
-  {
-    name: "Fundraiser",
-    href: "/organiser/fundraiser",
-    icon: BanknotesIcon,
-    current: false,
-  },
-];
 const settings = [{ id: 1, name: "Profile", href: "#" }];
 
 function classNames(...classes: any) {
@@ -132,7 +94,7 @@ const SideBar = ({
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-2">
                   <div className="space-y-1">
-                    {navigation.map((item) => (
+                    {org_navigation.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
@@ -204,7 +166,7 @@ const SideBar = ({
         <div className="mt-1 h-0 flex-1 flex flex-col overflow-y-auto">
           <nav className="flex-1 px-2 py-4">
             <div className="space-y-1">
-              {navigation.map((item) => (
+              {org_navigation.map((item) => (
                 <Link key={item.name} href={item.href}>
                   <span
                     className={classNames(
@@ -235,6 +197,43 @@ const SideBar = ({
                 </Link>
               ))}
             </div>
+
+            <div className="mt-8">
+              {/* Secondary navigation */}
+              <h3
+                className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                id="desktop-teams-headline"
+              >
+                Crowd Funding
+              </h3>
+              <div
+                className="mt-1 space-y-1"
+                role="group"
+                aria-labelledby="desktop-teams-headline"
+              >
+                {org_crowd_funding.map((content) => (
+                  <Link key={content.name} href={content.href}>
+                    <span
+                      className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-50 ${
+                        router.pathname === content.href
+                          ? "bg-gray-200 text-gray-900"
+                          : "text-gray-700 hover:text-gray-900 "
+                      }`}
+                    >
+                      <span
+                        className={classNames(
+                          content.bgColorClass,
+                          "w-2.5 h-2.5 mr-4 rounded-full"
+                        )}
+                        aria-hidden="true"
+                      />
+                      <span className="truncate">{content.name}</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
             <div className="mt-10">
               <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 Settings

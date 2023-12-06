@@ -17,9 +17,7 @@ function classNames(...classes: any) {
 const CommandPallete = () => {
   const { office_admin_token } = orgTokenStore();
   const [query, setQuery] = useState("");
-
   const [donations, setDonations] = useState<DonationProps[]>([]);
-
   const debouncedSearch = useDebounce(query, 500);
   const router = useRouter();
 

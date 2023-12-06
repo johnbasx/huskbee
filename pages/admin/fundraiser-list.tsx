@@ -15,7 +15,7 @@ import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import CommandPallete from "@components/Admin/FundraisersList/CommandPellete";
 import Filter from "@components/common/Table/Filter";
 import { FormatDate } from "@utils/index";
-import { FundraiserEventProps } from "../organiser/fundraiser";
+import { FundraiserEventProps } from "../organiser/fundraisers";
 import Layout from "@components/Admin/Layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";

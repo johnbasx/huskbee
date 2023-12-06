@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import NextNProgress from "nextjs-progressbar";
 import React from "react";
-import Script from "next/script";
 import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -23,17 +23,14 @@ export default function App({ Component, pageProps }: AppProps) {
     return <></>;
   }
 
-  // useEffect(() => {
-  //   const importTE = async () => {
-  //     (await import("tw-elements")).default;
-  //   };
-  //   importTE();
-  // }, []);
-
   return (
     <>
+      <NextNProgress
+        height={6}
+        color="#3b82f6"
+        options={{ showSpinner: false }}
+      />
       <QueryClientProvider client={queryClient}>
-        {/* <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script> */}
         <GoogleOAuthProvider clientId="829759909963-gqla1538rhsb9gj92b8dbfkl0oan496u.apps.googleusercontent.com">
           <>
             <Head>

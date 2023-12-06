@@ -9,7 +9,7 @@ import RecentList, { HuskbeeUserList } from "@components/Admin/home/RecentList";
 import { ApprovedStatus } from "@components/common/Table/Others";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import { FormatDate } from "@utils/index";
-import { FundraiserEventProps } from "../organiser/fundraiser";
+import { FundraiserEventProps } from "../organiser/fundraisers";
 import { HuskbeeUserProp } from "./users";
 import Layout from "@components/Admin/Layout/Layout";
 import Link from "next/link";
@@ -53,9 +53,6 @@ export default function Home({
       <div className="space-y-12 py-8 max-w-7xl mx-auto px-4">
         {/* Overview */}
         <div className="">
-          {/* <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-            Overview
-          </h2> */}
           <ul
             role="list"
             className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-3"

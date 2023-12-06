@@ -34,14 +34,17 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     serialize("org_token", data.access_token, {
       httpOnly: true,
       path: "/",
+      maxAge: 2629800000,
     }),
     serialize("org_token_expires_on", expire_date.toString(), {
       httpOnly: true,
       path: "/",
+      maxAge: 2629800000,
     }),
     serialize("Org_login", "true", {
       httpOnly: true,
       path: "/",
+      maxAge: 2629800000,
     }),
   ]);
   res.status(200).json({ user: data.username });

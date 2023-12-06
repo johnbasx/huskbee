@@ -1,15 +1,19 @@
-import { BASE_URL, CROWDFUNDING_BASE_URL } from "@constants/api-urls";
-import {
-  EnvelopeIcon,
-  PaperClipIcon,
-  PhoneIcon,
-} from "@heroicons/react/24/outline";
-import React, { Dispatch, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { FundraiserEventProps } from "../fundraiser";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
+import ChartAnalytic from "@components/Organiser/FundraiserDetail/ChartAnalytic";
+import { DataDisplay } from "../../admin/fundraiser-detail/[fundraiserId]";
+import DetailWrapper from "@components/Admin/FundraiserDetail/DetailWrapper";
+import Donations from "@components/Organiser/FundraiserDetail/Donations";
+import { DonorsObjStore } from "@store/organiser-fundraiserDetail-store";
+import { FormatDate } from "@utils/index";
+import FundDonors from "@components/Organiser/FundraiserDetail/FundDonors";
+import { FundraiserEventProps } from "../fundraisers";
 import Layout from "@components/Organiser/Layout/Layout";
 import { NextPageContext } from "next";
-import UploadPhoto from "@components/Organiser/UploadPhoto";
+import Photos from "@components/Organiser/FundraiserDetail/Photos";
+import { RootUrlStore } from "@store/table-store";
+import { Toaster } from "react-hot-toast";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
 
@@ -18,6 +22,7 @@ export type FunraiserPhotoType = {
   photo: string;
   fundraiser: string;
 };
+
 export interface FundraiserEventsProps extends FundraiserEventProps {
   fundraiser_photo: FunraiserPhotoType[];
 }
@@ -37,156 +42,143 @@ export interface DonationProps {
   created_at: string;
 }
 
-type PhotoType = {
-  image: File;
+export type DonorsObjType = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: DonationProps[];
 };
+
+export interface FundDonationsGraphProp {
+  id: string;
+  amount: number;
+  created_at: string;
+  total_donation: number;
+  created_date: string;
+}
+
 const FunraiserDetail = ({
   token,
-  fundraiserId,
   detail,
-  donors,
+  donors_obj,
+  fund_donations_graph_data,
 }: {
   token: string;
-  fundraiserId: string;
   detail: FundraiserEventsProps;
-  donors: DonationProps[];
+  donors_obj: DonorsObjType;
+  fund_donations_graph_data: FundDonationsGraphProp[];
 }) => {
-  const [photo, setPhoto] = useState<PhotoType>();
+  const { donorsIns, setDonorsIns } = DonorsObjStore();
   const { setOrgToken } = orgTokenStore();
+  const [fundraiserPhotos, setFundraiserPhotos] = useState<
+    FunraiserPhotoType[]
+  >(detail.fundraiser_photo);
+  const [recentDonations, setRecentDonations] = useState<DonationProps[]>(
+    donors_obj.results
+  );
+  const [donors, setDonors] = useState<DonationProps[]>();
+  const [prev, setPrev] = useState<string | null>("");
+  const [next, setNext] = useState<string | null>("");
+  const { setRootUrl } = RootUrlStore();
+
   useEffect(() => {
     setOrgToken(token);
+    setDonorsIns(donors_obj);
+    setRootUrl(CROWDFUNDING_BASE_URL + `donors/${detail.id}?page=`);
   }, []);
 
+  useEffect(() => {
+    if (donorsIns != null) {
+      setDonors(donorsIns.results);
+      setPrev(donorsIns.previous);
+      setNext(donorsIns.next);
+    }
+  }, [donorsIns]);
+
   return (
-    <Layout>
-      {/* <div>FunraiserDetail {fundraiserId}</div> */}
-      <div className="max-w-5xl mx-auto py-20">
-        <div className="px-4 sm:px-0">
-          <h3 className="text-2xl font-semibold leading-7 text-gray-200">
-            Fundraiser detail
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-            Personal details and application.
-          </p>
-        </div>
-        <div className="mt-6 border-t border-gray-400">
-          <dl className="divide-y divide-gray-400">
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-200">
-                Title
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-200 sm:col-span-2 sm:mt-0">
-                {detail.title}
-              </dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-200">
-                Goal
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-200 sm:col-span-2 sm:mt-0">
-                {detail.goal}
-              </dd>
-            </div>
-            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-200">
-                Email address
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-200 sm:col-span-2 sm:mt-0">
-                margotfoster@example.com
-              </dd>
-            </div> */}
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-200">
-                Total donars
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-200 sm:col-span-2 sm:mt-0">
-                120,000
-              </dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-200">
-                Description
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-200 sm:col-span-2 sm:mt-0">
-                {detail.description}
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div className="mx-auto py-20">
-          <div className="px-4 sm:px-0 mb-10">
-            <h3 className="text-2xl font-semibold leading-7 text-gray-200">
-              Donors
-            </h3>
+    <Layout pageTitle="Fundraiser detail">
+      <Toaster />
+      <div className="max-w-3xl mx-auto  sm:px-6 lg:max-w-7xl space-y-12 pb-20">
+        <main className="">
+          <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-flow-col-dense lg:grid-cols-3">
+            <DetailWrapper
+              status={detail.approved_status}
+              totalDonation={detail.total_donation}
+              totalDonors={detail.total_donors}
+            >
+              <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                <div className="sm:col-span-1">
+                  <DataDisplay
+                    orgId={detail.organiser}
+                    title="Title"
+                    content={detail.title}
+                  />
+                </div>
+                <div className="sm:col-span-1">
+                  <DataDisplay
+                    orgId={detail.organiser}
+                    title="Target Amount"
+                    content={"₹ " + detail.target_amount}
+                  />
+                </div>
+                <div className="sm:col-span-1">
+                  <DataDisplay
+                    orgId={detail.organiser}
+                    title="Created on"
+                    content={FormatDate(detail.created_at)}
+                  />
+                </div>
+                <div className="sm:col-span-1">
+                  <DataDisplay
+                    orgId={detail.organiser}
+                    title="Ends on"
+                    content={FormatDate(detail.end_date)}
+                  />
+                </div>
+                <div className="sm:col-span-1">
+                  <DataDisplay
+                    orgId={detail.organiser}
+                    title="Goal"
+                    content={
+                      detail.goal +
+                      "Lorem ipsum dolor sit amet consecteturadipisicing elit. Iure, nemo."
+                    }
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <DataDisplay
+                    orgId={detail.organiser}
+                    title="Description"
+                    content={
+                      // "Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu." +
+                      detail.description
+                    }
+                  />
+                </div>
+              </dl>
+            </DetailWrapper>
+            <Donations donors={recentDonations} />
           </div>
-          <ul
-            role="list"
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-          >
-            {donors &&
-              donors.map((donor) => (
-                <li
-                  key={donor.created_at}
-                  className="col-span-1 flex flex-col text-center bg-white rounded-lg  divide-y divide-gray-200 shadow-xl"
-                >
-                  <div className="flex-1 flex flex-col p-8">
-                    <img
-                      className="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
-                      src={BASE_URL + donor.donor_photo_url}
-                      alt=""
-                    />
-                    <h3 className="mt-6 text-gray-900 text-sm font-medium">
-                      {donor.donor_email}
-                    </h3>
-                    <dl className="mt-1 flex-grow flex flex-col justify-between">
-                      <dt className="sr-only">Title</dt>
-                      <dd className="text-gray-500 text-sm">
-                        {donor.donor_name}
-                      </dd>
-                      <dt className="sr-only">Role</dt>
-                      <dd className="mt-3">
-                        <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-                          {"Donated ₹" + donor.amount}
-                        </span>
-                      </dd>
-                    </dl>
-                  </div>
-                  {/* <div>
-                  <div className="-mt-px flex divide-x divide-gray-200">
-                    <div className="w-0 flex-1 flex">
-                      <a
-                        href={`mailto:${person.email}`}
-                        className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
-                      >
-                        <EnvelopeIcon
-                          className="w-5 h-5 text-gray-400"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-3">Email</span>
-                      </a>
-                    </div>
-                    <div className="-ml-px w-0 flex-1 flex">
-                      <a
-                        href={`tel:${person.telephone}`}
-                        className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
-                      >
-                        <PhoneIcon
-                          className="w-5 h-5 text-gray-400"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-3">Call</span>
-                      </a>
-                    </div>
-                  </div>
-                </div> */}
-                </li>
-              ))}
-          </ul>
-        </div>
-      </div>
+        </main>
 
-      <UploadPhoto funraiserId={fundraiserId} />
+        <Photos
+          fundraiserId={detail.id}
+          photos={fundraiserPhotos}
+          title={detail.title}
+          setFundraiserPhoto={setFundraiserPhotos}
+        />
+
+        {donors && donors.length > 0 && (
+          <FundDonors
+            totalDonation={donors_obj.count}
+            donors={donors}
+            next={next}
+            prev={prev}
+          />
+        )}
+
+        <ChartAnalytic graphData={fund_donations_graph_data} />
+      </div>
     </Layout>
   );
 };
@@ -217,9 +209,19 @@ export async function getServerSideProps(context: NextPageContext) {
       },
     }
   );
-  const donors = await donors_res.json();
+  const donors_obj = await donors_res.json();
 
-  if (!detail || !donors) {
+  const fund_donations_res = await fetch(
+    CROWDFUNDING_BASE_URL + "fund-donations-graph/" + fundraiserId,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const fund_donations_graph_data = await fund_donations_res.json();
+
+  if (!detail || !donors_obj) {
     return {
       redirect: {
         destination: "/home",
@@ -229,6 +231,12 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 
   return {
-    props: { token, fundraiserId, detail, donors },
+    props: {
+      token,
+      fundraiserId,
+      detail,
+      donors_obj,
+      fund_donations_graph_data,
+    },
   };
 }

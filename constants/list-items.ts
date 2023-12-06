@@ -1,9 +1,14 @@
 import {
+  ArchiveBoxIcon,
   Bars4Icon,
   ClockIcon,
   HomeIcon,
+  ListBulletIcon,
+  RectangleGroupIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
+
+import { MdEventAvailable } from "react-icons/Md";
 
 export const OrganiserTypes = [
   {
@@ -141,4 +146,64 @@ export const off_admin_dropdown_list = [
     name: "Settings",
     href: "/admin/settings",
   },
+];
+
+// SIDE NAV LIST FOR ORGANISER DASHBOARD
+export const org_navigation = [
+  { name: "Home", href: "/organiser/home", icon: HomeIcon, current: true },
+  {
+    name: "My Events",
+    href: "/organiser/events",
+    icon: ListBulletIcon,
+    current: false,
+  },
+  {
+    name: "My Partners",
+    href: "/organiser/partners",
+    icon: RectangleGroupIcon,
+    current: false,
+  },
+  {
+    name: "Upcoming Events",
+    href: "/organiser/upcoming-events",
+    icon: ClockIcon,
+    current: false,
+  },
+  {
+    name: "Finished Events",
+    href: "/organiser/finished-events",
+    icon: ArchiveBoxIcon,
+    current: false,
+  },
+  {
+    name: "Create Event",
+    href: "/organiser/create-event",
+    icon: MdEventAvailable,
+    current: false,
+  },
+];
+
+export const org_crowd_funding = [
+  {
+    name: "Fundraisers",
+    href: "/organiser/fundraisers",
+    bgColorClass: "bg-indigo-500",
+  },
+  {
+    name: "Create Fundraiser",
+    href: "/organiser/create-fundraiser",
+    bgColorClass: "bg-red-500",
+  },
+  // { name: "Donors", href: "/admin/donor-list", bgColorClass: "bg-green-500" },
+  {
+    name: "Donations",
+    href: "/organiser/donations",
+    bgColorClass: "bg-orange-500",
+  },
+  // { name: "Issues and Report", href: "#", bgColorClass: "bg-yellow-500" },
+  // {
+  //   name: "Analytics",
+  //   href: "/admin/analytics",
+  //   bgColorClass: "bg-blue-700",
+  // },
 ];

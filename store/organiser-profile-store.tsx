@@ -17,6 +17,9 @@ const orgProfile: OrganiserProfileProps = {
   created_at: "",
   updated_at: "",
   user: 0,
+  user_id: "",
+  status: false,
+  description: "",
 };
 
 const addresses: AddressProps[] = [
@@ -62,5 +65,22 @@ export const OrganiserProfileStore = create<OrganiserProfileStoreProps>(
     setAddresses: (addresses) => set({ addresses: addresses }),
     bankDetail: bankDetail,
     setBankDetail: (bankDetail) => set({ bankDetail: bankDetail }),
+  })
+);
+
+export type AddressTabListType = {
+  name: string;
+  default: Boolean;
+};
+
+interface AddressTabListStoreProps {
+  addressTabList: AddressTabListType[];
+  setAddressTabList: (list: AddressTabListType[]) => void;
+}
+
+export const AddressTabListStore = create<AddressTabListStoreProps>(
+  (set, get) => ({
+    addressTabList: [],
+    setAddressTabList: (list) => set({ addressTabList: list }),
   })
 );
