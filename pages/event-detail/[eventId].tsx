@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import { BOOKING_BASE_URL } from "@constants/api-urls";
-import EventDescription from "@components/eventDetail/EventDetail";
+import EventDescription from "@components/event-detail/EventDetail";
 import { EventNameStore } from "@store/index";
 import Layout from "@components/layout/Layout";
 import { NextPageContext } from "next";
-import Organisers from "@components/eventDetail/Organisers";
-import ProductImage from "@components/eventDetail/ProductImage";
-import ShareOnSocial from "@components/eventDetail/ShareOnSocial";
+import Organisers from "@components/event-detail/Organisers";
+import ProductImage from "@components/event-detail/ProductImage";
+import ShareOnSocial from "@components/event-detail/ShareOnSocial";
 import { useRouter } from "next/router";
 
 export interface TicketVariantProps {
@@ -72,10 +72,10 @@ const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
 
   return (
     <Layout>
-      <div className="border-none bg-transparent">
-        <div className="mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className='border-none bg-transparent'>
+        <div className='mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8'>
           {/* Product */}
-          <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
+          <div className='lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16'>
             {/* Product image */}
             <ProductImage
               ImageSrc={event_detail.hero_image}
@@ -83,7 +83,7 @@ const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
             />
 
             {/* Event details */}
-            <div className="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3">
+            <div className='max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3'>
               <EventDescription
                 event={event_detail.id}
                 name={event_detail.name}

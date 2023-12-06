@@ -131,7 +131,7 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
           src={data.cover_image}
           alt='donate'
         />
-        <div className='absolute bg-slate-950/30 font-sans tracking-tight backdrop-blur-md py-1.5 px-2 text-xs font-semibold rounded-full bottom-2 left-2'>
+        <div className='absolute bg-black/30 font-sans tracking-tight backdrop-blur-md py-1.5 px-2 text-xs font-semibold rounded-full bottom-2 left-2'>
           <span>1.6K donations</span>
         </div>
       </div>

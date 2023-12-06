@@ -5,7 +5,7 @@ import {
   TbArrowRight,
   TbArrowUpRight,
   TbArrowWaveRightUp,
-  TbCircleFilled,
+  TbCircleDot,
 } from "react-icons/tb";
 
 const FeatureCard1 = () => {
@@ -31,7 +31,7 @@ const FeatureCard1 = () => {
         <span className='inline-flex text-xs items-center gap-1.5 rounded-full px-4 py-2 bg-white text-black font-semibold transition'>
           local projects initiatives
         </span>
-        <span className='bg-white rounded-full p-3'>
+        <span className='bg-white text-black rounded-full p-3'>
           <TbArrowUpRight />
         </span>
       </div>
@@ -46,7 +46,7 @@ const FeatureCard1 = () => {
             className='inline-flex mt-6 text-sm items-center gap-1.5 rounded-full px-4 py-2 bg-white/10 backdrop-blur-md border border-white/10 text-white font-semibold transition'
           >
             Explore
-            <TbCircleFilled className='h-3 w-3 text-blue-300' />
+            <TbCircleDot className='h-3 w-3 text-blue-300' />
           </Link>
         </div>
       </div>
@@ -84,7 +84,7 @@ const FeatureCard2 = () => {
             className='inline-flex mt-6 text-sm items-center gap-1.5 rounded-full px-4 py-2 bg-white/10 border border-white/10 backdrop-blur-md text-white font-semibold transition'
           >
             Explore
-            <TbCircleFilled className='h-3 w-3 text-blue-300' />
+            <TbCircleDot className='h-3 w-3 text-blue-300' />
           </Link>
         </div>
       </div>
@@ -92,7 +92,7 @@ const FeatureCard2 = () => {
         <span className='inline-flex text-xs items-center gap-1.5 rounded-full px-4 py-2 bg-white text-black font-semibold transition'>
           catalyst for new ideas
         </span>
-        <span className='bg-white rounded-full p-3'>
+        <span className='bg-white text-black rounded-full p-3'>
           <TbArrowUpRight />
         </span>
       </div>
@@ -122,7 +122,7 @@ const FeatureCard3 = () => {
         <span className='inline-flex text-xs items-center gap-1.5 rounded-full px-4 py-2 bg-white text-black font-semibold transition'>
           democratic decision
         </span>
-        <span className='bg-white rounded-full p-3'>
+        <span className='bg-white text-black rounded-full p-3'>
           <TbArrowUpRight />
         </span>
       </div>
@@ -137,7 +137,7 @@ const FeatureCard3 = () => {
             className='inline-flex mt-6 text-sm items-center gap-1.5 rounded-full px-4 py-2 bg-white/10 backdrop-blur-md border border-white/10 text-white font-semibold transition'
           >
             Explore
-            <TbCircleFilled className='h-3 w-3 text-blue-300' />
+            <TbCircleDot className='h-3 w-3 text-blue-300' />
           </Link>
         </div>
       </div>
@@ -147,7 +147,7 @@ const FeatureCard3 = () => {
 
 const EmptyCard = () => {
   return (
-    <article className='relative bg-slate-950 block sm:hidden overflow-hidden rounded-2xl lg:rounded-3xl transition'>
+    <article className='relative bg-black block sm:hidden overflow-hidden rounded-2xl lg:rounded-3xl transition'>
       <div className='p-4 text-slate-50 '>
         <h3 className='text-xl font-semibold'>
           Bring a creative project to life.
@@ -155,7 +155,7 @@ const EmptyCard = () => {
         <p className='mt-4 text-sm'>
           Raising Funds was never this easy. Start a fundraiser in 5 minutes!
         </p>
-        <span className='bg-blue-400 mt-4 inline-flex text-center items-center justify-center text-slate-950 rounded-full p-3 text-xl font-medium'>
+        <span className='bg-blue-400 mt-4 inline-flex text-center items-center justify-center text-black rounded-full p-3 text-xl font-medium'>
           <TbArrowUpRight className='w-6 h-6' />
         </span>
       </div>
@@ -186,7 +186,7 @@ const HeroFeature = () => {
             className='border inline-flex items-center gap-2 text-sm border-slate-700 font-semibold rounded-full px-6 py-2.5 text-slate-700'
           >
             Learn more
-            <TbCircleFilled className='h-4 w-4 text-blue-300' />
+            <TbCircleDot className='h-4 w-4 text-blue-300' />
           </Link>
         </div>
       </div>

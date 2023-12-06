@@ -62,7 +62,7 @@ const FundraisersFor = () => {
                   className='absolute inset-0 h-full w-full object-cover'
                 /> */}
 
-                <div className='relative h-full text-slate-950 bg-white'>
+                <div className='relative h-full text-black bg-white'>
                   <div className='p-4'>
                     <item.Icon className='h-8 w-8' />
 

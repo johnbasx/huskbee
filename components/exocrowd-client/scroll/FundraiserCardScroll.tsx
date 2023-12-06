@@ -229,7 +229,7 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
         src={data.cover_image}
         alt='donate'
       />
-      <div className='px-4 py-4 flex flex-col gap-2'>
+      <div className='px-4 py-4 text-black flex flex-col gap-2'>
         <div className=''>
           <div className='font-bold text-xl h-14 mb-2 line-clamp-2'>
             {data.title}
@@ -343,23 +343,5 @@ function Arrow(props: {
         />
       )}
     </button>
-
-    // <svg
-    //   onClick={props.onClick}
-    //   className={`arrow rounded-full bg-transparent backdrop-blur-md p-2 h-10 w-10 border-slate-600 border absolute -top-1 cursor-pointer translate-y-0 fill-slate-800 ${
-    //     props.left
-    //       ? "arrow--left right-14 md:right-14"
-    //       : "arrow--right right-0 md:right-0"
-    //   } ${disabled}`}
-    //   xmlns='http://www.w3.org/2000/svg'
-    //   viewBox='0 0 24 24'
-    // >
-    //   {props.left && (
-    //     <path d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' />
-    //   )}
-    //   {!props.left && (
-    //     <path d='M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z' />
-    //   )}
-    // </svg>
   );
 }

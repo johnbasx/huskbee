@@ -21,7 +21,7 @@ const stats = [
 
 const DisplacedStats = () => {
   return (
-    <section className='py-40 bg-gradient-to-b from-slate-950 to-slate-950 via-slate-900'>
+    <section className='py-40 bg-gradient-to-b from-black to-black via-slate-900'>
       <div className='relative z-10 max-w-screen-xl mx-auto px-4 md:px-8'>
         <div className='max-w-2xl xl:mx-auto xl:text-center'>
           <h3 className='text-white text-3xl font-semibold sm:text-4xl'>

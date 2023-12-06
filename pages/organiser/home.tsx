@@ -13,12 +13,12 @@ import {
   FcMultipleInputs,
 } from "react-icons/fc";
 
-import Events from "@components/Organiser/home/Events";
-import FundraiserChart from "@components/Organiser/home/FundraiserChart";
+import Events from "@components/organiser/home/Events";
+import FundraiserChart from "@components/organiser/home/FundraiserChart";
 import { FundraiserEventProps } from "./fundraisers";
-import FundraiserTable from "@components/Organiser/home/FundraiserTable";
-import Layout from "@components/Organiser/Layout/Layout";
-import MyPartners from "@components/Organiser/home/MyPartners";
+import FundraiserTable from "@components/organiser/home/FundraiserTable";
+import Layout from "@components/organiser/layout/Layout";
+import MyPartners from "@components/organiser/home/MyPartners";
 import { NextPageContext } from "next";
 import { OrgPartnersStore } from "@store/index";
 import Overview from "@components/common/Overview";
@@ -60,30 +60,30 @@ const Home = ({
   // }, []);
 
   return (
-    <Layout pageTitle="Home">
-      <div className="py-12 xl:py-10 space-y-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <Layout pageTitle='Home'>
+      <div className='py-12 xl:py-10 space-y-24'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+          <div className='mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
             <Overview
               icon={FcMultipleInputs}
-              title="Fundraiser"
+              title='Fundraiser'
               total={overview.total_fundraiser}
-              color="border-l-[#4e73df]"
-              link="/organiser/fundraisers"
+              color='border-l-[#4e73df]'
+              link='/organiser/fundraisers'
             />
             <Overview
               icon={FcConferenceCall}
-              title="Donors"
+              title='Donors'
               total={overview.total_donors}
-              color="border-l-[#1cc88a]"
-              link="/organiser/fundraisers"
+              color='border-l-[#1cc88a]'
+              link='/organiser/fundraisers'
             />
             <Overview
               icon={FcMultipleInputs}
-              title="Donations"
+              title='Donations'
               total={"₹ " + overview.total_donation}
-              color="border-l-[#f6c23e]"
-              link="/organiser/donations"
+              color='border-l-[#f6c23e]'
+              link='/organiser/donations'
             />
           </div>
         </div>

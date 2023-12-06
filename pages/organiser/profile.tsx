@@ -4,14 +4,14 @@ import {
 } from "@store/organiser-profile-store";
 import React, { ReactNode, useEffect, useState } from "react";
 
-import AddressInfo from "@components/Organiser/Profile/AddressInfo";
-import BankDetail from "@components/Organiser/Profile/BankDetail";
-import Layout from "@components/Organiser/Layout/Layout";
+import AddressInfo from "@components/organiser/Profile/AddressInfo";
+import BankDetail from "@components/organiser/Profile/BankDetail";
+import Layout from "@components/organiser/layout/Layout";
 import { NextPageContext } from "next";
 import { OrganiserProfileStore } from "@store/organiser-profile-store";
 import { Toaster } from "react-hot-toast";
 import { USER_BASE_URL } from "@constants/api-urls";
-import UpdateProfile from "@components/Organiser/Profile/UpdateProfile";
+import UpdateProfile from "@components/organiser/Profile/UpdateProfile";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
 
@@ -84,47 +84,47 @@ const Profile = ({
   }, []);
 
   return (
-    <Layout pageTitle="Profile">
+    <Layout pageTitle='Profile'>
       <Toaster />
-      <div className="mt-8 max-w-3xl mx-auto gap-6 sm:px-6 lg:max-w-7xl pb-12 space-y-12">
+      <div className='mt-8 max-w-3xl mx-auto gap-6 sm:px-6 lg:max-w-7xl pb-12 space-y-12'>
         <Wrapper
-          title="Organiser profile"
-          subtitle="Information about the Organiser"
+          title='Organiser profile'
+          subtitle='Information about the Organiser'
         >
           <ProfileContent
             lookUp={orgProfile.id}
-            name="name"
-            label="Full name"
+            name='name'
+            label='Full name'
             value={orgProfile.name}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="email"
-            label="Email"
+            name='email'
+            label='Email'
             value={orgProfile.email}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="phone"
-            label="Phone"
+            name='phone'
+            label='Phone'
             value={orgProfile.phone}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="organiser_type"
-            label="Organisation type"
+            name='organiser_type'
+            label='Organisation type'
             value={orgProfile.organiser_type}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="description"
-            label="Description"
+            name='description'
+            label='Description'
             value={`${orgProfile.description}`}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
         </Wrapper>
         {/* <Wrapper
@@ -134,7 +134,7 @@ const Profile = ({
           <BankDetail BankAccounts={profile.bank_detail} />
         </Wrapper>*/}
         <Wrapper
-          title="Organiser Addresses"
+          title='Organiser Addresses'
           subtitle={`Different address for ${profile.organisation_name}`}
         >
           <AddressInfo Addresses={addresses} SetAddress={setAddresses} />
@@ -186,11 +186,11 @@ export const ProfileContent = ({
   link,
 }: ProfileContentProp) => {
   return (
-    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-      <dt className="text-sm font-medium leading-6 text-gray-900">{label}</dt>
-      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex justify-between space-x-4">
+    <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+      <dt className='text-sm font-medium leading-6 text-gray-900'>{label}</dt>
+      <dd className='mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex justify-between space-x-4'>
         <span>{value}</span>
-        <div className="mr-2 flex-shrink-0">
+        <div className='mr-2 flex-shrink-0'>
           <UpdateProfile
             lookUp={lookUp}
             name={name}
@@ -214,15 +214,15 @@ const Wrapper = ({
   subtitle: string;
 }) => {
   return (
-    <div className="bg-white w-full rounded-lg border p-6 shadow-md">
-      <div className="px-4 sm:px-0 text-center">
-        <h3 className="text-xl font-semibold leading-7 text-gray-900">
+    <div className='bg-white w-full rounded-lg border p-6 shadow-md'>
+      <div className='px-4 sm:px-0 text-center'>
+        <h3 className='text-xl font-semibold leading-7 text-gray-900'>
           {title}
         </h3>
-        <p className="mt-1  text-sm leading-6 text-gray-500">{subtitle}</p>
+        <p className='mt-1  text-sm leading-6 text-gray-500'>{subtitle}</p>
       </div>
-      <div className="mt-6 border-t border-gray-100">
-        <dl className="divide-y divide-gray-100">{children}</dl>
+      <div className='mt-6 border-t border-gray-100'>
+        <dl className='divide-y divide-gray-100'>{children}</dl>
       </div>
     </div>
   );

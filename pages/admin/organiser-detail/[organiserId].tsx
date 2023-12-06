@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 
-import Address from "@components/Admin/OrganisationDetail/Address";
-import BankDetail from "@components/Admin/OrganisationDetail/BankDetail";
+import Address from "@components/admin/organisation-detail/Address";
+import BankDetail from "@components/admin/organisation-detail/BankDetail";
 import { ExOrganiserProfileProps } from "../../organiser/profile";
-import Layout from "@components/Admin/Layout/Layout";
+import Layout from "@components/admin/layout/Layout";
 import { NextPageContext } from "next";
-import OrganisationInfo from "@components/Admin/OrganisationDetail/OrganisationInfo";
+import OrganisationInfo from "@components/admin/organisation-detail/OrganisationInfo";
 import { USER_BASE_URL } from "@constants/api-urls";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
@@ -32,25 +32,25 @@ const OganiserDetail = ({
   );
 
   return (
-    <Layout pageTitle="Organiser detail">
-      <div className="space-y-6 mb-20 mx-auto max-w-7xl py-6">
+    <Layout pageTitle='Organiser detail'>
+      <div className='space-y-6 mb-20 mx-auto max-w-7xl py-6'>
         {organiser_detail ? (
           <OrganisationInfo
             detail={organiser_detail}
-            title="Organisation Information"
+            title='Organisation Information'
           />
         ) : (
-          <NoDetail message="No Detail" />
+          <NoDetail message='No Detail' />
         )}
         {active_bankDetail[0] ? (
-          <BankDetail title="Bank detail" detail={active_bankDetail[0]} />
+          <BankDetail title='Bank detail' detail={active_bankDetail[0]} />
         ) : (
-          <NoDetail message="No active bank account" />
+          <NoDetail message='No active bank account' />
         )}
         {active_adress[0] ? (
-          <Address title="Adress detail" detail={active_adress[0]} />
+          <Address title='Adress detail' detail={active_adress[0]} />
         ) : (
-          <NoDetail message="No active address" />
+          <NoDetail message='No active address' />
         )}
       </div>
     </Layout>
@@ -92,7 +92,7 @@ export async function getServerSideProps(context: NextPageContext) {
 const NoDetail = ({ message }: { message: string }) => {
   return (
     <>
-      <span className="text-black mt-4">{message}</span>
+      <span className='text-black mt-4'>{message}</span>
       <br />
     </>
   );

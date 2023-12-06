@@ -4,22 +4,22 @@ import {
   TableHead,
   TableValue,
   TableWrapper,
-} from "@components/common/Table/Others";
+} from "@components/common/table/Others";
 import {
   donations_table_col_names,
   donors_filter,
 } from "@constants/list-items";
 
 import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
-import CommandPallete from "@components/Admin/AllDonations/CommandPelllete";
+import CommandPallete from "@components/admin/all-donations/CommandPelllete";
 import { DonationObjStore } from "@store/office-admin-store";
 import { DonationProps } from "../organiser/fundraiser-detail/[fundraiserId]";
-import Filter from "@components/common/Table/Filter";
+import Filter from "@components/common/table/Filter";
 import { FormatDate } from "@utils/index";
-import Layout from "@components/Admin/Layout/Layout";
+import Layout from "@components/admin/layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
-import Pagination from "@components/common/Table/pagination";
+import Pagination from "@components/common/table/pagination";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
@@ -114,9 +114,9 @@ const AllDonations = ({
     }
   }, [donationIns]);
   return (
-    <Layout pageTitle="All Donations">
-      <div className="max-w-7xl mx-auto">
-        <div className="mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0">
+    <Layout pageTitle='All Donations'>
+      <div className='max-w-7xl mx-auto'>
+        <div className='mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0'>
           <CommandPallete />
           <Filter
             linkPart={CROWDFUNDING_BASE_URL + "all-donations/"}
@@ -129,7 +129,7 @@ const AllDonations = ({
           totalItem={`${donationIns?.count} Total donations`}
           SearchPartner={SearchDonation}
         >
-          <thead className="bg-transparent">
+          <thead className='bg-transparent'>
             <tr>
               {donations_table_col_names.map((item) => (
                 <TableHead key={item.name} title={item.name} />
@@ -151,11 +151,11 @@ const AllDonations = ({
                   <TableValue value={donation.donor_name} />
                   <TableValue value={FormatDate(donation.created_at)} />
                   <TableValue value={donation.amount.toString()} />
-                  <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
+                  <td className='px-6 py-4 whitespace-nowrap  text-sm font-medium'>
                     <Link
                       href={`/admin/fundraiser-detail/${donation.donated_to}`}
                     >
-                      <span className="text-indigo-600 hover:text-indigo-900">
+                      <span className='text-indigo-600 hover:text-indigo-900'>
                         Detail
                       </span>
                     </Link>

@@ -19,7 +19,7 @@ const ActionHero = () => {
             and manage all the transactions.
           </p>
           {/* <Link
-            className='mt-6 px-6 py-3 text-slate-50 font-semibold text-base bg-slate-950 rounded-full inline-flex items-center gap-2'
+            className='mt-6 px-6 py-3 text-slate-50 font-semibold text-base bg-black rounded-full inline-flex items-center gap-2'
             href='#!'
           >
             Start a fundraiser for free
@@ -27,7 +27,7 @@ const ActionHero = () => {
           </Link> */}
         </div>
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-          <div className='bg-gradient-to-br from-slate-950 to-cyan-950 backdrop-blur-lg rounded-3xl p-8 md:p-12 lg:px-16 lg:py-24'>
+          <div className='bg-gradient-to-br from-black to-slate-900 backdrop-blur-lg rounded-3xl p-8 md:p-12 lg:px-16 lg:py-24'>
             <div className='mx-auto max-w-xl text-center'>
               <h2 className='text-xl font-bold text-white md:text-3xl'>
                 Free fundraising for all. Raise money with full transparency.
@@ -41,7 +41,7 @@ const ActionHero = () => {
               <div className='mt-6 md:mt-12'>
                 <a
                   href='#'
-                  className='inline-flex items-center gap-2 rounded-full px-6 py-3 bg-white text-slate-950 font-semibold transition hover:bg-slate-100'
+                  className='inline-flex items-center gap-2 rounded-full px-6 py-3 bg-white text-black font-semibold transition hover:bg-slate-100'
                 >
                   Start helping now
                   <TbArrowRight className='h-5 w-5' />

@@ -6,11 +6,11 @@ import {
   TicketVariantProps,
 } from "../pages/event-detail/[eventId]";
 
-import { AddressFormValues } from "@components/Organiser/registration/AddressForm";
-import { BankDetailFormValues } from "@components/Organiser/registration/BankDetailForm";
+import { AddressFormValues } from "@components/organiser/registration/AddressForm";
+import { BankDetailFormValues } from "@components/organiser/registration/BankDetailForm";
 import { EventsProps } from "../pages/organiser/events";
 import { FundraiserEventProps } from "../pages/organiser/fundraisers";
-import { OrgDetailFormValues } from "@components/Organiser/registration/OrganisationDetail";
+import { OrgDetailFormValues } from "@components/organiser/registration/OrganisationDetail";
 import { create } from "zustand";
 
 interface TokenProps {

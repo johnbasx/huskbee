@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
-import ChartAnalytic from "@components/Organiser/FundraiserDetail/ChartAnalytic";
+import ChartAnalytic from "@components/organiser/fundraiser-detail/ChartAnalytic";
 import { DataDisplay } from "../../admin/fundraiser-detail/[fundraiserId]";
-import DetailWrapper from "@components/Admin/FundraiserDetail/DetailWrapper";
-import Donations from "@components/Organiser/FundraiserDetail/Donations";
+import DetailWrapper from "@components/admin/fundraiser-detail/DetailWrapper";
+import Donations from "@components/organiser/fundraiser-detail/Donations";
 import { DonorsObjStore } from "@store/organiser-fundraiserDetail-store";
 import { FormatDate } from "@utils/index";
-import FundDonors from "@components/Organiser/FundraiserDetail/FundDonors";
+import FundDonors from "@components/organiser/fundraiser-detail/FundDonors";
 import { FundraiserEventProps } from "../fundraisers";
-import Layout from "@components/Organiser/Layout/Layout";
+import Layout from "@components/organiser/layout/Layout";
 import { NextPageContext } from "next";
-import Photos from "@components/Organiser/FundraiserDetail/Photos";
+import Photos from "@components/organiser/fundraiser-detail/Photos";
 import { RootUrlStore } from "@store/table-store";
 import { Toaster } from "react-hot-toast";
 import { getCookie } from "cookies-next";
@@ -96,59 +96,59 @@ const FunraiserDetail = ({
   }, [donorsIns]);
 
   return (
-    <Layout pageTitle="Fundraiser detail">
+    <Layout pageTitle='Fundraiser detail'>
       <Toaster />
-      <div className="max-w-3xl mx-auto  sm:px-6 lg:max-w-7xl space-y-12 pb-20">
-        <main className="">
-          <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-flow-col-dense lg:grid-cols-3">
+      <div className='max-w-3xl mx-auto  sm:px-6 lg:max-w-7xl space-y-12 pb-20'>
+        <main className=''>
+          <div className='mt-8 grid grid-cols-1 gap-6 lg:grid-flow-col-dense lg:grid-cols-3'>
             <DetailWrapper
               status={detail.approved_status}
               totalDonation={detail.total_donation}
               totalDonors={detail.total_donors}
             >
-              <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                <div className="sm:col-span-1">
+              <dl className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2'>
+                <div className='sm:col-span-1'>
                   <DataDisplay
                     orgId={detail.organiser}
-                    title="Title"
+                    title='Title'
                     content={detail.title}
                   />
                 </div>
-                <div className="sm:col-span-1">
+                <div className='sm:col-span-1'>
                   <DataDisplay
                     orgId={detail.organiser}
-                    title="Target Amount"
+                    title='Target Amount'
                     content={"₹ " + detail.target_amount}
                   />
                 </div>
-                <div className="sm:col-span-1">
+                <div className='sm:col-span-1'>
                   <DataDisplay
                     orgId={detail.organiser}
-                    title="Created on"
+                    title='Created on'
                     content={FormatDate(detail.created_at)}
                   />
                 </div>
-                <div className="sm:col-span-1">
+                <div className='sm:col-span-1'>
                   <DataDisplay
                     orgId={detail.organiser}
-                    title="Ends on"
+                    title='Ends on'
                     content={FormatDate(detail.end_date)}
                   />
                 </div>
-                <div className="sm:col-span-1">
+                <div className='sm:col-span-1'>
                   <DataDisplay
                     orgId={detail.organiser}
-                    title="Goal"
+                    title='Goal'
                     content={
                       detail.goal +
                       "Lorem ipsum dolor sit amet consecteturadipisicing elit. Iure, nemo."
                     }
                   />
                 </div>
-                <div className="sm:col-span-2">
+                <div className='sm:col-span-2'>
                   <DataDisplay
                     orgId={detail.organiser}
-                    title="Description"
+                    title='Description'
                     content={
                       // "Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu." +
                       detail.description
