@@ -1,4 +1,3 @@
-import Filter from "./Filter";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import React from "react";
 

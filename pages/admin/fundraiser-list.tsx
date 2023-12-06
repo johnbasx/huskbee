@@ -12,14 +12,15 @@ import {
 } from "@constants/list-items";
 
 import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
+import CommandPallete from "@components/Admin/FundraisersList/CommandPellete";
 import Filter from "@components/common/Table/Filter";
-import { FundraiserEventProps } from "../organiser/fundraiser";
+import { FormatDate } from "@utils/index";
+import { FundraiserEventProps } from "../organiser/fundraisers";
 import Layout from "@components/Admin/Layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
 import Pagination from "@components/common/Table/pagination";
 import { RootUrlStore } from "@store/table-store";
-import SearchInPage from "@components/common/Table/SearchInPage";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
@@ -70,9 +71,9 @@ const FundraiserList = ({
     if (fundraisersIns != null) {
       const filteredList = query
         ? fundraisersIns.results &&
-        fundraisersIns.results.filter((fundraiser) =>
-          fundraiser.title.toLowerCase().includes(query.toLowerCase())
-        )
+          fundraisersIns.results.filter((fundraiser) =>
+            fundraiser.title.toLowerCase().includes(query.toLowerCase())
+          )
         : fundraisers_obj.results;
       setfundraisers(filteredList);
     }
@@ -114,7 +115,6 @@ const FundraiserList = ({
           headers: { Authorization: "Bearer " + office_admin_token },
         });
         setFundraisersIns(response.data);
-        console.log(response.data);
       } catch (e: any) {
         console.log(e);
       }
@@ -123,13 +123,20 @@ const FundraiserList = ({
 
   return (
     <Layout pageTitle="Fundraiser List">
-      <div className="w-5xl mx-auto">
-        <div className="mt-2 p-8 sm:ml-6 block sm:flex justify-between space-y-4 sm:space-y-0">
-          <SearchInPage SearchPartner={SearchPartner} />
-          <Filter filterOptions={fundraiser_filter} getFilteredList={getData} />
+      <div className="max-w-7xl mx-auto">
+        <div className="mt-2 py-8 mx-6 block sm:flex justify-between space-y-4 sm:space-y-0">
+          <CommandPallete />
+          <Filter
+            linkPart={CROWDFUNDING_BASE_URL + "fundraiser-list/"}
+            filterOptions={fundraiser_filter}
+            getFilteredList={getData}
+          />
         </div>
 
-        <TableWrapper totalItem={`${fundraisersIns?.count} Total fundraisers`}>
+        <TableWrapper
+          totalItem={`${fundraisersIns?.count} Total fundraisers`}
+          SearchPartner={SearchPartner}
+        >
           <thead className="bg-white">
             <tr>
               {off_admin_table_col_names.map((item) => (
@@ -147,9 +154,11 @@ const FundraiserList = ({
                 >
                   <TableValue value={fundraiser.title} />
                   <TableValue value={fundraiser.goal} />
-                  <ApprovedStatus value={fundraiser.approved_status} />
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                    <ApprovedStatus value={fundraiser.approved_status} />
+                  </td>
                   <TableValue value={fundraiser.open_status} />
-                  <TableValue value={fundraiser.created_at} />
+                  <TableValue value={FormatDate(fundraiser.created_at)} />
                   <TableValue value={fundraiser.organiser_name} />
                   <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
                     <Link href={`/admin/fundraiser-detail/${fundraiser.id}`}>

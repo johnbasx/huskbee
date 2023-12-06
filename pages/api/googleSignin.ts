@@ -19,7 +19,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   );
   const data = await response.json();
 
-  console.log("Google ", data);
+  // console.log("Google ", data);
   let date = new Date().toString();
   const d = new Date(date);
   const expire_date = addSeconds(d, data.expires_in).toString();

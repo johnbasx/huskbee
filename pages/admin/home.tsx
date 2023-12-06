@@ -1,29 +1,37 @@
-import { BanknotesIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import {
-  FcApproval,
   FcBusinessman,
   FcConferenceCall,
-  FcDataSheet,
-  FcDisapprove,
   FcMultipleInputs,
   FcPlanner,
 } from "react-icons/fc";
+import RecentList, { HuskbeeUserList } from "@components/Admin/home/RecentList";
 
+import { ApprovedStatus } from "@components/common/Table/Others";
+import { ChevronRightIcon } from "@heroicons/react/24/solid";
+import { FormatDate } from "@utils/index";
+import { FundraiserEventProps } from "../organiser/fundraisers";
+import { HuskbeeUserProp } from "./users";
 import Layout from "@components/Admin/Layout/Layout";
 import Link from "next/link";
 import type { NextPageContext } from "next";
 import Overview from "@components/Admin/home/overview";
-import RecentList from "@components/Admin/home/RecentList";
 import { USER_BASE_URL } from "@constants/api-urls";
 import { getCookie } from "cookies-next";
 
-type OrganiserListType = {
+export type OrganiserListType = {
   id: string;
   name: string;
   organisation_name: string;
   logo: string;
   status: boolean;
   email: string;
+  created_at: string;
+};
+
+type HomeTableDatasType = {
+  fundraisers_list: FundraiserEventProps[];
+  organisers_list: OrganiserListType[];
+  huskbee_users_list: HuskbeeUserProp[];
 };
 
 type AdminOverview = {
@@ -32,204 +40,201 @@ type AdminOverview = {
   total_user: number;
   total_organiser: number;
 };
+
 export default function Home({
-  organiser_list,
   overview,
+  table_datas,
 }: {
-  organiser_list: OrganiserListType[];
   overview: AdminOverview;
+  table_datas: HomeTableDatasType;
 }) {
   return (
     <Layout pageTitle="Home">
-      {/* Overview */}
-      <div className="px-4 mt-6 sm:px-6 lg:px-8 ">
-        <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-          Overview
-        </h2>
-        <ul
-          role="list"
-          className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-3"
-        >
-          <Overview
-            icon={FcMultipleInputs}
-            title="Fundraiser"
-            total={overview.total_fundraiser}
-            color="border-l-[#4e73df]"
-          />
-          <Overview
-            icon={FcPlanner}
-            title="Events"
-            total={overview.total_events}
-            color="border-l-[#1cc88a]"
-          />
-          <Overview
-            icon={FcBusinessman}
-            title="Users"
-            total={overview.total_user}
-            color="border-l-[#20c9a6]"
-          />
-          <Overview
-            icon={FcConferenceCall}
-            title="Organiser"
-            total={overview.total_organiser}
-            color="border-l-[#f6c23e]"
-          />
-        </ul>
-      </div>
-
-      {/* Organiser list (only on smallest breakpoint) */}
-      <div className="mt-10 sm:hidden">
-        <div className="px-4 sm:px-6">
-          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-            Projects
-          </h2>
+      <div className="space-y-12 py-8 max-w-7xl mx-auto px-4">
+        {/* Overview */}
+        <div className="">
+          <ul
+            role="list"
+            className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-3"
+          >
+            <Overview
+              icon={FcMultipleInputs}
+              title="Fundraiser"
+              total={overview.total_fundraiser}
+              color="border-l-[#4e73df]"
+              link="/admin/fundraiser-list"
+            />
+            <Overview
+              icon={FcPlanner}
+              title="Events"
+              total={overview.total_events}
+              color="border-l-[#1cc88a]"
+              link="/admin/events-list"
+            />
+            <Overview
+              icon={FcBusinessman}
+              title="Users"
+              total={overview.total_user}
+              color="border-l-[#20c9a6]"
+              link="/admin/users"
+            />
+            <Overview
+              icon={FcConferenceCall}
+              title="Organiser"
+              total={overview.total_organiser}
+              color="border-l-[#f6c23e]"
+              link="/admin/organiser-list"
+            />
+          </ul>
         </div>
-        <ul
-          role="list"
-          className="mt-3 border-t border-gray-200 divide-y divide-gray-100"
-        >
-          {organiser_list.map((organiser) => (
-            <li key={organiser.id}>
-              <a
-                href="#"
-                className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
-              >
-                <span className="flex items-center truncate space-x-3">
-                  {/* <span
+
+        <div className="">
+          <div className="max-w-lg md:max-w-none md:grid md:grid-cols-2 md:gap-8">
+            <RecentList organisers={table_datas.organisers_list} />
+            <HuskbeeUserList huskbee_users={table_datas.huskbee_users_list} />
+          </div>
+        </div>
+
+        {/* Organiser list (only on smallest breakpoint) */}
+        <div className=" sm:hidden bg-white">
+          <div className="px-4 sm:px-6">
+            <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+              Recently Crowdfunding events
+            </h2>
+          </div>
+          <ul
+            role="list"
+            className="mt-3 border-t border-gray-200 divide-y divide-gray-100"
+          >
+            {table_datas.fundraisers_list.map((data) => (
+              <li key={data.id}>
+                <a
+                  href="#"
+                  className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
+                >
+                  <span className="flex items-center truncate space-x-3">
+                    {/* <span
                     className={classNames(
-                      organiser.bgColorClass,
+                      data.bgColorClass,
                       "w-2.5 h-2.5 flex-shrink-0 rounded-full"
                     )}
                     aria-hidden="true"
                   /> */}
-                  <span>
-                    <div className="flex-shrink-0 h-10 w-10">
-                      <img
+                    <span>
+                      <div className="flex-shrink-0 h-10 w-10">
+                        {data.title}
+                        {/* <img
                         className="h-10 w-10 rounded-full"
-                        src={organiser.logo}
+                        src={data.logo}
                         alt=""
-                      />
-                    </div>
+                      /> */}
+                      </div>
+                    </span>
+                    <span className="flex gap-x-4 font-medium truncate text-sm leading-6 text-gray-800">
+                      {data.organiser_name}{" "}
+                      <ApprovedStatus value={data.approved_status} />
+                    </span>
                   </span>
-                  <span className="flex gap-x-4 font-medium truncate text-sm leading-6 text-gray-800">
-                    {organiser.organisation_name}{" "}
-                    {organiser.status ? (
-                      <span className="truncate font-normal text-gray-500">
-                        <FcApproval className="h-6 w-6" />
-                      </span>
-                    ) : (
-                      <span className="truncate font-normal text-gray-500">
-                        <FcDisapprove className="h-6 w-6" />
-                      </span>
-                    )}
-                  </span>
-                </span>
-                <ChevronRightIcon
-                  className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                  aria-hidden="true"
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+                  <ChevronRightIcon
+                    className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                    aria-hidden="true"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      {/* Organisers table (small breakpoint and up) */}
-      <div className="hidden mt-8 sm:block mb-10">
-        <div className="align-middle inline-block min-w-full border-b border-gray-200">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Name
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Organisation name
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Status
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Role
-                </th>
-                <th scope="col" className="relative px-6 py-3">
-                  <span className="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {organiser_list.map((organiser) => (
-                <tr key={organiser.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <Link href={`/admin/organiser-detail/${organiser.id}`}>
-                      <span className="flex organisers-center">
-                        <div className="flex-shrink-0 h-10 w-10">
+        {/* Organisers table (small breakpoint and up) */}
+        <div className="hidden sm:block rounded-lg shadow-md border p-6 bg-white">
+          <div className="align-middle inline-block min-w-full border-b border-gray-200 ">
+            <div className="py-4 px-4 text-2xl font-bold text-gray-900 sm:text-2xl">
+              Recent Crowdfunding events
+            </div>
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide "
+                  >
+                    Title
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide"
+                  >
+                    Organiser
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide"
+                  >
+                    Approved Status
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wide"
+                  >
+                    Created at
+                  </th>
+                  <th scope="col" className="relative px-6 py-3">
+                    <span className="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {table_datas.fundraisers_list.map((data) => (
+                  <tr key={data.id}>
+                    <td className="px-6 py-6 whitespace-nowrap">
+                      <Link href={`/admin/fundraiser-detail/${data.id}`}>
+                        <span className="flex organisers-center">
+                          {/* <div className="flex-shrink-0 h-10 w-10">
                           <img
                             className="h-10 w-10 rounded-full"
-                            src={organiser.logo}
+                            src={data.}
                             alt=""
                           />
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            {organiser.name}
+                        </div> */}
+                          <div className="ml-4">
+                            <div className=" font-medium whitespace-nowrap text-sm text-gray-800 capitalize">
+                              {data.title}
+                            </div>
+                            {/* <div className="text-sm text-gray-500">
+                            {data.email}
+                          </div> */}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            {organiser.email}
-                          </div>
-                        </div>
-                      </span>
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {organiser.organisation_name}
-                    </div>
-                    {/* <div className="text-sm text-gray-500">
-                      {organiser.department}
+                        </span>
+                      </Link>
+                    </td>
+                    <td className="px-6 py-6 whitespace-nowrap">
+                      <div className="text-sm whitespace-nowrap text-gray-800">
+                        {data.organiser_name}
+                      </div>
+                      {/* <div className="text-sm text-gray-500">
+                      {data.department}
                     </div> */}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {organiser.status ? (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                        Active
-                      </span>
-                    ) : (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800">
-                        Not Active
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Organiser
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link href={`/admin/organiser-detail/${123}`}>
-                      <span className="text-indigo-600 hover:text-indigo-900">
-                        Detail
-                      </span>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                    <td className="px-6 py-2 whitespace-nowrap">
+                      <ApprovedStatus value={data.approved_status} />
+                    </td>
+                    <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-800">
+                      {FormatDate(data.created_at)}
+                    </td>
+                    <td className="px-6 py-6 whitespace-nowrap text-right text-sm font-medium">
+                      <Link href={`/admin/fundraiser-detail/${data.id}`}>
+                        <span className="text-indigo-600 hover:text-indigo-900">
+                          Detail
+                        </span>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
-      <RecentList />
     </Layout>
   );
 }
@@ -247,15 +252,13 @@ export async function getServerSideProps(context: NextPageContext) {
   });
 
   const overview = await overview_response.json();
-  // console.log("overview: ", overview);
 
-  const response = await fetch(USER_BASE_URL + "organiser-list", {
+  const table_response = await fetch(USER_BASE_URL + "admin-home-tables", {
     headers: { Authorization: `Bearer ${token}` },
   });
-  const list = await response.json();
-  const organiser_list = list.results;
+  const table_datas = await table_response.json();
 
   return {
-    props: { token, overview, login, organiser_list },
+    props: { token, overview, login, table_datas },
   };
 }

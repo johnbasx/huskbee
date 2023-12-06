@@ -1,3 +1,7 @@
+import {
+  AddressTabListStore,
+  AddressTabListType,
+} from "@store/organiser-profile-store";
 import React, { ReactNode, useEffect, useState } from "react";
 
 import AddressInfo from "@components/Organiser/Profile/AddressInfo";
@@ -5,6 +9,7 @@ import BankDetail from "@components/Organiser/Profile/BankDetail";
 import Layout from "@components/Organiser/Layout/Layout";
 import { NextPageContext } from "next";
 import { OrganiserProfileStore } from "@store/organiser-profile-store";
+import { Toaster } from "react-hot-toast";
 import { USER_BASE_URL } from "@constants/api-urls";
 import UpdateProfile from "@components/Organiser/Profile/UpdateProfile";
 import { getCookie } from "cookies-next";
@@ -32,6 +37,7 @@ export interface BankDetailProps {
   organiser: string;
   default: boolean;
 }
+
 export interface OrganiserProfileProps {
   id: string;
   user_id: string;
@@ -61,24 +67,30 @@ const Profile = ({
   profile: ExOrganiserProfileProps;
 }) => {
   const { setOrgToken } = orgTokenStore();
-
-  const { orgProfile, setOrgProfile, setAddresses, setBankDetail } =
+  const { setAddressTabList } = AddressTabListStore();
+  const { orgProfile, setOrgProfile, addresses, setAddresses } =
     OrganiserProfileStore();
 
   useEffect(() => {
     setOrgToken(token);
-  }, []);
-
-  useEffect(() => {
     setOrgProfile(profile);
     setAddresses(profile.address);
-    setBankDetail(profile.bank_detail);
-  }, [orgProfile]);
+
+    let list: AddressTabListType[] = [];
+    profile.address.map((item) => {
+      list = [...list, { name: item.name, default: item.default }];
+    });
+    setAddressTabList(list);
+  }, []);
 
   return (
-    <Layout>
-      <div className="max-w-5xl mx-auto py-12">
-        <Wrapper title="Profile">
+    <Layout pageTitle="Profile">
+      <Toaster />
+      <div className="mt-8 max-w-3xl mx-auto gap-6 sm:px-6 lg:max-w-7xl pb-12 space-y-12">
+        <Wrapper
+          title="Organiser profile"
+          subtitle="Information about the Organiser"
+        >
           <ProfileContent
             lookUp={orgProfile.id}
             name="name"
@@ -107,14 +119,25 @@ const Profile = ({
             value={orgProfile.organiser_type}
             link="update-organiser-profile/"
           />
+          <ProfileContent
+            lookUp={orgProfile.id}
+            name="description"
+            label="Description"
+            value={`${orgProfile.description}`}
+            link="update-organiser-profile/"
+          />
         </Wrapper>
-
-        <Wrapper title="Bank Detail">
-          <BankDetail />
-        </Wrapper>
-
-        <Wrapper title="Address info">
-          <AddressInfo />
+        {/* <Wrapper
+          title="Bank information"
+          subtitle={`Different Bank Accounts for ${profile.organisation_name}`}
+        >
+          <BankDetail BankAccounts={profile.bank_detail} />
+        </Wrapper>*/}
+        <Wrapper
+          title="Organiser Addresses"
+          subtitle={`Different address for ${profile.organisation_name}`}
+        >
+          <AddressInfo Addresses={addresses} SetAddress={setAddresses} />
         </Wrapper>
       </div>
     </Layout>
@@ -162,32 +185,21 @@ export const ProfileContent = ({
   value,
   link,
 }: ProfileContentProp) => {
-  const [content, setContent] = useState("");
-
-  useEffect(() => {
-    setContent(value);
-  }, []);
-
   return (
-    <div className="bg-transparent py-6 lg:py-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
-      <dl className="grid grid-cols-1 sm:gap-6 text-base sm:grid-cols-2 md:gap-x-8 lg:col-span-6">
-        <div>
-          <dt className=" font-bold text-gray-200">{label}</dt>
+    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt className="text-sm font-medium leading-6 text-gray-900">{label}</dt>
+      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex justify-between space-x-4">
+        <span>{value}</span>
+        <div className="mr-2 flex-shrink-0">
+          <UpdateProfile
+            lookUp={lookUp}
+            name={name}
+            label={label}
+            link={link}
+            defaultValue={value}
+          />
         </div>
-        <div>
-          <dt className="font-medium text-gray-300">
-            {content == "" ? value : content}
-          </dt>
-        </div>
-      </dl>
-
-      <UpdateProfile
-        setContent={setContent}
-        lookUp={lookUp}
-        name={name}
-        label={label}
-        link={link}
-      />
+      </dd>
     </div>
   );
 };
@@ -195,14 +207,23 @@ export const ProfileContent = ({
 const Wrapper = ({
   children,
   title,
+  subtitle,
 }: {
   children: ReactNode;
   title: string;
+  subtitle: string;
 }) => {
   return (
-    <div className="mt-8 px-4 pt-4 md:px-8 md:pt-8 backdrop-blur-md bg-zinc-800/20 rounded-3xl border border-zinc-700/40">
-      <h2 className="font-bold text-2xl text-gray-50 ">{title}</h2>
-      <div className="divide-y divide-gray-700">{children}</div>
+    <div className="bg-white w-full rounded-lg border p-6 shadow-md">
+      <div className="px-4 sm:px-0 text-center">
+        <h3 className="text-xl font-semibold leading-7 text-gray-900">
+          {title}
+        </h3>
+        <p className="mt-1  text-sm leading-6 text-gray-500">{subtitle}</p>
+      </div>
+      <div className="mt-6 border-t border-gray-100">
+        <dl className="divide-y divide-gray-100">{children}</dl>
+      </div>
     </div>
   );
 };

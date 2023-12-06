@@ -11,13 +11,13 @@ type FilterOptionType = {
   value: string;
 };
 
-const Filter = ({
-  filterOptions,
-  getFilteredList,
-}: {
+interface FilterProp {
+  linkPart: string;
   filterOptions: FilterOptionType[];
   getFilteredList: (url: string | null) => {};
-}) => {
+}
+
+const Filter = ({ linkPart, filterOptions, getFilteredList }: FilterProp) => {
   const [selected, setSelected] = useState(filterOptions[0]);
   const { rootUrl, setRootUrl, currentPage, setCurrentPage } = RootUrlStore();
 
@@ -26,21 +26,13 @@ const Filter = ({
     option: string
   ) => {
     setSelected(e);
-    setRootUrl(CROWDFUNDING_BASE_URL + "fundraiser-list/" + e.value + "?page=");
-    getFilteredList(CROWDFUNDING_BASE_URL + "fundraiser-list/" + e.value);
+    setRootUrl(linkPart + e.value + "?page=");
+    getFilteredList(linkPart + e.value);
     setCurrentPage(1);
   };
 
-  useEffect(() => {
-    // console.log("selcted: ", selected);
-    // getSelectedOptionData();
-  }, []);
-
-  // const OnChangeHandler = ()=> {
-  //   setSelected
-  // }
   return (
-    <div className=" top-16 w-72">
+    <div className="top-16 w-72">
       <Listbox
         value={selected}
         onChange={(e) => {
@@ -48,7 +40,7 @@ const Filter = ({
           getSelectedOptionData(e, selected.value);
         }}
       >
-        <div className="relative mt-1 border-gray-300 rounded-md">
+        <div className="relative mt-1 border-gray-300 rounded-md border">
           <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             <span className="block truncate text-black">{selected.name}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -69,7 +61,8 @@ const Filter = ({
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                     }`
                   }
                   value={option}
@@ -79,8 +72,9 @@ const Filter = ({
                     // onChange={() => getSelectedOptionData(option.value)}
                     >
                       <span
-                        className={`block truncate text-black ${selected ? "font-medium" : "font-normal"
-                          }`}
+                        className={`block truncate text-black ${
+                          selected ? "font-medium" : "font-normal"
+                        }`}
                       >
                         {option.name}
                       </span>

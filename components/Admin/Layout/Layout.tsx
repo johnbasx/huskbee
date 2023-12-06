@@ -1,63 +1,19 @@
-import {
-  Bars4Icon,
-  ChevronDownIcon,
-  ClockIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import {
-  ChevronDoubleRightIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/solid";
+import { Bars4Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, ReactNode, useEffect, useState } from "react";
-import TopNavbar, { ProfileDropDownList } from "./TopNavbar";
+import {
+  crowd_funding,
+  navigation,
+  off_admin_dropdown_list,
+} from "@constants/list-items";
 
 import Head from "next/head";
 import Link from "next/link";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import ProfileDropDown from "@components/common/ProfileDropDown";
+import TopNavbar from "./TopNavbar";
+import axios from "axios";
 import { useRouter } from "next/router";
-
-const navigation = [
-  { name: "Home", href: "/admin/home", icon: HomeIcon, current: true },
-  {
-    name: "Organiser List",
-    href: "/admin/organiser-list",
-    icon: Bars4Icon,
-    current: false,
-  },
-  {
-    name: "Huskbee Users",
-    href: "/admin/users",
-    icon: UsersIcon,
-    current: false,
-  },
-  {
-    name: "Recent activity",
-    href: "/admin/rcent-activity",
-    icon: ClockIcon,
-    current: false,
-  },
-];
-const crowd_funding = [
-  {
-    name: "Fundraiser List",
-    href: "/admin/fundraiser-list",
-    bgColorClass: "bg-indigo-500",
-  },
-  { name: "Donors", href: "/admin/donor-list", bgColorClass: "bg-green-500" },
-  {
-    name: "All donations",
-    href: "/admin/all-donations",
-    bgColorClass: "bg-red-500",
-  },
-  { name: "Issues and Report", href: "#", bgColorClass: "bg-yellow-500" },
-  {
-    name: "Analytics",
-    href: "/admin/all-donations",
-    bgColorClass: "bg-red-500",
-  },
-];
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -74,10 +30,20 @@ const Layout = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log(router.pathname);
     const el = document.querySelector("html") as HTMLElement | null;
-    el != null ? el.classList.add("bg-gray-100") : "";
+    el != null ? el.classList.add("bg-gray-50") : "";
   }, []);
+
+  const handleSignOut = async () => {
+    try {
+      const response = await axios.post("/api/office-admin-logout");
+
+      router.push("/admin/login");
+    } catch (e: any) {
+      console.log(e);
+    }
+    console.log("logout");
+  };
   return (
     <>
       <Head>
@@ -93,7 +59,7 @@ const Layout = ({
         {/* <meta name="apple-mobile-web-app-status-bar" content="#0f172a" /> */}
         <meta name="apple-mobile-web-app-status-bar" content="#0f172a" />
       </Head>
-      <div className="min-h-full bg-gray-100">
+      <div className="min-h-full bg-gray-50">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -224,8 +190,8 @@ const Layout = ({
         </Transition.Root>
 
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-gray-200 lg:pt-5 lg:pb-4 lg:bg-gray-100">
-          <div className=" items-center flex-shrink-0 px-6">
+        <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-gray-200 lg:pt-5 lg:pb-4 lg:bg-white">
+          <div className="items-center flex-shrink-0 px-6">
             <div className="flex gap-x-2">
               <img
                 className="h-8 w-auto"
@@ -242,7 +208,7 @@ const Layout = ({
             </span>
           </div>
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="mt-6 h-0 flex-1 flex flex-col overflow-y-auto">
+          <div className="mt-1 h-0 flex-1 flex flex-col overflow-y-auto">
             {/* Navigation */}
             <nav className="px-3 mt-6">
               <div className="space-y-1">
@@ -349,19 +315,12 @@ const Layout = ({
               </div>
               <div className="flex items-center">
                 {/* Profile dropdown */}
-                <Menu as="div" className="ml-3 relative">
-                  <div>
-                    <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <ProfileDropDownList />
-                </Menu>
+                <ProfileDropDown
+                  content={localStorage.getItem("off_username")}
+                  handleSignOut={handleSignOut}
+                  image="/logo/axewhy-colorful-logo.png"
+                  listItems={off_admin_dropdown_list}
+                />
               </div>
             </div>
           </div>

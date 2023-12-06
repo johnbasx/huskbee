@@ -10,6 +10,7 @@ import { BOOKING_BASE_URL } from "@constants/api-urls";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { EventDetailProps } from "../event-detail/[eventId]";
 import Layout from "@components/Organiser/Layout/Layout";
+import Link from "next/link";
 import { NextPageContext } from "next";
 import { TableStore } from "@store/table-store";
 import axios from "axios";
@@ -161,12 +162,11 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
                           {event.end_time}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <a
-                            href="#"
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            Detail
-                          </a>
+                          <Link href={`/organiser/event-detail/${event.id}`}>
+                            <span className="text-indigo-600 hover:text-indigo-900">
+                              Detail
+                            </span>
+                          </Link>
                         </td>
                       </tr>
                     ))}
@@ -197,7 +197,6 @@ export async function getServerSideProps(context: NextPageContext) {
     },
   });
   const events = await response.json();
-  console.log(events);
 
   return {
     props: { token, login, events },

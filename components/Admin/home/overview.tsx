@@ -1,20 +1,19 @@
+import Link from "next/link";
 import React from "react";
 
-const Overview = ({
-  icon,
-  title,
-  total,
-  color,
-}: {
+type OverviewType = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
   total: number;
   color: string;
-}) => {
+  link: string;
+};
+
+const Overview = ({ icon, title, total, color, link }: OverviewType) => {
   const Icon = icon;
   return (
     <div
-      className={`bg-white border border-l-[5px] ${color} shadow-xl overflow-hidden shadow rounded-lg`}
+      className={`bg-white border border-l-[5px] ${color} shadow-md overflow-hidden rounded-lg`}
     >
       <div className="p-5">
         <div className="flex items-center">
@@ -35,9 +34,11 @@ const Overview = ({
       </div>
       <div className="bg-gray-50 px-5 py-3">
         <div className="text-sm">
-          <a href="#" className="font-medium text-cyan-700 hover:text-cyan-900">
-            View all
-          </a>
+          <Link href={link}>
+            <span className="font-medium text-cyan-700 hover:text-cyan-900">
+              View all
+            </span>
+          </Link>
         </div>
       </div>
     </div>

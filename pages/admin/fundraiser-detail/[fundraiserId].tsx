@@ -5,7 +5,7 @@ import {
 import React, { useEffect } from "react";
 
 import Actions from "@components/Admin/FundraiserDetail/Actions";
-import { CRAWDFUNDING_BASE_URL } from "@constants/api-urls";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import DetailWrapper from "@components/Admin/FundraiserDetail/DetailWrapper";
 import Donors from "@components/Admin/FundraiserDetail/Donors";
 import { FundraiserDetailStore } from "@store/office-admin-store";
@@ -172,7 +172,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const token = getCookie("admin_token", { req, res });
 
   const response = await fetch(
-    CRAWDFUNDING_BASE_URL + "fundraiser-detail/" + fundraiserId,
+    CROWDFUNDING_BASE_URL + "a-fundraiser-detail/" + fundraiserId,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -182,7 +182,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const detail = await response.json();
 
   const donors_res = await fetch(
-    CRAWDFUNDING_BASE_URL + "donors/" + fundraiserId,
+    CROWDFUNDING_BASE_URL + "a-fund-donors/" + fundraiserId,
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -6,9 +6,6 @@ import {
   RegistrationFormsStore,
 } from "@store/index";
 
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { Switch } from "@headlessui/react";
-
 export interface AddressFormValues {
   name: string;
   pin_code: string;
@@ -33,7 +30,6 @@ const AddressForm = () => {
     setOrgDetailFormStatus,
   } = RegistrationFormsStore();
   const onSubmit: SubmitHandler<AddressFormValues> = (data) => {
-    // console.log("Test", data);
     setAddress(data);
   };
 

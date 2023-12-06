@@ -1,4 +1,5 @@
 import { DonationObjType } from "../pages/admin/all-donations";
+import { DonorsListObjProp } from "../pages/admin/donor-list";
 import { FundraisersObjType } from "../pages/admin/fundraiser-list";
 import { HuskbeeUserObjProp } from "../pages/admin/users";
 import { create } from "zustand";
@@ -49,4 +50,13 @@ interface usersProp {
 export const usersStore = create<usersProp>((set, get) => ({
   usersObj: null,
   setUserObj: (obj) => set({ usersObj: obj }),
+}));
+
+interface donorsListProp {
+  donorsListObj: DonorsListObjProp | null;
+  setDonorsListObj: (obj: DonorsListObjProp) => void;
+}
+export const donorsListStore = create<donorsListProp>((set, get) => ({
+  donorsListObj: null,
+  setDonorsListObj: (obj) => set({ donorsListObj: obj }),
 }));

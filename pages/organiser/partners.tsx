@@ -5,29 +5,6 @@ import { NextPageContext } from "next";
 import React from "react";
 import { getCookie } from "cookies-next";
 
-const incentives = [
-  {
-    name: "Free shipping",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-shipping-simple.svg",
-    description:
-      "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
-  },
-  {
-    name: "10-year warranty",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-warranty-simple.svg",
-    description:
-      "If it breaks in the first 10 years we'll replace it. After that you're on your own though.",
-  },
-  {
-    name: "Exchanges",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-exchange-simple.svg",
-    description:
-      "If you don't like it, trade it to one of your friends for something of theirs. Don't send it here though.",
-  },
-];
 const Partners = ({
   token,
   organiser_partners,
@@ -36,7 +13,7 @@ const Partners = ({
   organiser_partners: EventPartnersProps[];
 }) => {
   return (
-    <Layout>
+    <Layout pageTitle="Partners">
       <div className="bg-transparent">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
           <div className="bg-transparent rounded-2xl px-6 py-16 sm:p-16">

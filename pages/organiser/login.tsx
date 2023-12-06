@@ -21,7 +21,6 @@ const Login = () => {
 
     try {
       const response = await axios.post("/api/organiserSignin", data);
-      // console.log(response.data);
       localStorage.setItem("user", response.data.user);
       toast.success("Successfully Login");
       router.push("/organiser/home");
@@ -51,16 +50,16 @@ const Login = () => {
                 <Image
                   alt="Company Logo"
                   src="/logo/axewhy-colorful-logo.png"
-                  width={100}
-                  height={100}
+                  width={300}
+                  height={300}
                   className="object-contain h-5"
                 />
               </div>
               <div className="relative flex flex-col items-center justify-center w-full">
-                <h2 className="mt-6 text-3xl font-extrabold text-gray-100">
+                <h2 className="mt-6 text-3xl font-extrabold text-black">
                   HuskBee
                 </h2>
-                <p className="mt-2 text-sm text-gray-200">
+                <p className="mt-2 text-sm text-blue-700">
                   Organiser Login
                   {/* Or{" "}
                   <a
