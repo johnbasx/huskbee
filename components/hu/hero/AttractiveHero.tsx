@@ -1,11 +1,10 @@
 import { TbArrowDown, TbArrowRight } from "react-icons/tb";
 
 import { HiStop } from "react-icons/hi2";
+import { HiStopCircle } from "react-icons/hi2";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-// import { HiStopCircle } from "react-icons/hi2";
 
 const AttractiveHero = () => {
   return (
