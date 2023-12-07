@@ -1,10 +1,14 @@
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+
 import ActionHero from "@components/exocrowd-client/ActionHero";
 import AttractiveHero from "@components/exocrowd-client/hero/AttractiveHero";
+import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import CardScrollWrapper from "@components/exocrowd-client/CardScrollWrapper";
 import CausesSection from "@components/exocrowd-client/CausesSection";
 import DisplacedStats from "@components/exocrowd-client/DisplacedStats";
 import FunctionalitiesGrid from "@components/exocrowd-client/sections/FunctionalitiesGrid";
 import FundraiserCardScroll from "@components/exocrowd-client/scroll/FundraiserCardScroll";
+import { FundraiserEventsProps } from "./organiser/fundraiser-detail/[fundraiserId]";
 import FundraisersFor from "@components/exocrowd-client/sections/FundraisersFor";
 import HeroFeature from "@components/exocrowd-client/hero/HeroFeature";
 import Layout from "@components/exocrowd-client/Layout";
@@ -13,15 +17,24 @@ import RecommendCardScroll from "@components/exocrowd-client/RecommendCardScroll
 import StackedCards from "@components/exocrowd-client/StackedCards";
 import TrustAndSafetySection from "@components/exocrowd-client/sections/TrustAndSafetySection";
 
+export const getServerSideProps: GetServerSideProps<{
+  fundraisers: FundraiserEventsProps[];
+}> = async () => {
+  const res = await fetch(CROWDFUNDING_BASE_URL + "fundraisers/?q=all");
+  const fundraisers = await res.json();
+  // const fundraisers= instance.results
+
+  return {
+    props: { fundraisers },
+  };
+};
+
 const IndexPage = ({
-  login,
-}: // events,
-{
-  login: boolean;
-  // events: EventDetailProps[];
-}) => {
+  fundraisers,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  console.log("fundraisers: ", fundraisers);
   return (
-    <Layout title='Exocrowd Home | We are stronger united'>
+    <Layout title="Exocrowd Home | We are stronger united">
       <AttractiveHero />
       <HeroFeature />
       {/* <DisplacedStats /> */}
@@ -33,7 +46,7 @@ const IndexPage = ({
       {/* <HeroSection /> */}
       {/* <CardScrollWrapper /> */}
       {/* <RecommendCardScroll /> */}
-      <FundraiserCardScroll />
+      <FundraiserCardScroll fundraisers={fundraisers} />
 
       {/* <CausesSection /> */}
       <TrustAndSafetySection />

@@ -14,3 +14,8 @@ export const ConvertDatetoYMD = (str: Date) => {
     day = ("0" + date.getDate()).slice(-2);
   return [date.getFullYear(), mnth, day].join("-");
 };
+
+export const GetPercentage = (value: number, total: number) => {
+  const percentage = (value / total) * 100;
+  return percentage.toString() + "%";
+};
