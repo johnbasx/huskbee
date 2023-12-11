@@ -1,4 +1,4 @@
-import { TbArrowDown, TbArrowRight } from "react-icons/tb";
+import { TbArrowDown, TbArrowRight, TbCircleFilled } from "react-icons/tb";
 
 import { HiStop } from "react-icons/hi2";
 import Image from "next/image";
@@ -79,7 +79,7 @@ const AttractiveHero = () => {
                   className='inline-flex items-center gap-2 rounded-full px-6 py-3 bg-black text-white font-semibold text-lg transition hover:bg-slate-800'
                 >
                   Start helping now
-                  {/* <TbCircleFilled className='h-4 w-4 text-blue-300' /> */}
+                  <TbCircleFilled className='h-4 w-4 text-blue-300' />
                 </Link>
                 <Link
                   href='#!'
