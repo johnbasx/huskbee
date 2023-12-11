@@ -1,8 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { serialize } from "cookie";
+import { BASE_URL } from "@constants/api-urls";
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+const OrganiserSigninAPI = async function (
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -13,14 +17,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   let data;
   try {
-    const response = await fetch(
-      "http://127.0.0.1:8000/api/user/organiser-login",
-      {
-        method: "POST",
-        body: JSON.stringify(credential),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await fetch(`${BASE_URL}api/user/organiser-login`, {
+      method: "POST",
+      body: JSON.stringify(credential),
+      headers: { "Content-Type": "application/json" },
+    });
     data = await response.json();
   } catch (e: any) {
     console.log("error: ", e);
@@ -48,9 +49,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     }),
   ]);
   res.status(200).json({ user: data.username });
-}
+};
 
 function addSeconds(date: Date, seconds: number) {
   date.setSeconds(date.getSeconds() + seconds);
   return date;
 }
+
+export default OrganiserSigninAPI;

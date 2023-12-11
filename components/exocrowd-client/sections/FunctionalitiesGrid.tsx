@@ -8,6 +8,7 @@ import {
   TbMessageDots,
   TbShield,
   TbClock2,
+  TbCircleFilled,
 } from "react-icons/tb";
 
 export const functionalitiesData = [
@@ -95,7 +96,7 @@ const FunctionalitiesGrid = () => {
             className='inline-flex items-center gap-2 rounded-full px-6 py-3 bg-black text-white font-semibold text-lg transition hover:bg-slate-900'
           >
             Start helping now
-            <TbCircleDot className='h-4 w-4 text-blue-300 animate-pulse' />
+            <TbCircleFilled className='h-4 w-4 text-blue-300 animate-pulse' />
           </Link>
         </div>
       </div>

@@ -16,18 +16,7 @@ import MoreWaysScroll from "@components/exocrowd-client/scroll/MoreWaysScroll";
 import RecommendCardScroll from "@components/exocrowd-client/RecommendCardScroll";
 import StackedCards from "@components/exocrowd-client/StackedCards";
 import TrustAndSafetySection from "@components/exocrowd-client/sections/TrustAndSafetySection";
-
-export const getServerSideProps: GetServerSideProps<{
-  fundraisers: FundraiserEventsProps[];
-}> = async () => {
-  const res = await fetch(CROWDFUNDING_BASE_URL + "fundraisers/?q=all");
-  const fundraisers = await res.json();
-  // const fundraisers= instance.results
-
-  return {
-    props: { fundraisers },
-  };
-};
+import { createRouter } from "next-connect";
 
 const IndexPage = ({
   fundraisers,
@@ -56,3 +45,32 @@ const IndexPage = ({
 };
 
 export default IndexPage;
+
+// export async function getServerSideProps(context: NextPageContext) {
+//   const req = context.req;
+//   const res = context.res;
+//   const login_status = getCookie("login", { req, res });
+//   const login = login_status ? login_status == true : false;
+
+//   const response = await fetch(BOOKING_BASE_URL + "upcoming-events");
+//   const instance = await response.json();
+//   const events= instance.results
+
+//   return {
+//     props: { login, events },
+//   };
+// }
+
+export const getServerSideProps: GetServerSideProps<{
+  fundraisers: FundraiserEventsProps[];
+}> = async () => {
+  const data = await fetch(CROWDFUNDING_BASE_URL + "fundraisers/?q=all");
+  const fundraisers = await data.json();
+  if (!fundraisers) {
+    // https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#notfound
+    return {
+      notFound: true,
+    };
+  }
+  return { props: { fundraisers } };
+};

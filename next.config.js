@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: [
+      "192.168.29.199",
       "images.unsplash.com",
       "127.0.0.1",
       "picsum.photos",

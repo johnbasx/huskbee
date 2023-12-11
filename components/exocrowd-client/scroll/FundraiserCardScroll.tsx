@@ -176,10 +176,10 @@ export default function FundraiserCardScroll({
   );
 
   return (
-    <section className="max-w-screen-2xl mx-auto px-0 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-24">
-      <div className="navigation-wrapper relative">
-        <div ref={sliderRef} className="keen-slider py-12 px-6 lg:px-0">
-          {fundraisers.map((data, index) => (
+    <section className='max-w-screen-2xl mx-auto px-0 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-24'>
+      <div className='navigation-wrapper relative'>
+        <div ref={sliderRef} className='keen-slider py-12 px-6 lg:px-0'>
+          {fundraisers.reverse().map((data, index) => (
             <DisplayCardBlock
               key={"display-card-block-" + data.id + index}
               data={data}
@@ -230,9 +230,9 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
   // const pc = {GetPercentage(data.total_donation, data.target_amount)}
 
   return (
-    <div className="max-w-sm cursor-pointer keen-slider__slide shadow-lg flex flex-col rounded-2xl bg-white overflow-hidden">
+    <div className='max-w-sm cursor-pointer keen-slider__slide shadow-lg flex flex-col rounded-2xl bg-white overflow-hidden'>
       <Image
-        className="w-full h-[8rem] md:h-[12rem] object-cover"
+        className='w-full h-[8rem] md:h-[12rem] object-cover'
         width={500}
         height={500}
         priority
@@ -243,37 +243,37 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
             ? "https://picsum.photos/45/500"
             : BASE_URL + data.fundraiser_photo[0].photo
         }
-        alt="donate"
+        alt='donate'
       />
-      <div className="px-4 py-4 text-black flex flex-col gap-2">
-        <div className="">
-          <div className="font-bold text-xl h-14 mb-2 line-clamp-2">
+      <div className='px-4 py-4 text-black flex flex-col gap-2'>
+        <div className=''>
+          <div className='font-bold text-xl h-14 mb-2 line-clamp-2'>
             {data.title}
           </div>
-          <p className="text-gray-700 text-xs line-clamp-2">
+          <p className='text-gray-700 text-xs line-clamp-2'>
             {data.description}
           </p>
         </div>
-        <div className="grid grid-cols-2 divide-x gap-1">
-          <div className="text-base flex flex-col">
-            <span className="text-sm text-gray-500">Raised</span>
-            <span className="font-extrabold text-blue-600 text-lg font-sans tracking-tight">
+        <div className='grid grid-cols-2 divide-x gap-1'>
+          <div className='text-base flex flex-col'>
+            <span className='text-sm text-gray-500'>Raised</span>
+            <span className='font-extrabold text-blue-600 text-lg font-sans tracking-tight'>
               {toIndianCurrency(data.total_donation)}
             </span>
-            <span className="text-xs font-nunito font-normal">
+            <span className='text-xs font-nunito font-normal'>
               out of{" "}
-              <span className="font-sans tracking-tight">
+              <span className='font-sans tracking-tight'>
                 {toIndianCurrency(data.target_amount)}
               </span>
             </span>
           </div>
-          <div className="text-base px-2 flex flex-col gap-1 text-gray-500">
-            <span className="text-sm">Created by</span>
-            <div className="relative flex items-center gap-1 justify-start">
+          <div className='text-base px-2 flex flex-col gap-1 text-gray-500'>
+            <span className='text-sm'>Created by</span>
+            <div className='relative flex items-center gap-1 justify-start'>
               <Image
                 height={20}
                 width={20}
-                className="rounded-full object-cover h-8 w-8"
+                className='rounded-full object-cover h-8 w-8'
                 alt={data.organiser_name}
                 src={
                   data.organiser_logo === ""
@@ -281,15 +281,15 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
                     : BASE_URL + "media/" + data.organiser_logo
                 }
               />
-              <span className="text-xs line-clamp-1">
+              <span className='text-xs line-clamp-1'>
                 {data.organiser_name}
               </span>
             </div>
           </div>
         </div>
         {/* {GetPercentage(data.total_donation, data.target_amount).toString()} */}
-        <div className="mt-2">
-          <span id="ProgressLabel" className="sr-only">
+        <div className='mt-2'>
+          <span id='ProgressLabel' className='sr-only'>
             Loading
           </span>
 
@@ -297,10 +297,10 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
             // role="progressbar"
             // aria-labelledby="ProgressLabel"
             // aria-valuenow="75"
-            className="block rounded-full bg-gray-200"
+            className='block rounded-full bg-gray-200'
           >
             <span
-              className="block h-2.5 rounded-full bg-gradient-to-r from-purple-200 via-violet-500 to-blue-600"
+              className='block h-2.5 rounded-full bg-gradient-to-r from-purple-200 via-violet-500 to-blue-600'
               style={{
                 width: GetPercentage(data.total_donation, data.target_amount),
               }}
@@ -309,25 +309,33 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
           </span>
         </div>
 
-        <LatestSupportersAvatars recentDonors={data.recent_donors} />
+        <LatestSupportersAvatars
+          recent_donors={data.recent_donors}
+          total_donors={data.total_donors}
+        />
       </div>
     </div>
   );
 };
 
+export type LatestSupporterType = {
+  recent_donors: RecentDonorType[];
+  total_donors: number;
+};
+
 const LatestSupportersAvatars = ({
-  recentDonors,
-}: {
-  recentDonors: RecentDonorType[];
-}) => {
+  recent_donors,
+  total_donors,
+}: LatestSupporterType) => {
   return (
     <div>
-      <span className="text-xs text-gray-500">Latest Supporters</span>
-      <div className="flex flex-row-reverse justify-end px-3">
-        <div className="relative font-sans m-1 ml-0 mr-1 flex h-8 w-auto items-center justify-center rounded-full text-[0.6rem] md:text-xs text-gray-500">
-          +512 others
+      <span className='text-xs text-gray-500'>Latest Supporters</span>
+      <div className='flex flex-row-reverse justify-end px-3'>
+        <div className='relative font-sans m-1 ml-0 mr-1 flex h-8 w-auto items-center justify-center rounded-full text-[0.6rem] md:text-xs text-gray-500'>
+          {total_donors > recent_donors.length &&
+            `+ ${total_donors - recent_donors.length} others`}
         </div>
-        {recentDonors.map((data, index) => (
+        {recent_donors.slice(0, 4).map((data, index) => (
           <AvatarImage
             key={"avatar-image" + data.donated_by__photo + index}
             photo={data.donated_by__photo}
@@ -347,12 +355,14 @@ const LatestSupportersAvatars = ({
 // const AvatarImage = ({ temporaryProp }: { temporaryProp: number }) => {
 const AvatarImage = ({ photo }: { photo: string }) => {
   return (
-    <div className="relative m-1 -ml-3 mr-1 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white">
+    <div className='relative m-1 -ml-3 mr-1 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white'>
       <Image
         height={20}
         width={20}
-        className="rounded-full object-cover h-7 w-7"
-        alt="avatar image"
+        quality={10}
+        priority
+        className='rounded-full object-cover h-7 w-7'
+        alt='avatar image'
         src={BASE_URL + "media/" + photo}
         // src={`https://randomuser.me/api/portraits/men/${temporaryProp}.jpg`}
       />
