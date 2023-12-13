@@ -11,7 +11,8 @@ import toast, { Toaster } from "react-hot-toast";
 
 import AuthLayout from "@components/layout/AuthLayout";
 import ColorfulBlur from "@components/blur/ColorfulBlur";
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin } from "@react-oauth/google";
+// import { GoogleLogin } from "react-google-login";
 import { GoogleSvg } from "@components/common/GoogleSvg";
 import Image from "next/image";
 import Link from "next/link";
@@ -289,6 +290,13 @@ const Signup: NextPage = () => {
 							</form>
 
 							<GoogleLogin
+								onSuccess={responseGoogle}
+								onError={() =>
+									console.log("Something went wrong in google sign up")
+								}
+								useOneTap
+							/>
+							{/* <GoogleLogin
 								clientId="829759909963-gqla1538rhsb9gj92b8dbfkl0oan496u.apps.googleusercontent.com"
 								render={(renderProps) => (
 									// <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
@@ -313,7 +321,7 @@ const Signup: NextPage = () => {
 								onSuccess={responseGoogle}
 								onFailure={responseGoogle}
 								cookiePolicy="single_host_origin"
-							/>
+							/> */}
 
 							<div className="flex items-center justify-center mt-4">
 								{/* <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span> */}
