@@ -19,29 +19,29 @@ import TrustAndSafetySection from "@components/exocrowd-client/sections/TrustAnd
 import { createRouter } from "next-connect";
 
 const IndexPage = ({
-  fundraisers,
+	fundraisers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  console.log("fundraisers: ", fundraisers);
-  return (
-    <Layout title='Exocrowd Home | We are stronger united'>
-      <AttractiveHero />
-      <HeroFeature />
-      {/* <DisplacedStats /> */}
-      <MoreWaysScroll />
-      <FunctionalitiesGrid />
-      <ActionHero />
+	console.log("fundraisers: ", fundraisers);
+	return (
+		<Layout title="Exocrowd Home | We are stronger united">
+			<AttractiveHero />
+			<HeroFeature />
+			{/* <DisplacedStats /> */}
+			<MoreWaysScroll />
+			<FunctionalitiesGrid />
+			<ActionHero />
 
-      {/* <StackedCards /> */}
-      {/* <HeroSection /> */}
-      {/* <CardScrollWrapper /> */}
-      {/* <RecommendCardScroll /> */}
-      <FundraiserCardScroll fundraisers={fundraisers} />
+			{/* <StackedCards /> */}
+			{/* <HeroSection /> */}
+			{/* <CardScrollWrapper /> */}
+			{/* <RecommendCardScroll /> */}
+			<FundraiserCardScroll fundraisers={fundraisers} />
 
-      {/* <CausesSection /> */}
-      <TrustAndSafetySection />
-      {/* <FundraisersFor /> */}
-    </Layout>
-  );
+			{/* <CausesSection /> */}
+			<TrustAndSafetySection />
+			{/* <FundraisersFor /> */}
+		</Layout>
+	);
 };
 
 export default IndexPage;
@@ -62,15 +62,15 @@ export default IndexPage;
 // }
 
 export const getServerSideProps: GetServerSideProps<{
-  fundraisers: FundraiserEventsProps[];
+	fundraisers: FundraiserEventsProps[];
 }> = async () => {
-  const data = await fetch(CROWDFUNDING_BASE_URL + "fundraisers/?q=all");
-  const fundraisers = await data.json();
-  if (!fundraisers) {
-    // https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#notfound
-    return {
-      notFound: true,
-    };
-  }
-  return { props: { fundraisers } };
+	const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);
+	const fundraisers = await data.json();
+	if (!fundraisers) {
+		// https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#notfound
+		return {
+			notFound: true,
+		};
+	}
+	return { props: { fundraisers } };
 };
