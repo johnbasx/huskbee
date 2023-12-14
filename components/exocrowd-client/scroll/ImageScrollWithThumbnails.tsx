@@ -1,12 +1,15 @@
-import React, { MutableRefObject, useState } from "react";
 import {
-	useKeenSlider,
-	KeenSliderPlugin,
 	KeenSliderInstance,
+	KeenSliderPlugin,
+	useKeenSlider,
 } from "keen-slider/react";
-import { nanoid } from "nanoid";
-import Image from "next/image";
+import React, { MutableRefObject, useState } from "react";
 import { TbArrowLeft, TbArrowRight } from "react-icons/tb";
+
+import { BASE_URL } from "@constants/api-urls";
+import { FunraiserPhotoType } from "../../../pages/organiser/fundraiser-detail/[fundraiserId]";
+import Image from "next/image";
+import { nanoid } from "nanoid";
 
 export const fundraiserImages = [
 	{
@@ -78,7 +81,7 @@ function ThumbnailPlugin(
 	};
 }
 
-const ImageScrollWithThumbnails = () => {
+const ImageScrollWithThumbnails = ({fundraisers_photos}:{fundraisers_photos:FunraiserPhotoType[]}) => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [loaded, setLoaded] = useState(false);
 	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
@@ -157,7 +160,7 @@ const ImageScrollWithThumbnails = () => {
 	return (
 		<div className="navigation-wrapper relative">
 			<div ref={sliderRef} className="keen-slider">
-				{fundraiserImages.map((data, index) => (
+				{fundraisers_photos.map((data, index) => (
 					<div
 						key={data.id}
 						className="keen-slider__slide rounded-2xl overflow-hidden bg-slate-200 flex justify-center items-center text-2xl text-white font-medium max-h-screen h-[28vh] lg:h-[45vh]"
@@ -169,7 +172,7 @@ const ImageScrollWithThumbnails = () => {
 							quality={100}
 							className="object-cover h-full rounded-2xl overflow-hidden"
 							alt={`fundraiser-carousel-image-${+data.id}`}
-							src={data.image_link}
+							src={BASE_URL+ data.photo}
 						/>
 					</div>
 				))}
@@ -198,7 +201,7 @@ const ImageScrollWithThumbnails = () => {
 			)}
 
 			<div ref={thumbnailRef} className="keen-slider thumbnail mt-2">
-				{fundraiserImages.map((data, index) => (
+				{fundraisers_photos.map((data, index) => (
 					<div
 						key={data.id}
 						className="keen-slider__slide cursor-pointer bg-slate-200 flex justify-center items-center text-2xl text-white font-medium opacity-20 max-h-screen h-[3rem] w-[3rem] rounded-lg lg:rounded-xl lg:h-[6rem] lg:w-[6rem] overflow-hidden"
@@ -210,7 +213,7 @@ const ImageScrollWithThumbnails = () => {
 							priority
 							className="object-cover h-full w-full rounded-lg lg:rounded-xl"
 							alt={`fundraiser-carousel-thumbnail-${+data.id}`}
-							src={data.image_link}
+							src={BASE_URL+ data.photo}
 						/>
 					</div>
 				))}

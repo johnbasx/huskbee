@@ -49,6 +49,8 @@ const bankDetail: BankDetailProps[] = [
 ];
 
 interface OrganiserProfileStoreProps {
+  org_logo: string;
+  setOrgLogo: (org_logo: string) => void;
   orgProfile: OrganiserProfileProps;
   setOrgProfile: (orgProfile: OrganiserProfileProps) => void;
   addresses: AddressProps[];
@@ -59,6 +61,8 @@ interface OrganiserProfileStoreProps {
 
 export const OrganiserProfileStore = create<OrganiserProfileStoreProps>(
   (set, get) => ({
+    org_logo: "",
+    setOrgLogo: (org_logo) => set({ org_logo: org_logo }),
     orgProfile: orgProfile,
     setOrgProfile: (profile) => set({ orgProfile: profile }),
     addresses: addresses,

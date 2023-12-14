@@ -2,13 +2,10 @@ import { Menu, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { TbLogout } from "react-icons/tb";
-
-function classNames(...classes: any) {
-	return classes.filter(Boolean).join(" ");
-}
+import clsx from "clsx";
 
 type DropDownListItemsType = {
 	name: string;
@@ -62,7 +59,7 @@ export const ProfileDropDown = ({
 							{({ active }) => (
 								<Link
 									href={item.href}
-									className={classNames(
+									className={clsx(
 										active ? "bg-gray-100 text-blue-600" : "text-gray-700",
 										"block px-4 py-1.5 line-clamp-1 font-medium hover:text-gray-700 text-xs cursor-pointer",
 									)}
@@ -78,7 +75,7 @@ export const ProfileDropDown = ({
 							<button
 								type="button"
 								onClick={() => handleSignOut()}
-								className={classNames(
+								className={clsx(
 									active ? "bg-gray-100 text-blue-600" : "text-rose-600",
 									"inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold hover:text-rose-600 cursor-pointer w-full text-left",
 								)}

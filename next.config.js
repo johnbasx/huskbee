@@ -10,6 +10,8 @@ const nextConfig = {
       "picsum.photos",
       "source.unsplash.com",
       "randomuser.me",
+      "192.168.29.199",
+      "tailwindui.com",
     ],
   },
 };

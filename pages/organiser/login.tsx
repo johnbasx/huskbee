@@ -2,10 +2,12 @@ import React, { FormEvent, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 
 import Image from "next/image";
+import { OrganiserProfileStore } from "@store/organiser-profile-store";
 import axios from "axios";
 import { useRouter } from "next/router";
 
 const Login = () => {
+  const { setOrgLogo } = OrganiserProfileStore();
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +24,8 @@ const Login = () => {
     try {
       const response = await axios.post("/api/organiserSignin", data);
       localStorage.setItem("user", response.data.user);
+      localStorage.setItem("logo", response.data.logo);
+
       toast.success("Successfully Login");
       router.push("/organiser/home");
       setLoading(false);

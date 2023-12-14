@@ -3,7 +3,7 @@ import { TbArrowLeft, TbArrowRight } from "react-icons/tb";
 
 import { BASE_URL } from "@constants/api-urls";
 import { FundraiserEventsProps } from "../../../pages/organiser/fundraiser-detail/[fundraiserId]";
-import { GetPercentage } from "@utils/index";
+import { GetPercentage, toIndianCurrency } from "@utils/index";
 import Image from "next/image";
 import { RecentDonorType } from "../../../pages/organiser/fundraisers";
 import { useKeenSlider } from "keen-slider/react";
@@ -95,15 +95,6 @@ export const staticCardData = [
 		},
 	},
 ];
-
-export const toIndianCurrency = (num: number) => {
-	const curr = num.toLocaleString("en-IN", {
-		style: "currency",
-		currency: "INR",
-		maximumFractionDigits: 0,
-	});
-	return curr;
-};
 
 export default function FundraiserCardScroll({
 	fundraisers,

@@ -9,169 +9,169 @@ import { orgTokenStore } from "@store/index";
 import { toast } from "react-hot-toast";
 
 export type UpdateProfleProp = {
-  lookUp: string;
-  name: string;
-  label: string;
-  link: string;
-  defaultValue: string;
+	lookUp: string;
+	name: string;
+	label: string;
+	link: string;
+	defaultValue: string;
 };
 
 const UpdateProfile = ({
-  lookUp,
-  name,
-  label,
-  link,
-  defaultValue,
+	lookUp,
+	name,
+	label,
+	link,
+	defaultValue,
 }: UpdateProfleProp) => {
-  const [open, setOpen] = useState(false);
-  const { token } = orgTokenStore();
-  const [value, setvalue] = useState("");
-  const { addressTabList, setAddressTabList } = AddressTabListStore();
+	const [open, setOpen] = useState(false);
+	const { token } = orgTokenStore();
+	const [value, setvalue] = useState("");
+	const { addressTabList, setAddressTabList } = AddressTabListStore();
 
-  const cancelButtonRef = useRef(null);
-  const { setOrgProfile, addresses, setAddresses } = OrganiserProfileStore();
+	const cancelButtonRef = useRef(null);
+	const { setOrgProfile, addresses, setAddresses } = OrganiserProfileStore();
 
-  const UpdateHandler = async () => {
-    const data = { [name]: value };
+	const UpdateHandler = async () => {
+		const data = { [name]: value };
 
-    try {
-      const response = await axios.put(USER_BASE_URL + link + lookUp, data, {
-        headers: { Authorization: "Bearer " + token },
-      });
+		try {
+			const response = await axios.put(USER_BASE_URL + link + lookUp, data, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
 
-      setOpen(false);
-      toast.success(label + " updated Successfully");
+			setOpen(false);
+			toast.success(`${label} updated Successfully`);
 
-      if (link === "update-organiser-address/") {
-        const temp_list = addresses;
-        const index = temp_list.findIndex((el) => el.id === response.data.id);
-        temp_list[index] = response.data;
+			if (link === "update-organiser-address/") {
+				const temp_list = addresses;
+				const index = temp_list.findIndex((el) => el.id === response.data.id);
+				temp_list[index] = response.data;
 
-        setAddresses(temp_list);
+				setAddresses(temp_list);
 
-        const newTabList = addressTabList.map((item) => {
-          if (item.name === defaultValue) {
-            return { ...item, name: value };
-          } else {
-            return item;
-          }
-        });
+				const newTabList = addressTabList.map((item) => {
+					if (item.name === defaultValue) {
+						return { ...item, name: value };
+					}
+					return item;
+				});
 
-        setAddressTabList(newTabList);
-      } else if (link === "update-organiser-profile/") {
-        setOrgProfile(response.data);
-      }
-    } catch (e: any) {
-      toast.error("Cannot Update" + label);
-      console.log(e);
-      setOpen(false);
-    }
-  };
+				setAddressTabList(newTabList);
+			} else if (link === "update-organiser-profile/") {
+				setOrgProfile(response.data);
+			}
+		} catch (e) {
+			toast.error(`Cannot Update${label}`);
+			console.log(e);
+			setOpen(false);
+		}
+	};
 
-  return (
-    <>
-      <a
-        onClick={() => {
-          setOpen(true);
-        }}
-        className="inline-flex items-center shadow-sm px-2.5 py-0.5 text-sm leading-5 font-medium rounded-full text-blue-600 hover:bg-gray-50 hover:text-black cursor-pointer"
-      >
-        Edit
-      </a>
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          initialFocus={cancelButtonRef}
-          onClose={setOpen}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
-          </Transition.Child>
+	return (
+		<>
+			<button
+				type="button"
+				onClick={() => {
+					setOpen(true);
+				}}
+				className="inline-flex items-center shadow-sm px-2.5 py-0.5 text-sm leading-5 font-medium rounded-full text-blue-600 hover:bg-gray-50 hover:text-black cursor-pointer"
+			>
+				Edit
+			</button>
+			<Transition.Root show={open} as={Fragment}>
+				<Dialog
+					as="div"
+					className="relative z-10"
+					initialFocus={cancelButtonRef}
+					onClose={setOpen}
+				>
+					<Transition.Child
+						as={Fragment}
+						enter="ease-out duration-300"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+					>
+						<div className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
+					</Transition.Child>
 
-          <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="">
-                      <div className="mt-3 text-center sm:mx-4 sm:mt-0 sm:text-left">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-base font-semibold leading-6 text-gray-700"
-                        >
-                          Change {label}
-                        </Dialog.Title>
-                        <div className="mt-2">
-                          <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
-                            {label === "Description" ? (
-                              <textarea
-                                onChange={(e) => setvalue(e.target.value)}
-                                name={name}
-                                id={name}
-                                autoComplete={name}
-                                rows={4}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                defaultValue={defaultValue}
-                              />
-                            ) : (
-                              <input
-                                onChange={(e) => setvalue(e.target.value)}
-                                type="text"
-                                name={name}
-                                id={name}
-                                autoComplete={name}
-                                defaultValue={defaultValue}
-                                className="block w-full px-4 py-2 text-gray-700 border-b rounded-md border-gray-500 focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
-                                placeholder="fullname"
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white px-4 py-3 mb-2 sm:flex sm:flex-row-reverse sm:px-10">
-                    <button
-                      type="button"
-                      className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-1/2"
-                      onClick={() => UpdateHandler()}
-                    >
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-1/2"
-                      onClick={() => setOpen(false)}
-                      ref={cancelButtonRef}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition.Root>
-    </>
-  );
+					<div className="fixed inset-0 z-10 overflow-y-auto">
+						<div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+							<Transition.Child
+								as={Fragment}
+								enter="ease-out duration-300"
+								enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+								enterTo="opacity-100 translate-y-0 sm:scale-100"
+								leave="ease-in duration-200"
+								leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+								leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+							>
+								<Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+									<div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+										<div className="">
+											<div className="mt-3 text-center sm:mx-4 sm:mt-0 sm:text-left">
+												<Dialog.Title
+													as="h3"
+													className="text-base font-semibold leading-6 text-gray-700"
+												>
+													Change {label}
+												</Dialog.Title>
+												<div className="mt-2">
+													<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+														{label === "Description" ? (
+															<textarea
+																onChange={(e) => setvalue(e.target.value)}
+																name={name}
+																id={name}
+																autoComplete={name}
+																rows={4}
+																className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+																defaultValue={defaultValue}
+															/>
+														) : (
+															<input
+																onChange={(e) => setvalue(e.target.value)}
+																type="text"
+																name={name}
+																id={name}
+																autoComplete={name}
+																defaultValue={defaultValue}
+																className="block w-full px-4 py-2 text-gray-700 border-b rounded-md border-gray-500 focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+																placeholder="fullname"
+															/>
+														)}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="bg-white px-4 py-3 mb-2 sm:flex sm:flex-row-reverse sm:px-10">
+										<button
+											type="button"
+											className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-1/2"
+											onClick={() => UpdateHandler()}
+										>
+											Save
+										</button>
+										<button
+											type="button"
+											className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-1/2"
+											onClick={() => setOpen(false)}
+											ref={cancelButtonRef}
+										>
+											Cancel
+										</button>
+									</div>
+								</Dialog.Panel>
+							</Transition.Child>
+						</div>
+					</div>
+				</Dialog>
+			</Transition.Root>
+		</>
+	);
 };
 
 export default UpdateProfile;
