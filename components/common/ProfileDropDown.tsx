@@ -13,13 +13,13 @@ type DropDownListItemsType = {
   href: string;
 };
 type ProfileDropDownType = {
-  image: string;
+  logo: string | null;
   content: string | null;
   handleSignOut: () => void;
   listItems: DropDownListItemsType[];
 };
 export const ProfileDropDown = ({
-  image,
+  logo,
   content,
   handleSignOut,
   listItems,
@@ -30,7 +30,7 @@ export const ProfileDropDown = ({
         <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none  lg:p-2 lg:rounded-lg border">
           <img
             className="h-7 w-9 rounded-full"
-            src={image}
+            src={logo === null ? "/logo/placeholder_image.png" : logo}
             alt="Company logo"
           />
           <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block capitalize">

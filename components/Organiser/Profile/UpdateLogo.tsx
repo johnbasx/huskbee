@@ -1,45 +1,47 @@
+import { BASE_URL, USER_BASE_URL } from "@constants/api-urls";
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 
-import { BASE_URL } from "@constants/api-urls";
 import Image from "next/image";
+import { OrganiserProfileStore } from "@store/organiser-profile-store";
 import React from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { orgTokenStore } from "@store/index";
+import toast from "react-hot-toast";
 
-const product = {
-  name: "Basic Tee 6-Pack ",
-  price: "$192",
-  rating: 3.9,
-  reviewCount: 117,
-  href: "#",
-  imageSrc:
-    "https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg",
-  imageAlt: "Two each of gray, white, and black shirts arranged on table.",
-  colors: [
-    { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
-  ],
-  sizes: [
-    { name: "XXS", inStock: true },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "XXL", inStock: true },
-    { name: "XXXL", inStock: false },
-  ],
-};
+const UpdateLogo = ({ user_id }: { user_id: string }) => {
+  const { setOrgLogo } = OrganiserProfileStore();
+  const { token } = orgTokenStore();
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
-
-const UpdateLogo = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
+  const [previewImage, setPreviewImage] = useState<string>("");
+  const [logo, setLogo] = useState<File | null>(null);
+
+  const UpdateHandler = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    let form_data: any = new FormData();
+    form_data.append("logo", logo);
+    try {
+      const response = await axios.put(
+        USER_BASE_URL + "update-organiser-profile/" + user_id,
+        form_data,
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
+      console.log("logo ", response.data);
+      localStorage.setItem("logo", response.data.logo);
+
+      setOrgLogo(response.data.logo);
+      setOpen(false);
+      toast.success("Logo updated Successfully");
+    } catch (e: any) {
+      toast.error("Cannot Update");
+      console.log(e);
+      setOpen(false);
+    }
+  };
 
   return (
     <>
@@ -86,7 +88,11 @@ const UpdateLogo = () => {
                     {/* <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 "> */}
                     <div className="flex justify-center">
                       <Image
-                        src="https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg"
+                        src={
+                          previewImage === ""
+                            ? "/logo/placeholder_image.png"
+                            : previewImage
+                        }
                         height={200}
                         width={200}
                         alt="Organiser logo"
@@ -103,14 +109,14 @@ const UpdateLogo = () => {
                       Save
                     </button> */}
 
-                    <div className="flex justify-center">
+                    <div className="flex justify-center w-full">
                       <div className="relative">
                         <label
                           title="Click to upload"
                           htmlFor="button2"
                           className="cursor-pointer flex items-center gap-4 px-6 py-4 before:border-gray-400/60 hover:before:border-gray-300 group dark:before:bg-darker dark:hover:before:border-gray-500 before:bg-gray-100 dark:before:border-gray-600 before:absolute before:inset-0 before:rounded-3xl before:border before:border-dashed before:transition-transform before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
                         >
-                          <div className="w-max relative">
+                          {/* <div className="w-max relative">
                             <img
                               className="w-12"
                               src="https://www.svgrepo.com/show/485545/upload-cicle.svg"
@@ -118,18 +124,36 @@ const UpdateLogo = () => {
                               width="512"
                               height="512"
                             />
-                          </div>
+                          </div> */}
                           <div className="relative">
                             <span className="block text-base font-semibold relative text-blue-900 dark:text-white group-hover:text-blue-500">
-                              Upload a file
+                              Select logo
                             </span>
-                            <span className="mt-0.5 block text-sm text-gray-500 dark:text-gray-400">
+                            {/* <span className="mt-0.5 block text-sm text-gray-500 dark:text-gray-400">
                               Max 2 MB
-                            </span>
+                            </span> */}
                           </div>
                         </label>
-                        <input hidden type="file" name="button2" id="button2" />
+                        <input
+                          onChange={(e) => {
+                            setPreviewImage(
+                              URL.createObjectURL(e.target.files![0])
+                            );
+                            setLogo(e.target.files![0]);
+                          }}
+                          hidden
+                          type="file"
+                          name="button2"
+                          id="button2"
+                        />
                       </div>
+                      <button
+                        type="button"
+                        onClick={(e) => UpdateHandler(e)}
+                        className="inline-flex w-20  justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-1/2 h-10 "
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
                 </Dialog.Panel>

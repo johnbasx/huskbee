@@ -76,13 +76,20 @@ const Profile = ({
 }) => {
   const { setOrgToken } = orgTokenStore();
   const { setAddressTabList } = AddressTabListStore();
-  const { orgProfile, setOrgProfile, addresses, setAddresses } =
-    OrganiserProfileStore();
+  const {
+    orgProfile,
+    setOrgProfile,
+    addresses,
+    setAddresses,
+    org_logo,
+    setOrgLogo,
+  } = OrganiserProfileStore();
 
   useEffect(() => {
     setOrgToken(token);
     setOrgProfile(profile);
     setAddresses(profile.address);
+    setOrgLogo(BASE_URL + profile.logo);
 
     let list: AddressTabListType[] = [];
     profile.address.map((item) => {
@@ -97,7 +104,8 @@ const Profile = ({
       <div className="mt-8 max-w-3xl mx-auto gap-6 sm:px-6 lg:max-w-7xl pb-12 space-y-12">
         <ProfileWrapper
           title="Organiser profile"
-          logo={orgProfile.logo}
+          logo={org_logo}
+          user_id={profile.id}
           // subtitle="Information about the Organiser"
         >
           <ProfileContent
@@ -256,26 +264,24 @@ const ProfileWrapper = ({
   children,
   logo,
   title,
+  user_id,
 }: {
   children: ReactNode;
   logo: string;
   title: string;
+  user_id: string;
 }) => {
   // console.log("Logo: ", logo);
   return (
     <div className="bg-white w-full rounded-lg border p-6 shadow-md">
       <div className="px-4 sm:px-0 text-center">
         <div className="flex items-center gap-x-6">
-          <img
-            className="h-16 w-16 rounded-full"
-            src={BASE_URL + logo}
-            alt=""
-          />
+          <img className="h-16 w-16 rounded-full" src={logo} alt="" />
           <div>
             <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">
               {title}
             </h3>
-            <UpdateLogo />
+            <UpdateLogo user_id={user_id} />
           </div>
         </div>
       </div>
