@@ -20,7 +20,7 @@ import {
 	TbUserUp,
 } from "react-icons/tb";
 
-const temprary_phone = 919920512634;
+const temporary_phone = 919920512634;
 const urgent = false;
 
 const FundraiserDetailsPage = () => {
@@ -646,8 +646,8 @@ export const DonationDetailOrganiserDisplay = () => {
 				full_name="Manikanta Singh"
 				username="manikantasingh"
 				organisation_name="Meitei Apunba Lup"
-				phone_number={temprary_phone}
-				whatsapp_number={temprary_phone}
+				phone_number={temporary_phone}
+				whatsapp_number={temporary_phone}
 			/>
 			<DonationDetailSingleOrganiserCard
 				user_group="Beneficiary"
