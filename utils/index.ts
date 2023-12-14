@@ -19,3 +19,22 @@ export const GetPercentage = (value: number, total: number) => {
   const percentage = (value / total) * 100;
   return percentage.toString() + "%";
 };
+
+
+export const GetDaysLeft = (end_date:string)=>{
+  const today = new Date();
+  const month = today.getMonth();
+  const year = today.getFullYear();
+  const date = today. getDate();
+  const currentDate = month + "/" + date + "/" + year;
+
+  // To calculate the time difference of two dates
+  let Difference_In_Time = new Date(end_date).getTime() - new Date(currentDate).getTime();
+  
+  // To calculate the no. of days between two dates
+  let days_left = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
+  return days_left
+
+}
+
