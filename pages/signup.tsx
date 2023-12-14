@@ -12,15 +12,24 @@ import toast, { Toaster } from "react-hot-toast";
 import AuthLayout from "@components/layout/AuthLayout";
 import ColorfulBlur from "@components/blur/ColorfulBlur";
 import { GoogleLogin } from "@react-oauth/google";
-// import { GoogleLogin } from "react-google-login";
 import { GoogleSvg } from "@components/common/GoogleSvg";
 import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
-import Username from "@components/signup/FormInputs/Username";
+import Username from "@components/signUp/FormInputs/Username";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+// import { GoogleLogin } from "react-google-login";
+
+
+
+
+
+
+
+
 
 export interface signUpProps {
 	first_name: string;

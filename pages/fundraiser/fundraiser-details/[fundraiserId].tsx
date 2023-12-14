@@ -1,10 +1,5 @@
-import Layout from "@components/exocrowd-client/Layout";
-import { toIndianCurrency } from "@components/exocrowd-client/scroll/FundraiserCardScroll";
-import ImageScrollWithThumbnails from "@components/exocrowd-client/scroll/ImageScrollWithThumbnails";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image, { ImageProps } from "next/image";
-import Link from "next/link";
-import React from "react";
-import { IconType } from "react-icons";
 import {
 	TbBrandWhatsapp,
 	TbCalendarCheck,
@@ -20,13 +15,20 @@ import {
 	TbUserUp,
 } from "react-icons/tb";
 
+import { IconType } from "react-icons";
+import ImageScrollWithThumbnails from "@components/exocrowd-client/scroll/ImageScrollWithThumbnails";
+import Layout from "@components/exocrowd-client/Layout";
+import Link from "next/link";
+import React from "react";
+import { toIndianCurrency } from "@components/exocrowd-client/scroll/FundraiserCardScroll";
+
 const temprary_phone = 919920512634;
 const urgent = false;
 
 const FundraiserDetailsPage = () => {
 	return (
 		<Layout title="Exocrowd - fundraiser details page">
-			<section className="bg-neutral-50 py-4 md:py-16 mx-auto max-w-screen-2xl">
+			<section className="bg-neutral-50 py-4 md:py-16 mx-auto max-w-7xl">
 				{urgent && <UrgentFundraiserFlag />}
 				<FundraiserTitle title="Fundraiser in support for the people living in relief camps" />
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -796,3 +798,18 @@ export const UrgentFundraiserFlag = () => {
 	);
 };
 export default FundraiserDetailsPage;
+
+
+// export const getServerSideProps: GetServerSideProps<{
+// 	fundraisers: FundraiserEventsProps[];
+//   }> = async () => {
+// 	const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);
+// 	const fundraisers = await data.json();
+// 	if (!fundraisers) {
+// 	  // https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#notfound
+// 	  return {
+// 		notFound: true,
+// 	  };
+// 	}
+// 	return { props: { fundraisers } };
+//   };
