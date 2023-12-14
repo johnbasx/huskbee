@@ -3,7 +3,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { BASE_URL } from "@constants/api-urls";
 import { serialize } from "cookie";
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function OfficeAdminSigninAPI(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -12,17 +15,14 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     password,
   };
 
-  const response = await fetch(
-    `${BASE_URL}api/user/office-admin-login`,
-    {
-      method: "POST",
-      body: JSON.stringify(credential),
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  const response = await fetch(`${BASE_URL}api/user/office-admin-login`, {
+    method: "POST",
+    body: JSON.stringify(credential),
+    headers: { "Content-Type": "application/json" },
+  });
   const data = await response.json();
 
-  let date = new Date().toString();
+  const date = new Date().toString();
   const d = new Date(date);
   const expire_date = addSeconds(d, data.expires_in).toString();
 

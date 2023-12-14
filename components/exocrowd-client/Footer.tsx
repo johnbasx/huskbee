@@ -12,72 +12,175 @@ import {
 import Image from "next/image";
 import { TbBrandFacebook, TbBrandFacebookFilled } from "react-icons/tb";
 
+// export const footerLinks = [
+//   {
+//     id: nanoid(),
+//     category: "Explore",
+//     links: [
+//       {
+//         id: nanoid(),
+//         name: "About",
+//         url: "/about",
+//       },
+//       {
+//         id: nanoid(),
+//         name: "Our Farmers",
+//         url: "/press",
+//       },
+//       {
+//         id: nanoid(),
+//         name: "New Projects",
+//         url: "/career",
+//       },
+//     ],
+//   },
+//   {
+//     id: nanoid(),
+//     category: "Services",
+//     links: [
+//       {
+//         id: nanoid(),
+//         name: "Our platform",
+//         url: "/services",
+//       },
+//       {
+//         id: nanoid(),
+//         name: "SN services",
+//         url: "/services",
+//       },
+//       {
+//         id: nanoid(),
+//         name: "App downloads",
+//         url: "/contact",
+//       },
+//     ],
+//   },
+//   {
+//     id: nanoid(),
+//     category: "Others",
+//     links: [
+//       {
+//         id: nanoid(),
+//         name: "Careers",
+//         url: "/career",
+//       },
+//       {
+//         id: nanoid(),
+//         name: "Press",
+//         url: "/press",
+//       },
+//       {
+//         id: nanoid(),
+//         name: "Contact Us",
+//         url: "/contact",
+//       },
+//     ],
+//   },
+// ];
+const copyrightYear = new Date().getFullYear();
+
+export const socialLinks = [
+  {
+    id: nanoid(),
+    name: "Facebook",
+    Icon: FaFacebook,
+    link: "#!",
+  },
+  {
+    id: nanoid(),
+    name: "Instagram",
+    Icon: FaInstagram,
+    link: "#!",
+  },
+  {
+    id: nanoid(),
+    name: "Twitter",
+    Icon: FaTwitter,
+    link: "#!",
+  },
+  {
+    id: nanoid(),
+    name: "Github",
+    Icon: FaGithub,
+    link: "#!",
+  },
+  {
+    id: nanoid(),
+    name: "Dribbble",
+    Icon: FaDribbble,
+    link: "#!",
+  },
+];
+
 export const footerLinks = [
   {
     id: nanoid(),
-    category: "Explore",
+    category: "Causes",
     links: [
       {
         id: nanoid(),
-        name: "About",
-        url: "/about",
+        name: "Relief Camps",
+        link: "/relief-camps",
       },
       {
         id: nanoid(),
-        name: "Our Farmers",
-        url: "/press",
+        name: "Medical Funding",
+        link: "/medical-funding",
       },
       {
         id: nanoid(),
-        name: "New Projects",
-        url: "/career",
+        name: "Education Funding",
+        link: "/education-funding",
+      },
+      {
+        id: nanoid(),
+        name: "Sports Funding",
+        link: "/sports-funding",
+      },
+      {
+        id: nanoid(),
+        name: "Child Welfare",
+        link: "/child-welfare",
+      },
+      {
+        id: nanoid(),
+        name: "Animal Support",
+        link: "/animal-support",
       },
     ],
   },
   {
     id: nanoid(),
-    category: "Services",
+    category: "How it works?",
     links: [
       {
         id: nanoid(),
-        name: "Our platform",
-        url: "/services",
+        name: "Fundraising for NGOs",
+        link: "/fundraising-for-ngos",
       },
       {
         id: nanoid(),
-        name: "SN services",
-        url: "/services",
+        name: "Sponsor a child",
+        link: "/sponsor-a-child",
       },
       {
         id: nanoid(),
-        name: "App downloads",
-        url: "/contact",
-      },
-    ],
-  },
-  {
-    id: nanoid(),
-    category: "Others",
-    links: [
-      {
-        id: nanoid(),
-        name: "Careers",
-        url: "/career",
+        name: "What is crowdfunding",
+        link: "/what-is-crowdfunding",
       },
       {
         id: nanoid(),
-        name: "Press",
-        url: "/press",
+        name: "Fundraising tips",
+        link: "/fundraising-tips",
       },
       {
         id: nanoid(),
-        name: "Contact Us",
-        url: "/contact",
+        name: "Withdraw funds",
+        link: "/withdraw-funds",
       },
     ],
   },
 ];
-const copyrightYear = new Date().getFullYear();
 
 const Footer = () => {
   return (
@@ -96,9 +199,8 @@ const Footer = () => {
         <div className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
           <div>
             <p>
-              <span className='text-xs uppercase tracking-wide text-gray-50'>
-                {" "}
-                Call us{" "}
+              <span className='text-xs uppercase tracking-wide text-gray-200'>
+                Helpline
               </span>
 
               <a
@@ -109,171 +211,51 @@ const Footer = () => {
               </a>
             </p>
 
-            <ul className='mt-8 space-y-1 text-sm text-gray-100'>
-              <li>Monday to Friday: 10am - 5pm</li>
-              <li>Weekend: 10am - 3pm</li>
+            <ul className='mt-8 space-y-1 text-sm text-gray-50'>
+              <span className='text-xs uppercase tracking-wide text-gray-200'>
+                email
+              </span>
+              <li className='font-semibold'>support@exocrowd.in</li>
+              <li className='font-semibold'>24x7 support</li>
             </ul>
 
             <ul className='mt-8 flex gap-6'>
-              <li>
-                <a
-                  href='/'
-                  rel='noreferrer'
-                  target='_blank'
-                  className='text-gray-100 transition hover:opacity-75'
-                >
-                  <span className='sr-only'>Facebook</span>
+              {socialLinks.map((item, index) => (
+                <li key={item.id}>
+                  <Link
+                    href={item.link}
+                    rel='noreferrer'
+                    target='_blank'
+                    className='text-gray-200 transition hover:opacity-75'
+                  >
+                    <span className='sr-only'>{item.name}</span>
 
-                  <FaFacebook className='h-6 w-6' />
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href='/'
-                  rel='noreferrer'
-                  target='_blank'
-                  className='text-gray-100 transition hover:opacity-75'
-                >
-                  <span className='sr-only'>Instagram</span>
-
-                  <FaInstagram className='h-6 w-6' />
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href='/'
-                  rel='noreferrer'
-                  target='_blank'
-                  className='text-gray-100 transition hover:opacity-75'
-                >
-                  <span className='sr-only'>Twitter</span>
-
-                  <FaTwitter className='h-6 w-6' />
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href='/'
-                  rel='noreferrer'
-                  target='_blank'
-                  className='text-gray-100 transition hover:opacity-75'
-                >
-                  <span className='sr-only'>GitHub</span>
-
-                  <FaGithub className='h-6 w-6' />
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href='/'
-                  rel='noreferrer'
-                  target='_blank'
-                  className='text-gray-100 transition hover:opacity-75'
-                >
-                  <span className='sr-only'>Dribbble</span>
-
-                  <FaDribbble className='h-6 w-6' />
-                </a>
-              </li>
+                    <item.Icon className='h-6 w-6' />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
-            <div>
-              <p className='font-medium text-gray-50'>Services</p>
+            {footerLinks.map(({ links, id, category }, index) => (
+              <div key={id}>
+                <p className='font-semibold text-gray-50'>{category}</p>
 
-              <ul className='mt-6 space-y-4 text-sm'>
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    1on1 Coaching{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    Company Review{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    Accounts Review{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    HR Consulting{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    SEO Optimisation{" "}
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <p className='font-medium text-gray-50'>Company</p>
-
-              <ul className='mt-6 space-y-4 text-sm'>
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    About{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    Meet the Team{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href='#'
-                    className='text-gray-100 transition hover:opacity-75'
-                  >
-                    {" "}
-                    Accounts Review{" "}
-                  </a>
-                </li>
-              </ul>
-            </div>
+                <ul className='mt-6 space-y-4 text-sm'>
+                  {links.map((item, indexJ) => (
+                    <li key={item.id}>
+                      <a
+                        href={item.link}
+                        className='text-gray-100 transition hover:opacity-75'
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -282,37 +264,34 @@ const Footer = () => {
             <ul className='flex flex-wrap gap-4 text-xs'>
               <li>
                 <a
-                  href='#'
+                  href='#!'
                   className='text-gray-50 transition hover:opacity-75'
                 >
-                  {" "}
-                  Terms & Conditions{" "}
+                  Terms & Conditions
                 </a>
               </li>
 
               <li>
                 <a
-                  href='#'
+                  href='#!'
                   className='text-gray-50 transition hover:opacity-75'
                 >
-                  {" "}
-                  Privacy Policy{" "}
+                  Privacy Policy
                 </a>
               </li>
 
               <li>
                 <a
-                  href='#'
+                  href='#!'
                   className='text-gray-50 transition hover:opacity-75'
                 >
-                  {" "}
-                  Cookies{" "}
+                  Cookies
                 </a>
               </li>
             </ul>
 
             <p className='mt-8 text-xs text-gray-50 sm:mt-0'>
-              &copy; 2022. Company Name. All rights reserved.
+              &copy; {copyrightYear}. Exocrowd. All rights reserved.
             </p>
           </div>
         </div>

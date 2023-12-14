@@ -50,7 +50,7 @@ export default IndexPage;
 export const getServerSideProps: GetServerSideProps<{
   fundraisers: FundraiserEventsProps[];
 }> = async () => {
-  const data = await fetch(CROWDFUNDING_BASE_URL + "fundraisers/?q=all");
+  const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);
   const fundraisers = await data.json();
   if (!fundraisers) {
     // https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#notfound

@@ -2,7 +2,9 @@ import { Menu, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Link from "next/link";
+import { TbLogout } from "react-icons/tb";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -13,13 +15,13 @@ type DropDownListItemsType = {
   href: string;
 };
 type ProfileDropDownType = {
-  logo: string | null;
+  image: string;
   content: string | null;
   handleSignOut: () => void;
   listItems: DropDownListItemsType[];
 };
 export const ProfileDropDown = ({
-  logo,
+  image,
   content,
   handleSignOut,
   listItems,
@@ -27,18 +29,20 @@ export const ProfileDropDown = ({
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
-        <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none  lg:p-2 lg:rounded-lg border">
-          <img
-            className="h-7 w-9 rounded-full"
-            src={logo === null ? "/logo/placeholder_image.png" : logo}
+        <Menu.Button className="max-w-xs bg-white rounded-full flex items-center text-xs focus:outline-none lg:p-2 lg:rounded-lg border">
+          <Image
+            height={30}
+            width={30}
+            className="h-5 w-5 object-contain rounded-full"
+            src={image}
             alt="Company logo"
           />
-          <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block capitalize">
+          <span className="hidden ml-2 mr-1 text-gray-700 line-clamp-1 text-xs font-semibold lg:block capitalize">
             <span className="sr-only">Open user menu for </span>
             {content && content}
           </span>
           <ChevronDownIcon
-            className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-600 lg:block"
+            className="hidden flex-shrink-0 h-4 w-4 text-gray-600 lg:block"
             aria-hidden="true"
           />
         </Menu.Button>
@@ -52,15 +56,15 @@ export const ProfileDropDown = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 z-10 bg-white  ring-1 ring-black ring-opacity-5 focus:outline-none ">
+        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 z-10 bg-white ring-1 overflow-hidden ring-black ring-opacity-5 focus:outline-none ">
           {listItems.map((item) => (
             <Menu.Item key={item.name}>
               {({ active }) => (
                 <Link
                   href={item.href}
                   className={classNames(
-                    active ? "bg-gray-200 text-indigo-600" : "text-gray-700",
-                    "block px-4 py-2 text-sm cursor-pointer"
+                    active ? "bg-gray-100 text-blue-600" : "text-gray-700",
+                    "block px-4 py-1.5 line-clamp-1 font-medium hover:text-gray-700 text-xs cursor-pointer"
                   )}
                 >
                   {item.name}
@@ -71,15 +75,17 @@ export const ProfileDropDown = ({
 
           <Menu.Item>
             {({ active }) => (
-              <a
+              <button
+                type="button"
                 onClick={() => handleSignOut()}
                 className={classNames(
-                  active ? "bg-gray-200 text-indigo-600" : "text-gray-700",
-                  "block px-4 py-2 text-sm cursor-pointer"
+                  active ? "bg-gray-100 text-blue-600" : "text-rose-600",
+                  "inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold hover:text-rose-600 cursor-pointer w-full text-left"
                 )}
               >
                 Logout
-              </a>
+                <TbLogout />
+              </button>
             )}
           </Menu.Item>
         </Menu.Items>
