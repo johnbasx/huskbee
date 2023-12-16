@@ -5,6 +5,7 @@ import { BASE_URL } from "@constants/api-urls";
 import { FundraiserEventsProps } from "../../../pages/organiser/fundraiser-detail/[fundraiserId]";
 import { GetPercentage } from "@utils/index";
 import Image from "next/image";
+import Link from "next/link";
 import { RecentDonorType } from "../../../pages/organiser/fundraisers";
 import { useKeenSlider } from "keen-slider/react";
 
@@ -227,7 +228,6 @@ export type DisplayCardBlockType = {
 
 export type DisplayCardBlockDataType = { data: FundraiserEventsProps };
 const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
-	// const pc = {GetPercentage(data.total_donation, data.target_amount)}
 
 	return (
 		<div className="max-w-sm cursor-pointer keen-slider__slide shadow-lg flex flex-col rounded-2xl bg-white overflow-hidden">
@@ -237,7 +237,6 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 				height={500}
 				priority
 				quality={100}
-				// src={"https://picsum.photos/45/500"}
 				src={
 					data.fundraiser_photo.length === 0
 						? "https://picsum.photos/45/500"
@@ -248,7 +247,8 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 			<div className="px-4 py-4 text-black flex flex-col gap-2">
 				<div className="">
 					<div className="font-bold text-xl h-14 mb-2 line-clamp-2">
-						{data.title}
+						<Link href={`/fundraiser/fundraiser-details/${data.id}`}>
+						{data.title}</Link>
 					</div>
 					<p className="text-gray-700 text-xs line-clamp-2">
 						{data.description}
@@ -287,7 +287,6 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 						</div>
 					</div>
 				</div>
-				{/* {GetPercentage(data.total_donation, data.target_amount).toString()} */}
 				<div className="mt-2">
 					<span id="ProgressLabel" className="sr-only">
 						Loading

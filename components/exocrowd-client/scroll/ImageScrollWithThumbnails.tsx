@@ -160,7 +160,7 @@ const ImageScrollWithThumbnails = ({fundraisers_photos}:{fundraisers_photos:Funr
 	return (
 		<div className="navigation-wrapper relative">
 			<div ref={sliderRef} className="keen-slider">
-				{fundraisers_photos.map((data, index) => (
+				{fundraisers_photos.length>0? fundraisers_photos.map((data, index) => (
 					<div
 						key={data.id}
 						className="keen-slider__slide rounded-2xl overflow-hidden bg-slate-200 flex justify-center items-center text-2xl text-white font-medium max-h-screen h-[28vh] lg:h-[45vh]"
@@ -175,7 +175,20 @@ const ImageScrollWithThumbnails = ({fundraisers_photos}:{fundraisers_photos:Funr
 							src={BASE_URL+ data.photo}
 						/>
 					</div>
-				))}
+				)):<div
+				// key={data.id}
+				className="keen-slider__slide rounded-2xl overflow-hidden bg-slate-200 flex justify-center items-center text-2xl text-white font-medium max-h-screen h-[28vh] lg:h-[45vh]"
+			>
+				<Image
+					height={1000}
+					width={1000}
+					priority
+					quality={100}
+					className="object-cover h-full rounded-2xl overflow-hidden"
+					alt={`fundraiser-carousel-image`}
+					src={fundraiserImages[0].image_link}
+				/>
+			</div>}
 			</div>
 
 			{loaded && instanceRef.current && (
@@ -201,7 +214,7 @@ const ImageScrollWithThumbnails = ({fundraisers_photos}:{fundraisers_photos:Funr
 			)}
 
 			<div ref={thumbnailRef} className="keen-slider thumbnail mt-2">
-				{fundraisers_photos.map((data, index) => (
+				{fundraisers_photos.length>0?fundraisers_photos.map((data, index) => (
 					<div
 						key={data.id}
 						className="keen-slider__slide cursor-pointer bg-slate-200 flex justify-center items-center text-2xl text-white font-medium opacity-20 max-h-screen h-[3rem] w-[3rem] rounded-lg lg:rounded-xl lg:h-[6rem] lg:w-[6rem] overflow-hidden"
@@ -216,7 +229,7 @@ const ImageScrollWithThumbnails = ({fundraisers_photos}:{fundraisers_photos:Funr
 							src={BASE_URL+ data.photo}
 						/>
 					</div>
-				))}
+				)):<>No images added for this fundraiser</>}
 			</div>
 		</div>
 	);

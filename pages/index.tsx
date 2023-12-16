@@ -17,12 +17,9 @@ import RecommendCardScroll from "@components/exocrowd-client/RecommendCardScroll
 import StackedCards from "@components/exocrowd-client/StackedCards";
 import TrustAndSafetySection from "@components/exocrowd-client/sections/TrustAndSafetySection";
 
-// import { createRouter } from "next-connect";
-
 const IndexPage = ({
   fundraisers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  console.log("fundraisers: ", fundraisers);
   return (
     <Layout title="Exocrowd Home | We are stronger united">
       <AttractiveHero />
@@ -53,7 +50,6 @@ export const getServerSideProps: GetServerSideProps<{
   const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);
   const fundraisers = await data.json();
   if (!fundraisers) {
-    // https://nextjs.org/docs/api-reference/data-fetching/get-server-side-props#notfound
     return {
       notFound: true,
     };

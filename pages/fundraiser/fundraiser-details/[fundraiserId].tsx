@@ -815,15 +815,19 @@ export default FundraiserDetailsPage;
 
 export const getServerSideProps: GetServerSideProps<{
 	fundraiser_detail: FundraiserEventsProps;
-  }> = async (context) => {
+  }> = (async (context) => {
 	const { fundraiserId } = context.query;
 	const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraiser-detail/${fundraiserId}`);
 	const fundraiser_detail = await data.json();
 	
-	if (!fundraiser_detail) {
+	if (!fundraiser_detail || fundraiser_detail.detail==='Not found.') {
 	  return {
-		notFound: true,
+		redirect: {
+			destination: '/404',
+			permanent: false,
+		  },
+		// notFound: true,
 	  };
 	}
 	return { props: { fundraiser_detail } };
-  };
+  }) ;
