@@ -141,7 +141,7 @@ export const FirstImage = ({
           <input
             {...register(name, { required })}
             onChange={(e) => {
-              setPreviewImage(URL.createObjectURL(e.target.files![0]));
+              setPreviewImage(URL.createObjectURL(e.target.files!.[0]));
             }}
             name="first_image"
             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
@@ -151,14 +151,14 @@ export const FirstImage = ({
         </div>
         <div className="pt-9">
           {previewImage && (
-            <a
+            <button type="button"
               onClick={() => {
                 previewImage && setOpen(true);
               }}
               className="mr-4 inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
             >
               Preview
-            </a>
+            </button>
           )}
         </div>
       </div>
@@ -200,14 +200,15 @@ export const SecondImage = ({
         </div>
         <div className="pt-9">
           {previewImage && (
-            <a
+            <button
+            type="button"
               onClick={() => {
                 previewImage && setOpen(true);
               }}
               className="mr-4 inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
             >
               Preview
-            </a>
+            </button>
           )}
         </div>
       </div>
@@ -249,14 +250,15 @@ export const ThirdImage = ({
         </div>
         <div className="pt-9">
           {previewImage && (
-            <a
+            <button
+            type="button"
               onClick={() => {
                 setOpen(true);
               }}
               className="mr-4 inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
             >
               Preview
-            </a>
+            </button>
           )}
         </div>
       </div>

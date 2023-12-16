@@ -25,13 +25,13 @@ import Link from "next/link";
 import React from "react";
 import { toIndianCurrency } from "@components/exocrowd-client/scroll/FundraiserCardScroll";
 
-const temprary_phone = 919920512634;
+const temporary_phone = 919920512634;
 const urgent = false;
 
 const FundraiserDetailsPage = ({
 	fundraiser_detail,
-  }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-	console.log('DETAIL: ', fundraiser_detail);
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+	console.log("DETAIL: ", fundraiser_detail);
 	return (
 		<Layout title="Exocrowd - fundraiser details page">
 			<section className="bg-neutral-50 py-4 md:py-16 mx-auto max-w-7xl">
@@ -39,9 +39,16 @@ const FundraiserDetailsPage = ({
 				<FundraiserTitle title={fundraiser_detail.title} />
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 					<div className="col-span-1 lg:col-span-2 px-4 md:pr-0">
-						<ImageScrollWithThumbnails fundraisers_photos={fundraiser_detail.fundraiser_photo} />
+						<ImageScrollWithThumbnails
+							fundraisers_photos={fundraiser_detail.fundraiser_photo}
+						/>
 						<div className="block md:hidden mt-4">
-							<DonationDetailSideUpdates total_donation={fundraiser_detail.total_donation} target_amount={fundraiser_detail.target_amount} total_donors={fundraiser_detail.total_donors} end_date={fundraiser_detail.end_date} />
+							<DonationDetailSideUpdates
+								total_donation={fundraiser_detail.total_donation}
+								target_amount={fundraiser_detail.target_amount}
+								total_donors={fundraiser_detail.total_donors}
+								end_date={fundraiser_detail.end_date}
+							/>
 						</div>
 
 						<FundraiserOrganiserTag
@@ -52,7 +59,12 @@ const FundraiserDetailsPage = ({
 					</div>
 					<div className="col-span-1 lg:col-span-1 px-4 mt-4 md:mt-0 sticky top-24 self-start">
 						{/* fundraiser details info */}
-						<DonationDetailSideUpdates total_donation={fundraiser_detail.total_donation} target_amount={fundraiser_detail.target_amount} total_donors={fundraiser_detail.total_donors} end_date={fundraiser_detail.end_date}  />
+						<DonationDetailSideUpdates
+							total_donation={fundraiser_detail.total_donation}
+							target_amount={fundraiser_detail.target_amount}
+							total_donors={fundraiser_detail.total_donors}
+							end_date={fundraiser_detail.end_date}
+						/>
 						<DonationDetailOrganiserDisplay />
 					</div>
 				</div>
@@ -518,13 +530,18 @@ export const FundraiserDetailDescription = () => {
 	);
 };
 
-type DonationDetailType ={
-	total_donation: number
-	target_amount: number
-	total_donors: number
-	end_date: string
-}
-export const DonationDetailSideUpdates = ({total_donation,target_amount,total_donors,end_date}:DonationDetailType) => {
+type DonationDetailType = {
+	total_donation: number;
+	target_amount: number;
+	total_donors: number;
+	end_date: string;
+};
+export const DonationDetailSideUpdates = ({
+	total_donation,
+	target_amount,
+	total_donors,
+	end_date,
+}: DonationDetailType) => {
 	return (
 		<div className="bg-white rounded-2xl p-5 shadow-lg">
 			<div className="flex flex-col gap-4 mb-4">
@@ -557,20 +574,26 @@ export const DonationDetailSideUpdates = ({total_donation,target_amount,total_do
 					>
 						<span
 							className="block h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500"
-							style={{ width:GetPercentage(total_donation, target_amount)}}
+							style={{ width: GetPercentage(total_donation, target_amount) }}
 							// Dynamic data for progress bar
 						/>
 					</span>
 				</div>
 				<span className="font-nato inline-flex items-center gap-2 text-sm font-medium text-slate-500">
 					<span>
-						 {total_donors}
-						 <span className="font-nunito"> donations</span>
+						{total_donors}
+						<span className="font-nunito"> donations</span>
 					</span>
 					<span className="text-slate-400">&bull;</span>
 					<span>
-					{GetDaysLeft(end_date=end_date)<0?`fundraiser ended`:<>{GetDaysLeft(end_date=end_date)}<span className="font-nunito">days left</span></>}	
-				
+						{GetDaysLeft(end_date) < 0 ? (
+							"fundraiser ended"
+						) : (
+							<>
+								{GetDaysLeft(end_date)}
+								<span className="font-nunito">days left</span>
+							</>
+						)}
 					</span>
 				</span>
 			</div>
@@ -662,8 +685,8 @@ export const DonationDetailOrganiserDisplay = () => {
 				full_name="Manikanta Singh"
 				username="manikantasingh"
 				organisation_name="Meitei Apunba Lup"
-				phone_number={temprary_phone}
-				whatsapp_number={temprary_phone}
+				phone_number={temporary_phone}
+				whatsapp_number={temporary_phone}
 			/>
 			<DonationDetailSingleOrganiserCard
 				user_group="Beneficiary"
@@ -817,7 +840,9 @@ export const getServerSideProps: GetServerSideProps<{
 	fundraiser_detail: FundraiserEventsProps;
   }> = (async (context) => {
 	const { fundraiserId } = context.query;
-	const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraiser-detail/${fundraiserId}`);
+	const data = await fetch(
+		`${CROWDFUNDING_BASE_URL}fundraiser-detail/${fundraiserId}`,
+	);
 	const fundraiser_detail = await data.json();
 	
 	if (!fundraiser_detail || fundraiser_detail.detail==='Not found.') {
