@@ -229,7 +229,21 @@ const ImageScrollWithThumbnails = ({fundraisers_photos}:{fundraisers_photos:Funr
 							src={BASE_URL+ data.photo}
 						/>
 					</div>
-				)):<>No images added for this fundraiser</>}
+				)):<div
+				
+				className="keen-slider__slide cursor-pointer bg-slate-200 flex justify-center items-center text-2xl text-white font-medium opacity-20 max-h-screen h-[3rem] w-[3rem] rounded-lg lg:rounded-xl lg:h-[6rem] lg:w-[6rem] overflow-hidden"
+			>
+				<Image
+					height={100}
+					width={100}
+					quality={30}
+					priority
+					className="object-cover h-full w-full rounded-lg lg:rounded-xl"
+					alt={`fundraiser-carousel-thumbnai`}
+					src={fundraiserImages[0].image_link}
+
+				/>
+			</div>}
 			</div>
 		</div>
 	);

@@ -10,9 +10,10 @@ import React, { Fragment, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import clsx from "clsx";
-import { useRouter } from "next/router";
 import { TbCircleFilled } from "react-icons/tb";
+import clsx from "clsx";
+import { orgTokenStore } from "@store/index";
+import { useRouter } from "next/router";
 
 // import { TbCircleFilled } from "react-icons/tb";
 
@@ -30,6 +31,9 @@ export const mobileNavigation = navigation.concat([
 ]);
 
 const Navbar = () => {
+	const {user_token} = orgTokenStore()
+  console.log('Navbar: ', user_token);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
   const currentRoute = router.pathname;
@@ -103,13 +107,14 @@ const Navbar = () => {
                 <TbCircleFilled className='text-blue-300' />
               </span>
             </Link>
+            {user_token==''?
             <Link
               href='/exocrowd-user/signin'
               className='inline-flex border-none border-slate-400 rounded-full items-center gap-1 px-3 py-1.5 text-sm text-white bg-blue-500 font-semibold cursor-pointer'
             >
               <HiOutlineUserCircle className='h-4 w-4' />
               Sign in
-            </Link>
+            </Link>:<></>}
           </div>
         </div>
       </div>

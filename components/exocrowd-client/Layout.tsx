@@ -1,7 +1,7 @@
-import React from "react";
-import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Head from "next/head";
+import Navbar from "./Navbar";
+import React from "react";
 
 export interface LayoutProps {
 	children: React.ReactNode;
@@ -12,6 +12,7 @@ const Layout = ({
 	children,
 	title = "Exocrowd | We are stronger united",
 }: LayoutProps) => {
+
 	return (
 		<>
 			<Head>

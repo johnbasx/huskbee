@@ -13,13 +13,27 @@ import FundraisersFor from "@components/exocrowd-client/sections/FundraisersFor"
 import HeroFeature from "@components/exocrowd-client/hero/HeroFeature";
 import Layout from "@components/exocrowd-client/Layout";
 import MoreWaysScroll from "@components/exocrowd-client/scroll/MoreWaysScroll";
+import type { NextPageContext } from "next";
 import RecommendCardScroll from "@components/exocrowd-client/RecommendCardScroll";
 import StackedCards from "@components/exocrowd-client/StackedCards";
 import TrustAndSafetySection from "@components/exocrowd-client/sections/TrustAndSafetySection";
+import { getCookie } from "cookies-next";
+import { orgTokenStore } from "@store/index";
+import { useEffect } from "react";
 
 const IndexPage = ({
+  access_token,
   fundraisers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const {user_token, setUserToken} = orgTokenStore()
+  console.log('U_token: ', user_token);
+
+  useEffect(() => {
+    if(access_token!=''){
+      setUserToken(access_token)
+    }
+  }, [user_token])
+  
   return (
     <Layout title="Exocrowd Home | We are stronger united">
       <AttractiveHero />
@@ -45,8 +59,18 @@ const IndexPage = ({
 export default IndexPage;
 
 export const getServerSideProps: GetServerSideProps<{
+  access_token: string;
   fundraisers: FundraiserEventsProps[];
-}> = async () => {
+}> = async (context) => {
+  const req = context.req;
+	const res = context.res;
+	const token = getCookie("user_token", { req, res });
+
+  let access_token = ''
+  if(token!=undefined && typeof token == 'string'){
+    access_token=token
+  }
+
   const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);
   const fundraisers = await data.json();
   if (!fundraisers) {
@@ -54,5 +78,5 @@ export const getServerSideProps: GetServerSideProps<{
       notFound: true,
     };
   }
-  return { props: { fundraisers } };
+  return { props: { access_token, fundraisers } };
 };

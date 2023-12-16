@@ -1,4 +1,4 @@
-import { GetDaysLeft, GetPercentage } from "@utils/index";
+import { GetDaysLeft, GetPercentage, toIndianCurrency } from "@utils/index";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image, { ImageProps } from "next/image";
 import {
@@ -23,7 +23,7 @@ import ImageScrollWithThumbnails from "@components/exocrowd-client/scroll/ImageS
 import Layout from "@components/exocrowd-client/Layout";
 import Link from "next/link";
 import React from "react";
-import { toIndianCurrency } from "@components/exocrowd-client/scroll/FundraiserCardScroll";
+import { orgTokenStore } from "@store/index";
 
 const temporary_phone = 919920512634;
 const urgent = false;
@@ -31,7 +31,8 @@ const urgent = false;
 const FundraiserDetailsPage = ({
 	fundraiser_detail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-	console.log("DETAIL: ", fundraiser_detail);
+	const {user_token} = orgTokenStore()
+	// console.log("DETAIL: ", fundraiser_detail);
 	return (
 		<Layout title="Exocrowd - fundraiser details page">
 			<section className="bg-neutral-50 py-4 md:py-16 mx-auto max-w-7xl">
@@ -598,12 +599,13 @@ export const DonationDetailSideUpdates = ({
 				</span>
 			</div>
 			<div className="flex flex-col gap-2 border-b pb-3 border-dashed">
+				<Link href={`/ad`}>
 				<button
 					type="button"
 					className="rounded-xl py-3 px-4 bg-slate-950 text-white w-full font-semibold text-lg"
 				>
 					Contribute now
-				</button>
+				</button></Link>
 				<button
 					type="button"
 					className="rounded-xl py-3 px-4 bg-blue-600 text-white w-full font-semibold text-lg"

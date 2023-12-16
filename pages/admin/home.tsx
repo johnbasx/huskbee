@@ -4,7 +4,7 @@ import {
 	FcMultipleInputs,
 	FcPlanner,
 } from "react-icons/fc";
-import RecentList, { HuskbeeUserList } from "@components/admin/home/RecentList";
+import RecentList, { HuskbeeUserList } from "@components/Admin/home/RecentList";
 
 import { ApprovedStatus } from "@components/common/table/Others";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
@@ -14,7 +14,7 @@ import { HuskbeeUserProp } from "./users";
 import Layout from "@components/admin/layout/Layout";
 import Link from "next/link";
 import type { NextPageContext } from "next";
-import Overview from "@components/admin/home/overview";
+import Overview from "@components/Admin/home/overview";
 import { USER_BASE_URL } from "@constants/api-urls";
 import { getCookie } from "cookies-next";
 

@@ -14,12 +14,16 @@ import { OrgDetailFormValues } from "@components/organiser/registration/Organisa
 import { create } from "zustand";
 
 interface TokenProps {
+  user_token: string;
+  setUserToken: (token: string) => void;
   token: string;
   setOrgToken: (token: string) => void;
   office_admin_token: string;
   setOfficeAdminToken: (token: string) => void;
 }
 export const orgTokenStore = create<TokenProps>((set, get) => ({
+  user_token: "",
+  setUserToken: (user_token) => set({user_token:user_token}),
   token: "",
   setOrgToken: (token) => set({ token: token }),
   office_admin_token: "",
