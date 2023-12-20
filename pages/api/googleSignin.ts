@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { BASE_URL } from "@constants/api-urls";
 import { serialize } from "cookie";
 
 export default async function GoogleSigninAPI(
@@ -13,7 +14,7 @@ export default async function GoogleSigninAPI(
 	};
 
 	const response = await fetch(
-		"http://127.0.0.1:8000/api/user/loginWithGoogle",
+		`${BASE_URL}api/user/loginWithGoogle`,
 		{
 			method: "POST",
 			body: JSON.stringify(credential),
@@ -22,13 +23,13 @@ export default async function GoogleSigninAPI(
 	);
 	const data = await response.json();
 
-	// console.log("Google ", data);
+	console.log("Google ", data);
 	const date = new Date().toString();
 	const d = new Date(date);
 	const expire_date = addSeconds(d, data.expires_in).toString();
 
 	res.setHeader("Set-Cookie", [
-		serialize("access_token", data.access_token, {
+		serialize("user_token", data.access_token, {
 			httpOnly: true,
 			// secure: true,
 			path: "/",
