@@ -64,7 +64,7 @@ export interface OrganiserProfileProps {
 
 export interface ExOrganiserProfileProps extends OrganiserProfileProps {
   address: AddressProps[];
-  bank_detail: BankDetailProps[];
+  bank_accounts: BankDetailProps[];
 }
 
 const Profile = ({
@@ -80,7 +80,10 @@ const Profile = ({
     orgProfile,
     setOrgProfile,
     addresses,
+   
     setAddresses,
+    bankAccounts,
+    setBankAccounts,
     org_logo,
     setOrgLogo,
   } = OrganiserProfileStore();
@@ -89,14 +92,15 @@ const Profile = ({
     setOrgToken(token);
     setOrgProfile(profile);
     setAddresses(profile.address);
+    setBankAccounts(profile.bank_accounts)
     setOrgLogo(BASE_URL + profile.logo);
 
-    let list: AddressTabListType[] = [];
-    profile.address.map((item) => {
-      list = [...list, { name: item.name, default: item.default }];
-    });
-    setAddressTabList(list);
-  }, []);
+  //   let list: AddressTabListType[] = [];
+  //   profile.address.map((item) => {
+  //     list = [...list, { name: item.name, default: item.default }];
+  //   });
+  //   setAddressTabList(list);
+   }, []);
 
   return (
     <Layout pageTitle="Profile">
@@ -144,12 +148,12 @@ const Profile = ({
             link="update-organiser-profile/"
           />
         </ProfileWrapper>
-        {/* <Wrapper
+        <Wrapper
           title="Bank information"
           subtitle={`Different Bank Accounts for ${profile.organisation_name}`}
         >
-          <BankDetail BankAccounts={profile.bank_detail} />
-        </Wrapper>*/}
+          <BankDetail BankAccounts={bankAccounts} />
+        </Wrapper>
         <Wrapper
           title="Organiser Addresses"
           subtitle={`Different address for ${profile.organisation_name}`}

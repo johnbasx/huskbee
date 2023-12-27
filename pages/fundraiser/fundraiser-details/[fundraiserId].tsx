@@ -24,6 +24,7 @@ import Layout from "@components/exocrowd-client/Layout";
 import Link from "next/link";
 import React from "react";
 import { orgTokenStore } from "@store/index";
+import { useRouter } from "next/router";
 
 const temporary_phone = 919920512634;
 const urgent = false;
@@ -31,8 +32,21 @@ const urgent = false;
 const FundraiserDetailsPage = ({
 	fundraiser_detail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+	const router = useRouter()
 	const {user_token} = orgTokenStore()
 	// console.log("DETAIL: ", fundraiser_detail);
+
+	const goToDonatePage = async ()=> {
+		router.push(
+			{
+			  pathname: `/fundraiser/contribute/${fundraiser_detail.id}`,
+			  query: {
+				fundraiser_title: fundraiser_detail.title
+			  },
+			},
+			`/fundraiser/contribute/${fundraiser_detail.id}`
+		  );
+	}
 	return (
 		<Layout title="Exocrowd - fundraiser details page">
 			<section className="bg-neutral-50 py-4 md:py-16 mx-auto max-w-7xl">
@@ -49,6 +63,7 @@ const FundraiserDetailsPage = ({
 								target_amount={fundraiser_detail.target_amount}
 								total_donors={fundraiser_detail.total_donors}
 								end_date={fundraiser_detail.end_date}
+								goToDonatePage={goToDonatePage}
 							/>
 						</div>
 
@@ -65,6 +80,7 @@ const FundraiserDetailsPage = ({
 							target_amount={fundraiser_detail.target_amount}
 							total_donors={fundraiser_detail.total_donors}
 							end_date={fundraiser_detail.end_date}
+							goToDonatePage={goToDonatePage}
 						/>
 						<DonationDetailOrganiserDisplay />
 					</div>
@@ -536,13 +552,17 @@ type DonationDetailType = {
 	target_amount: number;
 	total_donors: number;
 	end_date: string;
+	goToDonatePage: ()=> {};
 };
 export const DonationDetailSideUpdates = ({
 	total_donation,
 	target_amount,
 	total_donors,
 	end_date,
+	goToDonatePage
 }: DonationDetailType) => {
+	const router = useRouter()
+
 	return (
 		<div className="bg-white rounded-2xl p-5 shadow-lg">
 			<div className="flex flex-col gap-4 mb-4">
@@ -599,13 +619,15 @@ export const DonationDetailSideUpdates = ({
 				</span>
 			</div>
 			<div className="flex flex-col gap-2 border-b pb-3 border-dashed">
-				<Link href={`/ad`}>
+				{/* <Link href={`/ad`}> */}
 				<button
 					type="button"
+					onClick={() => goToDonatePage()}
 					className="rounded-xl py-3 px-4 bg-slate-950 text-white w-full font-semibold text-lg"
 				>
 					Contribute now
-				</button></Link>
+				</button>
+				{/* </Link> */}
 				<button
 					type="button"
 					className="rounded-xl py-3 px-4 bg-blue-600 text-white w-full font-semibold text-lg"

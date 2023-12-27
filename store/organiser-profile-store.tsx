@@ -34,7 +34,7 @@ const addresses: AddressProps[] = [
     default: false,
   },
 ];
-const bankDetail: BankDetailProps[] = [
+const bankAccounts: BankDetailProps[] = [
   {
     id: "",
     acc_number: "",
@@ -55,8 +55,8 @@ interface OrganiserProfileStoreProps {
   setOrgProfile: (orgProfile: OrganiserProfileProps) => void;
   addresses: AddressProps[];
   setAddresses: (address: AddressProps[]) => void;
-  bankDetail: BankDetailProps[];
-  setBankDetail: (bankDetail: BankDetailProps[]) => void;
+  bankAccounts: BankDetailProps[];
+  setBankAccounts: (bankDetail: BankDetailProps[]) => void;
 }
 
 export const OrganiserProfileStore = create<OrganiserProfileStoreProps>(
@@ -67,8 +67,8 @@ export const OrganiserProfileStore = create<OrganiserProfileStoreProps>(
     setOrgProfile: (profile) => set({ orgProfile: profile }),
     addresses: addresses,
     setAddresses: (addresses) => set({ addresses: addresses }),
-    bankDetail: bankDetail,
-    setBankDetail: (bankDetail) => set({ bankDetail: bankDetail }),
+    bankAccounts: bankAccounts,
+    setBankAccounts: (bankAccounts) => set({ bankAccounts: bankAccounts }),
   })
 );
 

@@ -26,10 +26,10 @@ const UpdateProfile = ({
 	const [open, setOpen] = useState(false);
 	const { token } = orgTokenStore();
 	const [value, setvalue] = useState("");
-	const { addressTabList, setAddressTabList } = AddressTabListStore();
+	// const { addressTabList, setAddressTabList } = AddressTabListStore();
 
 	const cancelButtonRef = useRef(null);
-	const { setOrgProfile, addresses, setAddresses } = OrganiserProfileStore();
+	const { setOrgProfile, addresses, setAddresses, bankAccounts, setBankAccounts } = OrganiserProfileStore();
 
 	const UpdateHandler = async () => {
 		const data = { [name]: value };
@@ -49,15 +49,26 @@ const UpdateProfile = ({
 
 				setAddresses(temp_list);
 
-				const newTabList = addressTabList.map((item) => {
-					if (item.name === defaultValue) {
-						return { ...item, name: value };
-					}
-					return item;
-				});
+				// const newTabList = addressTabList.map((item) => {
+				// 	if (item.name === defaultValue) {
+				// 		return { ...item, name: value };
+				// 	}
+				// 	return item;
+				// });
 
-				setAddressTabList(newTabList);
-			} else if (link === "update-organiser-profile/") {
+				// setAddressTabList(newTabList);
+			} 
+			else if (link ==="update-organiser-bank/"){
+
+				const temp_list = bankAccounts;
+				const index = temp_list.findIndex((el) => el.id === response.data.id);
+				temp_list[index] = response.data;
+
+				setBankAccounts(temp_list);
+
+			}
+			
+			else if (link === "update-organiser-profile/") {
 				setOrgProfile(response.data);
 			}
 		} catch (e) {

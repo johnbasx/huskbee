@@ -1,8 +1,8 @@
 import { AddressProps, ProfileContent } from "../../../pages/organiser/profile";
+import { CheckBadgeIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
 import React, { ReactNode, useEffect, useState } from "react";
 
 import { AddressTabListStore } from "@store/organiser-profile-store";
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 
@@ -14,7 +14,7 @@ const AddressInfo = ({
 	SetAddress: (addresses: AddressProps[]) => void;
 }) => {
 	return (
-		<Wrapper>
+		<Wrapper Addresses={Addresses}>
 			{Addresses.map((address, idx) => (
 				<Tab.Panel
 					key={`tab-panel-${idx}`}
@@ -41,6 +41,15 @@ const AddressInfo = ({
 						value={address.pin_code}
 						link="update-organiser-address/"
 					/>
+					{!address.default&&
+						<button
+					  type="button"
+					//   onClick={(e)=>MarkDefault(e, detail.id, detail.default)}
+					  className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
+					>
+					  <PlayCircleIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+					  Mark as default
+					</button>}
 				</Tab.Panel>
 			))}
 		</Wrapper>
@@ -51,10 +60,11 @@ export default AddressInfo;
 
 const Wrapper = ({
 	children,
+	Addresses
 }: // Addresses,
 {
 	children: ReactNode;
-	// Addresses: AddressProps[];
+	Addresses: AddressProps[];
 }) => {
 	const { addressTabList } = AddressTabListStore();
 
@@ -62,7 +72,7 @@ const Wrapper = ({
 		<div className="w-full max-w-full px-2 py-4 sm:px-0">
 			<Tab.Group>
 				<Tab.List className="flex space-x-1 rounded-xl bg-transparent p-1">
-					{addressTabList.map((address, index) => (
+					{Addresses.map((address, index) => (
 						<Tab
 							key={`address_tab${index}`}
 							className={({ selected }) =>

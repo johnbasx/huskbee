@@ -2,19 +2,46 @@ import {
 	BankDetailProps,
 	ProfileContent,
 } from "../../../pages/organiser/profile";
+import { CheckBadgeIcon, PlayCircleIcon } from "@heroicons/react/24/outline";
 import React, { ReactNode } from "react";
 
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { Tab } from "@headlessui/react";
+import { USER_BASE_URL } from "@constants/api-urls";
+import axios from "axios";
 import clsx from "clsx";
+import { orgTokenStore } from "@store/index";
+import toast from "react-hot-toast";
 
 const BankDetail = ({ BankAccounts }: { BankAccounts: BankDetailProps[] }) => {
+	const {token}=orgTokenStore()
+
+	const MarkDefault = async(e: React.MouseEvent, id: string, mark_default: Boolean)=>{
+		e.preventDefault()
+
+		if(!mark_default){
+			try {
+				const response = await axios.put(USER_BASE_URL + 'update-organiser-bank/' + id, {default: true}, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
+				console.log(response);
+				toast.success(`Default marked`);
+			} catch (e) {
+				toast.error(`Cannot mark default`);
+				console.log(e);
+			}
+		}
+		else{
+			toast.success('Already mark as default account')
+		}
+	}
+	
 	return (
 		<Wrapper BankAccounts={BankAccounts}>
 			{BankAccounts.length > 0 ? (
 				BankAccounts.map((detail, idx) => (
+					<React.Fragment key={`bank-account-${idx}`}>
 					<Tab.Panel
-						key={`bank-account-${idx}`}
+						
 						className={clsx(
 							"rounded-xl bg-transparent p-3",
 							"ring-white ring-opacity-60 ring-offset-2  focus:outline-none ",
@@ -25,34 +52,46 @@ const BankDetail = ({ BankAccounts }: { BankAccounts: BankDetailProps[] }) => {
 							name="acc_name"
 							label="Account name"
 							value={detail.acc_name}
-							link="sample-link"
+							link="update-organiser-bank/"
 						/>
 						<ProfileContent
 							lookUp={detail.id}
 							name="acc_number"
 							label="Acc number"
 							value={detail.acc_number}
-							link="sample-link"
+							link="update-organiser-bank/"
 						/>
 						<ProfileContent
 							lookUp={detail.id}
 							name="ifsc"
 							label="IFSC"
 							value={detail.ifsc}
-							link="sample-link"
+							link="update-organiser-bank/"
 						/>
 						<ProfileContent
 							lookUp={detail.id}
 							name="branch"
 							label="Branch"
 							value={detail.branch}
-							link="sample-link"
+							link="update-organiser-bank/"
 						/>
+						{!detail.default&&
+						<button
+					  type="button"
+					  onClick={(e)=>MarkDefault(e, detail.id, detail.default)}
+					  className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
+					>
+					  <PlayCircleIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+					  Mark as default
+					</button>}
 					</Tab.Panel>
+					
+					</React.Fragment>
 				))
 			) : (
 				<span className="text-black">No Bank account added</span>
 			)}
+			
 		</Wrapper>
 	);
 };
