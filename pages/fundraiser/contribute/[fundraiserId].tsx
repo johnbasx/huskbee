@@ -15,10 +15,14 @@ import { redirect } from 'next/dist/server/api-utils';
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-// import { load } from "@cashfreepayments/cashfree-js";
-const cashfree = ({
-  mode: "sandbox" //or production
-});
+type CashfreeReturnType = {
+  mode: string,
+  checkout: (checkoutOptions: {
+    paymentSessionId: string,
+    redirectTarget: string
+  }) => void
+}
+
 
 const Contribute = ({
   access_token,
@@ -29,7 +33,8 @@ const Contribute = ({
   const router = useRouter()
   const [amount, setAmount] = useState<Number>(0)
 
-  let cashfree;
+
+  let cashfree: Promise<CashfreeReturnType>
   var initializeSDK = async function () {
     cashfree = await load({
       mode: "sandbox"
@@ -42,7 +47,7 @@ const Contribute = ({
       paymentSessionId: cashfree_session_id,
       redirectTarget: "_self",
     };
-    cashfree.checkout(checkoutOptions);
+    (await cashfree).checkout(checkoutOptions);
   };
 
   useEffect(() => {
