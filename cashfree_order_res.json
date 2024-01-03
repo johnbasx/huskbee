@@ -1,0 +1,19 @@
+{
+    "cf_order_id":"2153178617",
+    "order_id":"order_100248742aFlEKIeIGDBsQ19jqieV0hZKs9",
+    "entity":"order", 
+    "order_currency":"INR", 
+    "order_amount":"1.0", 
+    "order_status":"ACTIVE", "payment_session_id":"session_4kdJe1bfnh3zIAxyLc9ggndXQX8c9l7CNKmmOoRXEKYPVErgBhQAKTfLKP141lX6M2wAuYICoRZ0QWXKoyuh4KKEcXZNz9PiLwVcCtVgLQqi", 
+    "order_expiry_time":"datetime.datetime(2024, 1, 29, 13, 11, 35",
+    "tzinfo":"datetime.timezone(datetime.timedelta(seconds=19800))) ",
+    "order_note":"None", 
+    "created_at":"datetime.datetime(2023, 12, 30, 13, 11, 35,", 
+    "tzinfo_2":"datetime.timezone(datetime.timedelta(seconds=19800)))",
+    "order_splits":[], 
+    "customer_details":"CustomerDetails(customer_id='FYFYYT213', customer_email=None, customer_phone='9546463243', customer_name=None, customer_bank_account_number=None, customer_bank_ifsc=None, customer_bank_code=None)", 
+    "order_meta":"OrderMeta(return_url=None, notify_url=None, payment_methods=None)", "payments":"PaymentURLObject(url='https://sandbox.cashfree.com/pg/orders/order_100248742aFlEKIeIGDBsQ19jqieV0hZKs9/payments')",
+    "settlements":"SettlementURLObject(url='https://sandbox.cashfree.com/pg/orders/order_100248742aFlEKIeIGDBsQ19jqieV0hZKs9/settlements')",
+    "refunds":"RefundURLObject(url='https://sandbox.cashfree.com/pg/orders/order_100248742aFlEKIeIGDBsQ19jqieV0hZKs9/refunds')",
+    "order_tags":"None"
+}

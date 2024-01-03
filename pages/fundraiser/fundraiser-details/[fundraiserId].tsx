@@ -1,6 +1,7 @@
 import { GetDaysLeft, GetPercentage, toIndianCurrency } from "@utils/index";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image, { ImageProps } from "next/image";
+import React, { useEffect } from "react";
 import {
 	TbBrandWhatsapp,
 	TbCalendarCheck,
@@ -22,30 +23,36 @@ import { IconType } from "react-icons";
 import ImageScrollWithThumbnails from "@components/exocrowd-client/scroll/ImageScrollWithThumbnails";
 import Layout from "@components/exocrowd-client/Layout";
 import Link from "next/link";
-import React from "react";
+import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
 import { useRouter } from "next/router";
 
 const temporary_phone = 919920512634;
 const urgent = false;
 
-const FundraiserDetailsPage = ({
+const FundraiserDetailsPage = ({ access_token,
 	fundraiser_detail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const router = useRouter()
-	const {user_token} = orgTokenStore()
+	const { user_token, setUserToken } = orgTokenStore()
 	// console.log("DETAIL: ", fundraiser_detail);
 
-	const goToDonatePage = async ()=> {
+	useEffect(() => {
+		if (access_token != '') {
+			setUserToken(access_token)
+		}
+	}, [user_token])
+
+	const goToDonatePage = async () => {
 		router.push(
 			{
-			  pathname: `/fundraiser/contribute/${fundraiser_detail.id}`,
-			  query: {
-				fundraiser_title: fundraiser_detail.title
-			  },
+				pathname: `/fundraiser/contribute/${fundraiser_detail.id}`,
+				query: {
+					fundraiser_title: fundraiser_detail.title
+				},
 			},
 			`/fundraiser/contribute/${fundraiser_detail.id}`
-		  );
+		);
 	}
 	return (
 		<Layout title="Exocrowd - fundraiser details page">
@@ -552,7 +559,7 @@ type DonationDetailType = {
 	target_amount: number;
 	total_donors: number;
 	end_date: string;
-	goToDonatePage: ()=> {};
+	goToDonatePage: () => {};
 };
 export const DonationDetailSideUpdates = ({
 	total_donation,
@@ -596,7 +603,7 @@ export const DonationDetailSideUpdates = ({
 						<span
 							className="block h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500"
 							style={{ width: GetPercentage(total_donation, target_amount) }}
-							// Dynamic data for progress bar
+						// Dynamic data for progress bar
 						/>
 					</span>
 				</div>
@@ -861,22 +868,33 @@ export const UrgentFundraiserFlag = () => {
 export default FundraiserDetailsPage;
 
 export const getServerSideProps: GetServerSideProps<{
+	access_token: string;
 	fundraiser_detail: FundraiserEventsProps;
-  }> = (async (context) => {
+}> = (async (context) => {
+
 	const { fundraiserId } = context.query;
 	const data = await fetch(
 		`${CROWDFUNDING_BASE_URL}fundraiser-detail/${fundraiserId}`,
 	);
 	const fundraiser_detail = await data.json();
-	
-	if (!fundraiser_detail || fundraiser_detail.detail==='Not found.') {
-	  return {
-		redirect: {
-			destination: '/404',
-			permanent: false,
-		  },
-		// notFound: true,
-	  };
+
+	const req = context.req;
+	const res = context.res;
+	const token = getCookie("user_token", { req, res });
+
+	let access_token = ''
+	if (token != undefined && typeof token == 'string') {
+		access_token = token
 	}
-	return { props: { fundraiser_detail } };
-  }) ;
+
+	if (!fundraiser_detail || fundraiser_detail.detail === 'Not found.') {
+		return {
+			redirect: {
+				destination: '/404',
+				permanent: false,
+			},
+			// notFound: true,
+		};
+	}
+	return { props: { access_token, fundraiser_detail } };
+});

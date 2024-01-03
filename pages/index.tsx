@@ -25,15 +25,15 @@ const IndexPage = ({
   access_token,
   fundraisers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const {user_token, setUserToken} = orgTokenStore()
-  console.log('U_token: ', user_token);
+  const { user_token, setUserToken } = orgTokenStore()
+  // console.log('U_token: ', user_token);
 
   useEffect(() => {
-    if(access_token!=''){
+    if (access_token != '') {
       setUserToken(access_token)
     }
   }, [user_token])
-  
+
   return (
     <Layout title="Exocrowd Home | We are stronger united">
       <AttractiveHero />
@@ -63,12 +63,12 @@ export const getServerSideProps: GetServerSideProps<{
   fundraisers: FundraiserEventsProps[];
 }> = async (context) => {
   const req = context.req;
-	const res = context.res;
-	const token = getCookie("user_token", { req, res });
+  const res = context.res;
+  const token = getCookie("user_token", { req, res });
 
   let access_token = ''
-  if(token!=undefined && typeof token == 'string'){
-    access_token=token
+  if (token != undefined && typeof token == 'string') {
+    access_token = token
   }
 
   const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);

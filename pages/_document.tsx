@@ -1,5 +1,7 @@
 import { Head, Html, Main, NextScript } from "next/document";
 
+import Script from 'next/script'
+
 export default function Document() {
 	return (
 		<Html lang="en" className="bg-gray-50 antialiased font-nunito">
@@ -19,6 +21,7 @@ export default function Document() {
 			<body>
 				<Main />
 				<NextScript />
+				<Script src="https://sdk.cashfree.com/js/v3/cashfree.js" />
 			</body>
 		</Html>
 	);

@@ -38,17 +38,21 @@ const SignInPage = () => {
 		try {
 			const response = await axios.post("/api/googleSignin", data);
 			toast.success("Login successful");
+			router.back()
+			console.log("Router_obj: ", router);
 		} catch (e: any) {
 			console.log(e);
 		}
 	};
 
-    const login = useGoogleLogin({
-        onSuccess: tokenResponse => {console.log(tokenResponse)
-            LoginWithGoogle(tokenResponse.access_token)},
-      });
+	const login = useGoogleLogin({
+		onSuccess: tokenResponse => {
+			console.log(tokenResponse)
+			LoginWithGoogle(tokenResponse.access_token)
+		},
+	});
 
-      
+
 	return (
 		<>
 			<Toaster />
@@ -88,8 +92,8 @@ const SignInPage = () => {
 								Welcome back!
 							</p>
 
-                            <button onClick={() => login()} type="submit" className="w-full rounded-lg px-4 py-3 font-semibold tracking-wide text-white transition-colors duration-300 transform bg-blue-600 cursor-pointer hover:bg-blue-700 focus:bg-blue-700 focus:ring-opacity-40 focus:border-blue-800 focus:outline-none focus:ring focus:ring-blue-700">Google Login</button>
-                           
+							<button onClick={() => login()} type="submit" className="w-full rounded-lg px-4 py-3 font-semibold tracking-wide text-white transition-colors duration-300 transform bg-blue-600 cursor-pointer hover:bg-blue-700 focus:bg-blue-700 focus:ring-opacity-40 focus:border-blue-800 focus:outline-none focus:ring focus:ring-blue-700">Google Login</button>
+
 
 							<div className="flex items-center justify-between mt-4">
 								<span className="w-1/5 border-b border-gray-600 lg:w-1/4" />
