@@ -38,16 +38,25 @@ const SignInPage = () => {
 		try {
 			const response = await axios.post("/api/googleSignin", data);
 			toast.success("Login successful");
-			router.back()
-			console.log("Router_obj: ", router);
+			console.log('response: ', response);
+
+			// router.back()
+			// console.log("Router_obj: ", router);
 		} catch (e: any) {
-			console.log(e);
+			if (e.response.status === 409) {
+				toast.error(e.response.data.message);
+				console.log(e.response.status);
+			}
+			else {
+				toast.error("Login error");
+			}
+
 		}
 	};
 
 	const login = useGoogleLogin({
 		onSuccess: tokenResponse => {
-			console.log(tokenResponse)
+			// console.log("resp from google: ", tokenResponse)
 			LoginWithGoogle(tokenResponse.access_token)
 		},
 	});

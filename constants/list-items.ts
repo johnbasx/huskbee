@@ -8,7 +8,12 @@ import {
 	UsersIcon,
 } from "@heroicons/react/24/outline";
 
+import { AtSymbolIcon } from '@heroicons/react/24/solid';
+import { BsTwitterX } from "react-icons/bs";
+import { FaTelegramPlane } from "react-icons/fa";
 import { MdEventAvailable } from "react-icons/Md";
+import { RiWhatsappFill } from "react-icons/ri";
+import { SiFacebook } from "react-icons/si";
 
 export const OrganiserTypes = [
 	{
@@ -211,3 +216,30 @@ export const org_crowd_funding = [
 	//   bgColorClass: "bg-blue-700",
 	// },
 ];
+
+
+export const socialShare = [{
+    name: "Facebook",
+    logo: SiFacebook,
+    color: "3498db"
+},
+{
+    name: "Whatsapp",
+    logo: RiWhatsappFill,
+    color: "25d366"
+},
+{
+    name: "Twitter",
+    logo: BsTwitterX,
+    color: "000000"
+},
+{
+    name: "Telegram",
+    logo: FaTelegramPlane,
+    color: "229ED9"
+},
+{
+    name: "E-mail",
+    logo: AtSymbolIcon,
+    color: "000000"
+}]

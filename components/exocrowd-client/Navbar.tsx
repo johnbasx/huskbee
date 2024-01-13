@@ -32,7 +32,7 @@ export const mobileNavigation = navigation.concat([
 
 const Navbar = () => {
 	const { user_token } = orgTokenStore();
-	console.log("Navbar: ", user_token);
+	// console.log("Navbar: ", user_token);
 
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const router = useRouter();

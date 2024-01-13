@@ -21,9 +21,14 @@ export default async function GoogleSigninAPI(
 			headers: { "Content-Type": "application/json" },
 		},
 	);
+
 	const data = await response.json();
 
-	console.log("Google ", data);
+	if(response.status===409){
+		res.status(409).json(data);
+	}
+
+	console.log("Google ", data, response.status);
 	const date = new Date().toString();
 	const d = new Date(date);
 	const expire_date = addSeconds(d, data.expires_in).toString();

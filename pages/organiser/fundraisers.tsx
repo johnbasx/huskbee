@@ -6,6 +6,7 @@ import Layout from "@components/organiser/layout/Layout";
 import Link from "next/link";
 import { NextPageContext } from "next";
 import SearchFundraiser from "@components/organiser/fundraiser/SearchFundraiser";
+import { ShareCountStore } from "@store/fundraiser-detail-store";
 import { getCookie } from "cookies-next";
 
 export type RecentDonorType = {
@@ -27,6 +28,7 @@ export interface FundraiserEventProps {
   organiser_name: string;
   organiser_logo: string;
   recent_donors: RecentDonorType[];
+  share_count: number
 }
 
 const Fundraisers = ({ token }: { token: string }) => {
@@ -83,9 +85,8 @@ const Fundraisers = ({ token }: { token: string }) => {
                     {/* text-[#166534] bg-[#DCFCE7]*/}
                     <div>
                       <span
-                        className={`relative rounded-full shadow-lg border-transparent border  ${
-                          event.open_status ? "bg-[#7ce7a1]" : "bg-red-400"
-                        } px-2 py-1 font-medium text-black hover:text-black hover:bg-gray-100 hover:border hover:border-gray-700 hover:shadow-xl`}
+                        className={`relative rounded-full shadow-lg border-transparent border  ${event.open_status ? "bg-[#7ce7a1]" : "bg-red-400"
+                          } px-2 py-1 font-medium text-black hover:text-black hover:bg-gray-100 hover:border hover:border-gray-700 hover:shadow-xl`}
                       >
                         {event.open_status ? "Active" : "Close"}
                       </span>

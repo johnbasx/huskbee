@@ -71,7 +71,7 @@ const Contribute = ({
       console.log('c_id: ', response.data.order_session_id);
       doPayment(response.data.order_session_id)
 
-      router.push("/admin/login");
+      // router.push("/admin/login");
     } catch (e) {
       console.log(e);
     }
