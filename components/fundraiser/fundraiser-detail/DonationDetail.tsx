@@ -10,6 +10,7 @@ import {
 
 import { IconType } from "react-icons";
 import Link from 'next/link';
+import { MinMaxDonationType } from '../../../pages/organiser/fundraisers';
 import React from 'react'
 import SocialShare from './SocialShare';
 
@@ -20,9 +21,19 @@ type DonationDetailType = {
     target_amount: number;
     total_donors: number;
     end_date: string;
+    min_max_donation: MinMaxDonationType
     goToDonatePage: () => {};
 };
+export type DonatedUserAndAmountSmallDisplayType = {
+    username: string;
+    donated_amount: number;
+    redirect_link: string;
+    redirect_text: string;
+    Icon: IconType;
+};
+
 const DonationDetail = ({
+    min_max_donation,
     share_count,
     fundraiser_id,
     total_donation,
@@ -132,19 +143,26 @@ const DonationDetail = ({
                     Icon={TbDevicesHeart}
                 />
                 <DonatedUserAndAmountSmallDisplay
-                    username="Dravid Singh"
-                    donated_amount={13500}
+                    username={min_max_donation.max_donated_by}
+                    donated_amount={min_max_donation.max_amount}
                     redirect_link="#!"
                     redirect_text="Top donations"
                     Icon={TbMoodHeart}
                 />
                 <DonatedUserAndAmountSmallDisplay
+                    username={min_max_donation.min_donated_by}
+                    donated_amount={min_max_donation.min_amount}
+                    redirect_link="#!"
+                    redirect_text="Smallest donation"
+                    Icon={TbUserUp}
+                />
+                {/* <DonatedUserAndAmountSmallDisplay
                     username="Dr. Leishem"
                     donated_amount={2500}
                     redirect_link="#!"
                     redirect_text="First donation"
                     Icon={TbUserUp}
-                />
+                /> */}
                 <div className="flex flex-wrap gap-2">
                     <Link
                         href="#!"
@@ -167,15 +185,6 @@ const DonationDetail = ({
 }
 
 export default DonationDetail
-
-
-export type DonatedUserAndAmountSmallDisplayType = {
-    username: string;
-    donated_amount: number;
-    redirect_link: string;
-    redirect_text: string;
-    Icon: IconType;
-};
 
 export const DonatedUserAndAmountSmallDisplay = ({
     username,

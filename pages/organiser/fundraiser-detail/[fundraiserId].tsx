@@ -104,8 +104,8 @@ const FunraiserDetail = ({
 					<div className="mt-8 grid grid-cols-1 gap-6 lg:grid-flow-col-dense lg:grid-cols-3">
 						<DetailWrapper
 							status={detail.approved_status}
-							totalDonation={detail.total_donation}
-							totalDonors={detail.total_donors}
+							totalDonation={detail.donation_detail.total_donation}
+							totalDonors={detail.donation_detail.total_donors}
 						>
 							<dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
 								<div className="sm:col-span-1">

@@ -1,9 +1,9 @@
+import { GetPercentage, toIndianCurrency } from "@utils/index";
 import React, { useState } from "react";
 import { TbArrowLeft, TbArrowRight } from "react-icons/tb";
 
 import { BASE_URL } from "@constants/api-urls";
 import { FundraiserEventsProps } from "../../../pages/organiser/fundraiser-detail/[fundraiserId]";
-import { GetPercentage, toIndianCurrency } from "@utils/index";
 import Image from "next/image";
 import Link from "next/link";
 import { RecentDonorType } from "../../../pages/organiser/fundraisers";
@@ -239,7 +239,7 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 				<div className="">
 					<div className="font-bold text-xl h-14 mb-2 line-clamp-2">
 						<Link href={`/fundraiser/fundraiser-details/${data.id}`}>
-						{data.title}</Link>
+							{data.title}</Link>
 					</div>
 					<p className="text-gray-700 text-xs line-clamp-2">
 						{data.description}
@@ -249,7 +249,7 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 					<div className="text-base flex flex-col">
 						<span className="text-sm text-gray-500">Raised</span>
 						<span className="font-extrabold text-blue-600 text-lg font-sans tracking-tight">
-							{toIndianCurrency(data.total_donation)}
+							{toIndianCurrency(data.donation_detail.total_donation)}
 						</span>
 						<span className="text-xs font-nunito font-normal">
 							out of{" "}
@@ -292,16 +292,16 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 						<span
 							className="block h-2.5 rounded-full bg-gradient-to-r from-purple-200 via-violet-500 to-blue-600"
 							style={{
-								width: GetPercentage(data.total_donation, data.target_amount),
+								width: GetPercentage(data.donation_detail.total_donation, data.target_amount),
 							}}
-							// Dynamic data for progress bar
+						// Dynamic data for progress bar
 						/>
 					</span>
 				</div>
 
 				<LatestSupportersAvatars
-					recent_donors={data.recent_donors}
-					total_donors={data.total_donors}
+					recent_donors={data.donation_detail.recent_donors}
+					total_donors={data.donation_detail.total_donors}
 				/>
 			</div>
 		</div>
@@ -354,7 +354,7 @@ const AvatarImage = ({ photo }: { photo: string }) => {
 				className="rounded-full object-cover h-7 w-7"
 				alt="avatar image"
 				src={`${BASE_URL}media/${photo}`}
-				// src={`https://randomuser.me/api/portraits/men/${temporaryProp}.jpg`}
+			// src={`https://randomuser.me/api/portraits/men/${temporaryProp}.jpg`}
 			/>
 		</div>
 	);

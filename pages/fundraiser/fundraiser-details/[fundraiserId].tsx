@@ -26,6 +26,9 @@ import { useRouter } from "next/router";
 const temporary_phone = 919920512634;
 const urgent = false;
 
+type OrganiserDisplayType = {
+	organiser_name: string; organiser_logo: string;
+}
 const FundraiserDetailsPage = ({ access_token,
 	fundraiser_detail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -69,11 +72,12 @@ const FundraiserDetailsPage = ({ access_token,
 							/>
 							<div className="block md:hidden mt-4">
 								<DonationDetail
+									min_max_donation={fundraiser_detail.max_min_donation}
 									share_count={count}
 									fundraiser_id={fundraiser_detail.id}
-									total_donation={fundraiser_detail.total_donation}
+									total_donation={fundraiser_detail.donation_detail.total_donation}
 									target_amount={fundraiser_detail.target_amount}
-									total_donors={fundraiser_detail.total_donors}
+									total_donors={fundraiser_detail.donation_detail.total_donors}
 									end_date={fundraiser_detail.end_date}
 									goToDonatePage={goToDonatePage}
 								/>
@@ -97,15 +101,16 @@ const FundraiserDetailsPage = ({ access_token,
 						<div className="col-span-1 lg:col-span-1 px-4 mt-4 md:mt-0 sticky top-24 self-start">
 							{/* fundraiser details info */}
 							<DonationDetail
+								min_max_donation={fundraiser_detail.max_min_donation}
 								share_count={count}
 								fundraiser_id={fundraiser_detail.id}
-								total_donation={fundraiser_detail.total_donation}
+								total_donation={fundraiser_detail.donation_detail.total_donation}
 								target_amount={fundraiser_detail.target_amount}
-								total_donors={fundraiser_detail.total_donors}
+								total_donors={fundraiser_detail.donation_detail.total_donors}
 								end_date={fundraiser_detail.end_date}
 								goToDonatePage={goToDonatePage}
 							/>
-							<DonationDetailOrganiserDisplay />
+							<DonationDetailOrganiserDisplay organiser_name={fundraiser_detail.organiser_name} organiser_logo={fundraiser_detail.organiser_logo} />
 						</div>
 					</div>
 				</section>
@@ -143,15 +148,15 @@ export const FundraiserOrganiserTag = ({
 	);
 };
 
-export const DonationDetailOrganiserDisplay = () => {
+export const DonationDetailOrganiserDisplay = ({ organiser_name, organiser_logo }: OrganiserDisplayType) => {
 	return (
 		<div className="bg-white shadow-lg mt-6 rounded-2xl flex flex-col gap-4 px-6 py-4">
 			<h3 className="text-sm font-bold">Organisers &amp; Beneficiaries</h3>
 			<DonationDetailSingleOrganiserCard
 				user_group="Organiser"
-				full_name="Manikanta Singh"
+				full_name={organiser_name}
 				username="manikantasingh"
-				organisation_name="Meitei Apunba Lup"
+				organisation_name={"Meitei Apunba Lup"}
 				phone_number={temporary_phone}
 				whatsapp_number={temporary_phone}
 			/>

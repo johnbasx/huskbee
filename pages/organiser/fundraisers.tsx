@@ -10,8 +10,24 @@ import { ShareCountStore } from "@store/fundraiser-detail-store";
 import { getCookie } from "cookies-next";
 
 export type RecentDonorType = {
+
   donated_by__photo: string;
 };
+
+export type DonationDetailType = {
+  recent_donors: RecentDonorType[];
+  total_donation: number;
+  total_donors: number;
+}
+
+export type MinMaxDonationType = {
+  max_donated_by: string;
+  max_amount: number;
+  max_donated_id: string;
+  min_donated_by: string;
+  min_amount: number;
+  min_donated_id: string
+}
 export interface FundraiserEventProps {
   id: string;
   title: string;
@@ -20,14 +36,16 @@ export interface FundraiserEventProps {
   open_status: boolean;
   approved_status: string;
   target_amount: number;
-  total_donors: number;
-  total_donation: number;
+
   end_date: string;
   created_at: string;
   organiser: string;
   organiser_name: string;
   organiser_logo: string;
-  recent_donors: RecentDonorType[];
+
+  donation_detail: DonationDetailType;
+
+  max_min_donation: MinMaxDonationType
   share_count: number
 }
 
@@ -68,7 +86,7 @@ const Fundraisers = ({ token }: { token: string }) => {
                       <p className="font-semibold text-gray-700">
                         <a href="#!">
                           <span className="absolute inset-0" />
-                          {event.total_donors + " Donors"}
+                          {event.donation_detail.total_donors + " Donors"}
                         </a>
                       </p>
                       {/* <p className="text-gray-600">{post.author.role}</p> */}
