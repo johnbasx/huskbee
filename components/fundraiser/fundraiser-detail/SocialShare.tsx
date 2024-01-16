@@ -83,7 +83,7 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
             <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="rounded-xl py-3 px-4 bg-blue-600 text-white w-full font-semibold text-lg"
+                className="rounded-xl py-3 px-4 bg-slate-50 border text-slate-700 w-full font-semibold text-sm"
             >
                 Share this fundraiser
             </button>

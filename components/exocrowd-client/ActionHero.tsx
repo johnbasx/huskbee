@@ -5,12 +5,13 @@ import { TbArrowRight } from "react-icons/tb";
 
 const ActionHero = () => {
 	return (
-		<section className="bg-gradient-to-b from-blue-500/20 to-lime-500/0 via-emerald-500/20 py-6 lg:py-24">
+		<section className="py-6 lg:pb-24">
+		{/* <section className="bg-gradient-to-b from-blue-500/20 to-lime-500/0 via-emerald-500/20 py-6 lg:py-24"> */}
 			<div className="mx-auto max-w-screen-2xl px-4 py-2 sm:px-6 lg:px-8">
 				<div className="flex-1 py-8 md:py-10 sm:mx-auto sm:text-center lg:text-left">
 					<h3 className="text-3xl max-w-lg sm:max-w-screen-sm text-gray-800 font-semibold md:text-4xl">
 						Need Funds to Pay For a{" "}
-						<span className="text-emerald-600">
+						<span className="text-emerald-600 font-serif italic">
 							Social Cause or Medical Emergencies?
 						</span>
 					</h3>

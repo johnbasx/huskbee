@@ -59,7 +59,7 @@ export const functionalitiesData = [
 const FunctionalitiesGrid = () => {
 	return (
 		<section className="bg-blue-700 text-white">
-			<div className="max-w-screen-2xl mx-auto px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8 lg:pb-24">
+			<div className="max-w-screen-2xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
 				<div className="max-w-xl">
 					<h2 className="text-3xl font-bold sm:text-4xl">
 						Exocrowd has everything You need

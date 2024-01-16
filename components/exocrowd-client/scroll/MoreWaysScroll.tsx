@@ -1,13 +1,11 @@
-import {
-	DisplayCardBlockDataType,
-	staticCardData,
-} from "./FundraiserCardScroll";
+import {DisplayCardBlockDataType} from "./FundraiserCardScroll";
 import React, { useState } from "react";
 import { TbArrowLeft, TbArrowRight } from "react-icons/tb";
 
 import Image from "next/image";
 import { toIndianCurrency } from "@utils/index";
 import { useKeenSlider } from "keen-slider/react";
+import { staticCardData } from "@constants/fundraiser";
 
 const MoreWaysScroll = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);

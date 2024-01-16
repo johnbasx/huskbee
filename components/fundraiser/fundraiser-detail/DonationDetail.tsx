@@ -47,10 +47,10 @@ const DonationDetail = ({
             <div className="flex flex-col gap-4 mb-4">
                 <div className="text-base flex flex-col gap-2">
                     <div className="flex flex-col">
-                        <span className="text-xs font-medium uppercase text-slate-500">
+                        <span className="text-[0.6rem] font-medium uppercase tracking-wider text-slate-500">
                             Total Contributions
                         </span>
-                        <span className="font-bold text-slate-800 text-4xl font-nato tracking-tight">
+                        <span className="font-bold text-slate-800 text-2xl font-nato tracking-tight">
                             {toIndianCurrency(total_donation)}
                             {/* <span className="font-nunito">raised</span> */}
                         </span>
@@ -86,7 +86,7 @@ const DonationDetail = ({
                     </span>
                     <span className="text-slate-400">&bull;</span>
                     <span>
-                        {GetDaysLeft(end_date) < 0 ? (
+                        {GetDaysLeft(end_date) <= 0 || NaN ? (
                             "fundraiser ended"
                         ) : (
                             <>
@@ -97,12 +97,12 @@ const DonationDetail = ({
                     </span>
                 </span>
             </div>
-            <div className="flex flex-col gap-2 border-b pb-3 border-dashed">
+            <div className="flex flex-col gap-3 border-b pb-3 border-dashed">
                 {/* <Link href={`/ad`}> */}
                 <button
                     type="button"
                     onClick={() => goToDonatePage()}
-                    className="rounded-xl py-3 px-4 bg-slate-950 text-white w-full font-semibold text-lg"
+                    className="rounded-xl py-3 px-4 bg-blue-600 hover:bg-blue-500 duration-300 ease-out text-white w-full font-semibold text-lg"
                 >
                     Contribute now
                 </button>
@@ -111,7 +111,7 @@ const DonationDetail = ({
 
                 <button
                     type="button"
-                    className="rounded-xl py-3 px-4 bg-slate-100 border text-slate-700 w-full font-semibold text-sm"
+                    className="rounded-xl py-3 px-4 bg-slate-50 border text-slate-700 w-full font-semibold text-sm"
                 >
                     Make monthly contributions
                 </button>

@@ -62,7 +62,7 @@ const FundraiserDetailsPage = ({ access_token,
 	return (
 		<> <Toaster />
 			<Layout title="Exocrowd - fundraiser details page">
-				<section className="bg-neutral-50 py-4 md:py-16 mx-auto max-w-7xl">
+				<section className="bg-neutral-50 py-4 lg:px-8 md:pt-8 md:pb-16 mx-auto max-w-screen-2xl">
 					{urgent && <UrgentFundraiserFlag />}
 					<FundraiserTitle title={fundraiser_detail.title} />
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -70,6 +70,7 @@ const FundraiserDetailsPage = ({ access_token,
 							<ImageScrollWithThumbnails
 								fundraisers_photos={fundraiser_detail.fundraiser_photo}
 							/>
+							{/* Mobile donation details */}
 							<div className="block md:hidden mt-4">
 								<DonationDetail
 									min_max_donation={fundraiser_detail.max_min_donation}
@@ -96,7 +97,7 @@ const FundraiserDetailsPage = ({ access_token,
 								organiser_name={fundraiser_detail.organiser_name}
 								beneficiary_name="Gaurav"
 							/>
-							<FundraiserDetailDescription />
+							<FundraiserDetailDescription details={fundraiser_detail.description} />
 						</div>
 						<div className="col-span-1 lg:col-span-1 px-4 mt-4 md:mt-0 sticky top-24 self-start">
 							{/* fundraiser details info */}
