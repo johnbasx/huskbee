@@ -1,4 +1,4 @@
-import { FundraiserEventProps, MinMaxDonationType } from '../../../pages/organiser/fundraisers';
+import { FirstDonationType, FundraiserEventProps, MaxDonationType } from '../../../pages/organiser/fundraisers';
 import { GetDaysLeft, GetPercentage, toIndianCurrency } from '@utils/index';
 import {
     TbDevicesHeart,
@@ -20,8 +20,9 @@ type DonationDetailType = {
     total_donation: number;
     target_amount: number;
     total_donors: number;
+    first_donation: FirstDonationType | null
     end_date: string;
-    min_max_donation: MinMaxDonationType | null
+    max_donation: MaxDonationType | null
     goToDonatePage: () => {};
 }
 export type DonatedUserAndAmountSmallDisplayType = {
@@ -33,7 +34,8 @@ export type DonatedUserAndAmountSmallDisplayType = {
 };
 
 const DonationDetail = ({
-    min_max_donation,
+    first_donation,
+    max_donation,
     share_count,
     fundraiser_id,
     total_donation,
@@ -143,27 +145,28 @@ const DonationDetail = ({
                     redirect_text="Recent donations"
                     Icon={TbDevicesHeart}
                 /> */}
-                {min_max_donation && <DonatedUserAndAmountSmallDisplay
-                    username={min_max_donation.max_donated_by}
-                    donated_amount={min_max_donation.max_amount}
+                {max_donation && <DonatedUserAndAmountSmallDisplay
+                    username={max_donation.donated_by}
+                    donated_amount={max_donation.amount}
                     redirect_link="#!"
                     redirect_text="Top donations"
                     Icon={TbMoodHeart}
                 />}
-                {min_max_donation && <DonatedUserAndAmountSmallDisplay
+                {/* {min_max_donation && <DonatedUserAndAmountSmallDisplay
                     username={min_max_donation.min_donated_by}
                     donated_amount={min_max_donation.min_amount}
                     redirect_link="#!"
                     redirect_text="Smallest donation"
                     Icon={TbUserUp}
-                />}
-                {/* <DonatedUserAndAmountSmallDisplay
-                    username="Dr. Leishem"
-                    donated_amount={2500}
-                    redirect_link="#!"
-                    redirect_text="First donation"
-                    Icon={TbUserUp}
-                /> */}
+                />} */}
+                {first_donation != null ?
+                    <DonatedUserAndAmountSmallDisplay
+                        username={first_donation.fullname}
+                        donated_amount={first_donation.amount}
+                        redirect_link="#!"
+                        redirect_text="First donation"
+                        Icon={TbUserUp}
+                    /> : ''}
                 <div className="flex flex-wrap gap-2">
                     <Link
                         href={`/fundraiser/donations/${fundraiser_id}`}

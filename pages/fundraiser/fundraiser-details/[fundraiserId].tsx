@@ -73,7 +73,9 @@ const FundraiserDetailsPage = ({ access_token,
 							{/* Mobile donation details */}
 							<div className="block md:hidden mt-4">
 								<DonationDetail
-									min_max_donation={fundraiser_detail.max_min_donation && fundraiser_detail.max_min_donation}
+									first_donation={fundraiser_detail.first_donation}
+
+									max_donation={fundraiser_detail.max_donation && fundraiser_detail.max_donation}
 									share_count={count}
 									fundraiser_id={fundraiser_detail.id}
 									total_donation={fundraiser_detail.donation_detail.total_donation}
@@ -102,7 +104,8 @@ const FundraiserDetailsPage = ({ access_token,
 						<div className="col-span-1 lg:col-span-1 px-4 mt-4 md:mt-0 sticky top-24 self-start">
 							{/* fundraiser details info */}
 							<DonationDetail
-								min_max_donation={fundraiser_detail.max_min_donation}
+								first_donation={fundraiser_detail.first_donation}
+								max_donation={fundraiser_detail.max_donation}
 								share_count={count}
 								fundraiser_id={fundraiser_detail.id}
 								total_donation={fundraiser_detail.donation_detail.total_donation}

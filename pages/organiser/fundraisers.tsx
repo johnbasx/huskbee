@@ -20,14 +20,18 @@ export type DonationDetailType = {
   total_donors: number;
 }
 
-export type MinMaxDonationType = {
-  max_donated_by: string;
-  max_amount: number;
-  max_donated_id: string;
-  min_donated_by: string;
-  min_amount: number;
-  min_donated_id: string
+export type MaxDonationType = {
+  donated_by: string;
+  amount: number;
+  donated_id: string;
 }
+
+export type FirstDonationType = {
+  fullname: string,
+  amount: number,
+  donor_id: string
+}
+
 export interface FundraiserEventProps {
   id: string;
   title: string;
@@ -36,17 +40,16 @@ export interface FundraiserEventProps {
   open_status: boolean;
   approved_status: string;
   target_amount: number;
-
   end_date: string;
   created_at: string;
   organiser: string;
   organiser_name: string;
   organisation_name: string;
   organiser_logo: string;
+  first_donation: FirstDonationType | null;
 
   donation_detail: DonationDetailType;
-
-  max_min_donation: MinMaxDonationType | null
+  max_donation: MaxDonationType | null
   share_count: number
 }
 
