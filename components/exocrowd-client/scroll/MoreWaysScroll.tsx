@@ -1,13 +1,19 @@
-import {DisplayCardBlockDataType} from "./FundraiserCardScroll";
 import React, { useState } from "react";
 import { TbArrowLeft, TbArrowRight } from "react-icons/tb";
 
+import { BASE_URL } from "@constants/api-urls";
+import { DisplayCardBlockDataType } from "./FundraiserCardScroll";
+import { FundraiserEventsProps } from "../../../pages/organiser/fundraiser-detail/[fundraiserId]";
 import Image from "next/image";
+import { staticCardData } from "@constants/fundraiser";
 import { toIndianCurrency } from "@utils/index";
 import { useKeenSlider } from "keen-slider/react";
-import { staticCardData } from "@constants/fundraiser";
 
-const MoreWaysScroll = () => {
+const MoreWaysScroll = ({
+	fundraisers,
+}: {
+	fundraisers: FundraiserEventsProps[];
+}) => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [loaded, setLoaded] = useState(false);
 	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
@@ -83,7 +89,7 @@ const MoreWaysScroll = () => {
 				</div>
 				<div className="navigation-wrapper relative">
 					<div ref={sliderRef} className="keen-slider py-12 px-6 lg:px-0">
-						{staticCardData.map((data, index) => (
+						{fundraisers.map((data, index) => (
 							<DisplayCardBlock
 								key={`display-card-block-${data.id}${index}`}
 								data={data}
@@ -121,13 +127,19 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 	return (
 		<div className="max-w-sm cursor-pointer group bg-blue-900 lg:hover:bg-blue-900/50 duration-150 transition-colors keen-slider__slide flex flex-col rounded-2xl lg:bg-transparent overflow-hidden p-2">
 			<div className="relative overflow-hidden rounded-xl">
+
 				<Image
 					className="w-full rounded-xl group-hover:scale-110 duration-200 transition-transform ease-in h-[8rem] md:h-[12rem] object-cover"
 					width={500}
 					height={500}
 					priority
 					quality={100}
-					src={data.cover_image}
+					src={
+						data.fundraiser_photo.length === 0
+							? "/images/carousel/carousel-1.jpg"
+							: BASE_URL + data.fundraiser_photo[0].photo
+					}
+
 					alt="donate"
 				/>
 				<div className="absolute bg-black/30 font-sans tracking-tight backdrop-blur-md py-1.5 px-2 text-xs font-semibold rounded-full bottom-2 left-2">
@@ -142,7 +154,7 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 				</div>
 				{/* <div className='grid grid-cols-2 divide-x gap-1'> */}
 				<div className="text-base flex flex-col gap-1 font-semibold text-gray-100">
-					<span className="text-sm">by {data.created_by.name}</span>
+					<span className="text-sm">by {data.title}</span>
 					<span className="text-xs line-clamp-1 text-blue-200">for Family</span>
 				</div>
 				{/* </div> */}
@@ -160,7 +172,7 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 						<span
 							className="block h-1.5 rounded-full bg-gradient-to-r from-blue-100 to-blue-50"
 							style={{ width: "78%" }}
-							// Dynamic data for progress bar
+						// Dynamic data for progress bar
 						/>
 					</span>
 				</div>
@@ -168,13 +180,13 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 				{/* <LatestSupportersAvatars /> */}
 				<div className="text-base flex flex-col">
 					<span className="font-extrabold text-slate-50 text-sm font-sans tracking-tight">
-						{toIndianCurrency(data.donated_amount)}{" "}
+						{toIndianCurrency(data.donation_detail.total_donation)}{" "}
 						<span className="font-nunito">raised</span>
 					</span>
 					<span className="text-xs font-semibold font-nunito text-blue-200">
 						out of{" "}
 						<span className="font-sans tracking-tight">
-							{toIndianCurrency(data.required_amount)}
+							{toIndianCurrency(data.target_amount)}
 						</span>
 					</span>
 				</div>

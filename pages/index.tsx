@@ -10,10 +10,10 @@ import HeroFeature from "@components/exocrowd-client/hero/HeroFeature";
 import Layout from "@components/exocrowd-client/Layout";
 import MoreWaysScroll from "@components/exocrowd-client/scroll/MoreWaysScroll";
 import TrustAndSafetySection from "@components/exocrowd-client/sections/TrustAndSafetySection";
+import TrustedPartners from "@components/sections/TrustedPartners";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
 import { useEffect } from "react";
-import TrustedPartners from "@components/sections/TrustedPartners";
 
 const IndexPage = ({
   access_token,
@@ -43,8 +43,8 @@ const IndexPage = ({
       {/* <RecommendCardScroll /> */}
 
       {/* <CausesSection /> */}
-      <TrustedPartners/>
-      <MoreWaysScroll />
+      <TrustedPartners />
+      <MoreWaysScroll fundraisers={fundraisers} />
       <TrustAndSafetySection />
       {/* <FundraisersFor /> */}
     </Layout>

@@ -21,18 +21,30 @@ export const GetPercentage = (value: number, total: number) => {
 };
 
 export const GetDaysLeft = (end_date: string) => {
+	console.log("end_date: ",end_date);
+	
 	const today = new Date();
 	const month = today.getMonth();
 	const year = today.getFullYear();
 	const date = today.getDate();
 	const currentDate = `${month}/${date}/${year}`;
+	console.log("today: ",today);
+	console.log("month: ",month);
+
+	console.log("currentDate: ",currentDate);
+	console.log("end_date_time: ",new Date(end_date).getTime());
+
+	console.log("currentDate_time: ",new Date(currentDate).getTime());
+
 
 	// To calculate the time difference of two dates
 	const Difference_In_Time =
 		new Date(end_date).getTime() - new Date(currentDate).getTime();
-
+		console.log("Difference_In_Time: ",Difference_In_Time)
 	// To calculate the no. of days between two dates
 	const days_left = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
+	console.log("days_left: ",days_left);
 
 	return days_left;
 };

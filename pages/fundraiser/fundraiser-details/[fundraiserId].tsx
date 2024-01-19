@@ -1,3 +1,4 @@
+import { BASE_URL, CROWDFUNDING_BASE_URL, USER_BASE_URL } from "@constants/api-urls";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image, { ImageProps } from "next/image";
 import React, { useEffect, useState } from "react";
@@ -10,7 +11,6 @@ import {
 	TbUser,
 } from "react-icons/tb";
 
-import { CROWDFUNDING_BASE_URL } from "@constants/api-urls";
 import DonationDetail from "@components/fundraiser/fundraiser-detail/DonationDetail";
 import FundraiserDetailDescription from "@components/fundraiser/fundraiser-detail/FundraiserDetailDescription";
 import { FundraiserEventsProps } from "../../organiser/fundraiser-detail/[fundraiserId]";
@@ -27,7 +27,7 @@ const temporary_phone = 919920512634;
 const urgent = false;
 
 type OrganiserDisplayType = {
-	organiser_name: string; organiser_logo: string;
+	organiser_name: string; organiser_logo: string; organisation_name: string
 }
 const FundraiserDetailsPage = ({ access_token,
 	fundraiser_detail,
@@ -73,7 +73,7 @@ const FundraiserDetailsPage = ({ access_token,
 							{/* Mobile donation details */}
 							<div className="block md:hidden mt-4">
 								<DonationDetail
-									min_max_donation={fundraiser_detail.max_min_donation}
+									min_max_donation={fundraiser_detail.max_min_donation && fundraiser_detail.max_min_donation}
 									share_count={count}
 									fundraiser_id={fundraiser_detail.id}
 									total_donation={fundraiser_detail.donation_detail.total_donation}
@@ -111,7 +111,7 @@ const FundraiserDetailsPage = ({ access_token,
 								end_date={fundraiser_detail.end_date}
 								goToDonatePage={goToDonatePage}
 							/>
-							<DonationDetailOrganiserDisplay organiser_name={fundraiser_detail.organiser_name} organiser_logo={fundraiser_detail.organiser_logo} />
+							<DonationDetailOrganiserDisplay organisation_name={fundraiser_detail.organisation_name} organiser_name={fundraiser_detail.organiser_name} organiser_logo={fundraiser_detail.organiser_logo} />
 						</div>
 					</div>
 				</section>
@@ -149,19 +149,22 @@ export const FundraiserOrganiserTag = ({
 	);
 };
 
-export const DonationDetailOrganiserDisplay = ({ organiser_name, organiser_logo }: OrganiserDisplayType) => {
+export const DonationDetailOrganiserDisplay = ({ organisation_name, organiser_name, organiser_logo }: OrganiserDisplayType) => {
 	return (
 		<div className="bg-white shadow-lg mt-6 rounded-2xl flex flex-col gap-4 px-6 py-4">
 			<h3 className="text-sm font-bold">Organisers &amp; Beneficiaries</h3>
 			<DonationDetailSingleOrganiserCard
+				organiser_logo={organiser_logo}
 				user_group="Organiser"
 				full_name={organiser_name}
 				username="manikantasingh"
-				organisation_name={"Meitei Apunba Lup"}
+				organisation_name={organisation_name}
+				// organisation_name={"Meitei Apunba Lup"}
 				phone_number={temporary_phone}
 				whatsapp_number={temporary_phone}
 			/>
 			<DonationDetailSingleOrganiserCard
+				organiser_logo={organiser_logo}
 				user_group="Beneficiary"
 				full_name="Gaurav"
 				username="gaurav555"
@@ -171,6 +174,7 @@ export const DonationDetailOrganiserDisplay = ({ organiser_name, organiser_logo 
 };
 
 export type DonationDetailSingleOrganiserCardType = {
+	organiser_logo: string
 	user_group: string;
 	full_name: string;
 	username: string;
@@ -181,6 +185,7 @@ export type DonationDetailSingleOrganiserCardType = {
 };
 
 export const DonationDetailSingleOrganiserCard = ({
+	organiser_logo,
 	user_group,
 	full_name,
 	username,
@@ -191,11 +196,11 @@ export const DonationDetailSingleOrganiserCard = ({
 }: DonationDetailSingleOrganiserCardType) => {
 	return (
 		<div className="inline-flex items-start gap-2">
-			{profile_image ? (
+			{organiser_logo ? (
 				<Image
 					className="rounded-full h-10 w-10 object-cover"
 					alt={`profile-image-${full_name}`}
-					src={profile_image}
+					src={BASE_URL + '/media/' + organiser_logo}
 					height={50}
 					width={50}
 					quality={30}

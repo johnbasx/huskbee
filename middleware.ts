@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export const BASE_URL = "http://localhost:3000";
+export const FRONT_BASE_URL = "http://localhost:3000";
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token");
@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
   // const redirectPath = CheckParamContent(request, login)
 
   // return redirectPath!=undefined?NextResponse.redirect(
-  //       new URL(BASE_URL +redirectPath.toString())
+  //       new URL(FRONT_BASE_URL +redirectPath.toString())
   //     ):
   if (
     pathname.startsWith("/login") &&
@@ -23,9 +23,9 @@ export function middleware(request: NextRequest) {
   ) {
     const param = request.nextUrl.searchParams.get("q");
 
-    return NextResponse.redirect(new URL(BASE_URL + param!.toString()));
+    return NextResponse.redirect(new URL(FRONT_BASE_URL + param!.toString()));
   } else if (pathname.startsWith("/login") && login?.value == "true") {
-    return NextResponse.redirect(new URL(BASE_URL));
+    return NextResponse.redirect(new URL(FRONT_BASE_URL));
   }
 
   if (pathname.startsWith("/book-event")) {
@@ -47,7 +47,7 @@ export function middleware(request: NextRequest) {
     ) {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL(BASE_URL));
+      return NextResponse.redirect(new URL(FRONT_BASE_URL));
     }
   }
 
@@ -55,7 +55,7 @@ export function middleware(request: NextRequest) {
     if (admin_login?.value === "true" || pathname.startsWith("/admin/login")) {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL(BASE_URL));
+      return NextResponse.redirect(new URL(FRONT_BASE_URL));
     }
   }
 

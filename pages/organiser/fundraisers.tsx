@@ -41,11 +41,12 @@ export interface FundraiserEventProps {
   created_at: string;
   organiser: string;
   organiser_name: string;
+  organisation_name: string;
   organiser_logo: string;
 
   donation_detail: DonationDetailType;
 
-  max_min_donation: MinMaxDonationType
+  max_min_donation: MinMaxDonationType | null
   share_count: number
 }
 

@@ -57,7 +57,8 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
 
     const copyTextToClipboard = async () => {
         if ('clipboard' in navigator) {
-            return await navigator.clipboard.writeText(link);
+            return await navigator.clipboard.writeText(link)
+
         } else {
             return document.execCommand('copy', true, link);
         }
@@ -68,7 +69,6 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
         try {
             const response = await axios.put(CROWDFUNDING_BASE_URL + 'share-fundraiser/' + fundraiser_id)
             setShareCount(response.data.share_count)
-            // console.log("Share_count: ", response.data.share_count);
             toast.success('Share success');
             setOpen(false)
         } catch (e: any) {
@@ -147,7 +147,10 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
                                                 <div className="flex relative w-full">
                                                     <input type="text" placeholder="sada" className="w-full bg-[#9d9d9d0a] outline-none p-4 placeholder:text-text-slate-800 text-sm leading-[1.09375rem] text-slate-800 pr-16 rounded-2xl"
                                                         defaultValue={link} readOnly />
-                                                    <button type='button' onClick={() => copyTextToClipboard()} className="absolute right-6 top-1/2 -translate-y-1/2">
+                                                    <button type='button' onClick={(e) => {
+                                                        copyTextToClipboard();
+                                                        shareCountHandler(e)
+                                                    }} className="absolute right-6 top-1/2 -translate-y-1/2">
                                                         <FaRegCopy className='h-6 w-6 text-[#EE6C4D]' />
                                                     </button>
                                                 </div>

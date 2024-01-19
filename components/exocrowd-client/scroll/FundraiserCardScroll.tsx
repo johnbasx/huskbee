@@ -133,7 +133,7 @@ export type DisplayCardBlockDataType = { data: FundraiserEventsProps };
 const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 
 	return (
-		<div className="max-w-sm cursor-pointer keen-slider__slide shadow-lg flex flex-col rounded-2xl bg-white overflow-hidden">
+		<Link href={`/fundraiser/fundraiser-details/${data.id}`} className="max-w-sm cursor-pointer keen-slider__slide shadow-lg flex flex-col rounded-2xl bg-white overflow-hidden">
 			<Image
 				className="w-full h-[8rem] md:h-[12rem] object-cover"
 				width={500}
@@ -150,11 +150,11 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 			<div className="px-4 py-4 text-black flex flex-col gap-2">
 				<div className="">
 					<div className="font-bold text-xl h-14 mb-2 line-clamp-2">
-						<Link href={`/fundraiser/fundraiser-details/${data.id}`}>
-							{data.title}</Link>
+						<h3 >
+							{data.title}</h3>
 					</div>
-					<div className="text-gray-700 text-xs line-clamp-2" dangerouslySetInnerHTML={{__html:data.description}}/>
-						{/* {data.description} */}
+					<div className="text-gray-700 text-xs line-clamp-2" dangerouslySetInnerHTML={{ __html: data.description }} />
+					{/* {data.description} */}
 					{/* </div> */}
 				</div>
 				<div className="grid grid-cols-2 divide-x gap-1">
@@ -216,7 +216,7 @@ const DisplayCardBlock = ({ data }: DisplayCardBlockDataType) => {
 					total_donors={data.donation_detail.total_donors}
 				/>
 			</div>
-		</div>
+		</Link>
 	);
 };
 
