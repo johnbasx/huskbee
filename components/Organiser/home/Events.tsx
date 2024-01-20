@@ -1,101 +1,101 @@
-import { BASE_URL } from "@constants/api-urls";
-import { EventDetailProps } from "../../../pages/event-detail/[eventId]";
-import Link from "next/link";
-import MorePartners from "./MorePartners";
-import React from "react";
-import Image from "next/image";
+import { BASE_URL } from '@constants/api-urls';
+import { EventDetailProps } from '../../../pages/event-detail/[eventId]';
+import Link from 'next/link';
+import MorePartners from './MorePartners';
+import React from 'react';
+import Image from 'next/image';
 
 const Events = ({ events }: { events: EventDetailProps[] }) => {
-	return (
-		<div className="hidden mt-8 sm:block max-w-7xl mx-auto px-8">
-			<div className="align-middle inline-block min-w-full border-b border-gray-700">
-				<table className="min-w-full">
-					<thead>
-						<tr className="">
-							<th className="py-3 border-b  text-left text-xs font-medium text-gray-50 uppercase tracking-wider">
-								<span className="">Latest events</span>
-							</th>
-							<th className=" py-3 border-b  text-left text-xs font-medium text-gray-50 uppercase tracking-wider">
-								Partners
-							</th>
-							<th className="px-6 hidden md:table-cell py-3 border-b  text-right text-xs font-medium text-gray-50 uppercase tracking-wider">
-								Starts on
-							</th>
-							<th className="pr-6 py-3 border-b  text-right text-xs font-medium text-gray-50 uppercase tracking-wider" />
-						</tr>
-					</thead>
-					<tbody className="divide-y divide-gray-700">
-						{events.map((event) => (
-							<tr key={event.id}>
-								<td className="py-3  whitespace-nowrap text-sm font-medium text-gray-900">
-									<div className="flex items-center space-x-3 ">
-										{/* <div
+  return (
+    <div className='mx-auto mt-8 hidden max-w-7xl px-8 sm:block'>
+      <div className='inline-block min-w-full border-b border-neutral-700 align-middle'>
+        <table className='min-w-full'>
+          <thead>
+            <tr className=''>
+              <th className='border-b py-3  text-left text-xs font-medium uppercase tracking-wider text-neutral-50'>
+                <span className=''>Latest events</span>
+              </th>
+              <th className=' border-b py-3  text-left text-xs font-medium uppercase tracking-wider text-neutral-50'>
+                Partners
+              </th>
+              <th className='hidden border-b px-6 py-3 text-right  text-xs font-medium uppercase tracking-wider text-neutral-50 md:table-cell'>
+                Starts on
+              </th>
+              <th className='border-b py-3 pr-6  text-right text-xs font-medium uppercase tracking-wider text-neutral-50' />
+            </tr>
+          </thead>
+          <tbody className='divide-y divide-neutral-700'>
+            {events.map((event) => (
+              <tr key={event.id}>
+                <td className='whitespace-nowrap  py-3 text-sm font-medium text-neutral-900'>
+                  <div className='flex items-center space-x-3 '>
+                    {/* <div
                       className={classNames(
                         event.name,
                         "flex-shrink-0 w-2.5 h-2.5 rounded-full"
                       )}
                       aria-hidden="true"
                     /> */}
-										<Link
-											href={`/organiser/event-detail/${event.id}`}
-											className="truncate text-gray-50"
-										>
-											<span>
-												{event.name}{" "}
-												<span className="text-gray-200 font-normal">
-													in {event.start_date}
-												</span>
-											</span>
-										</Link>
-									</div>
-								</td>
-								<td className="px-6 py-3 text-sm text-gray-50 font-medium">
-									<div className="flex items-center space-x-2">
-										<div className="flex flex-shrink-0 -space-x-1">
-											{event.partners.map((detail, idx) => (
-												<>
-													{idx < 5 && (
-														<Link href="#!">
-															<Image
-																height={30}
-																width={30}
-																quality={30}
-																key={detail.id}
-																className="max-w-none object-cover h-6 w-6 rounded-full ring-2 hover:ring-1 ring-white cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-150 duration-500"
-																src={BASE_URL + detail.logo}
-																alt={detail.name}
-															/>
-														</Link>
-													)}
-												</>
-											))}
-										</div>
+                    <Link
+                      href={`/organiser/event-detail/${event.id}`}
+                      className='truncate text-neutral-50'
+                    >
+                      <span>
+                        {event.name}{' '}
+                        <span className='font-normal text-neutral-200'>
+                          in {event.start_date}
+                        </span>
+                      </span>
+                    </Link>
+                  </div>
+                </td>
+                <td className='px-6 py-3 text-sm font-medium text-neutral-50'>
+                  <div className='flex items-center space-x-2'>
+                    <div className='flex flex-shrink-0 -space-x-1'>
+                      {event.partners.map((detail, idx) => (
+                        <>
+                          {idx < 5 && (
+                            <Link href='#!'>
+                              <Image
+                                height={30}
+                                width={30}
+                                quality={30}
+                                key={detail.id}
+                                className='h-6 w-6 max-w-none cursor-pointer rounded-full object-cover ring-2 ring-white transition delay-150 duration-500 ease-in-out hover:-translate-y-1 hover:scale-150 hover:ring-1'
+                                src={BASE_URL + detail.logo}
+                                alt={detail.name}
+                              />
+                            </Link>
+                          )}
+                        </>
+                      ))}
+                    </div>
 
-										{event.partners.length > 1 ? (
-											<MorePartners
-												partners={event.partners}
-												morePartners={event.partners.length - 1}
-											/>
-										) : (
-											<></>
-										)}
-									</div>
-								</td>
-								<td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-50 text-right">
-									{event.start_date}
-								</td>
-								<td className="pl-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-									<a href="#!" className="text-blue-300 hover:text-blue-400">
-										Quick view
-									</a>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	);
+                    {event.partners.length > 1 ? (
+                      <MorePartners
+                        partners={event.partners}
+                        morePartners={event.partners.length - 1}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </td>
+                <td className='hidden whitespace-nowrap px-6 py-3 text-right text-sm text-neutral-50 md:table-cell'>
+                  {event.start_date}
+                </td>
+                <td className='whitespace-nowrap py-3 pl-6 text-right text-sm font-medium'>
+                  <a href='#!' className='text-blue-300 hover:text-blue-400'>
+                    Quick view
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default Events;

@@ -1,26 +1,26 @@
 import {
   AddressTabListStore,
   AddressTabListType,
-} from "@store/organiser-profile-store";
-import { BASE_URL, USER_BASE_URL } from "@constants/api-urls";
-import React, { ReactNode, useEffect, useState } from "react";
+} from '@store/organiser-profile-store';
+import { BASE_URL, USER_BASE_URL } from '@constants/api-urls';
+import React, { ReactNode, useEffect, useState } from 'react';
 
-import AddressInfo from "@components/organiser/Profile/AddressInfo";
-import BankDetail from "@components/organiser/Profile/BankDetail";
-import Layout from "@components/organiser/layout/Layout";
-import { NextPageContext } from "next";
-import { OrganiserProfileStore } from "@store/organiser-profile-store";
-import { Toaster } from "react-hot-toast";
-import UpdateLogo from "@components/organiser/Profile/UpdateLogo";
-import UpdateProfile from "@components/organiser/Profile/UpdateProfile";
-import { getCookie } from "cookies-next";
-import { orgTokenStore } from "@store/index";
+import AddressInfo from '@components/organiser/Profile/AddressInfo';
+import BankDetail from '@components/organiser/Profile/BankDetail';
+import Layout from '@components/organiser/layout/Layout';
+import { NextPageContext } from 'next';
+import { OrganiserProfileStore } from '@store/organiser-profile-store';
+import { Toaster } from 'react-hot-toast';
+import UpdateLogo from '@components/organiser/Profile/UpdateLogo';
+import UpdateProfile from '@components/organiser/Profile/UpdateProfile';
+import { getCookie } from 'cookies-next';
+import { orgTokenStore } from '@store/index';
 
 const person = {
-  name: "Leslie Alexander",
-  role: "Co-Founder / CEO",
+  name: 'Leslie Alexander',
+  role: 'Co-Founder / CEO',
   imageUrl:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 };
 
 export interface AddressProps {
@@ -80,7 +80,7 @@ const Profile = ({
     orgProfile,
     setOrgProfile,
     addresses,
-   
+
     setAddresses,
     bankAccounts,
     setBankAccounts,
@@ -92,70 +92,70 @@ const Profile = ({
     setOrgToken(token);
     setOrgProfile(profile);
     setAddresses(profile.address);
-    setBankAccounts(profile.bank_accounts)
+    setBankAccounts(profile.bank_accounts);
     setOrgLogo(BASE_URL + profile.logo);
 
-  //   let list: AddressTabListType[] = [];
-  //   profile.address.map((item) => {
-  //     list = [...list, { name: item.name, default: item.default }];
-  //   });
-  //   setAddressTabList(list);
-   }, []);
+    //   let list: AddressTabListType[] = [];
+    //   profile.address.map((item) => {
+    //     list = [...list, { name: item.name, default: item.default }];
+    //   });
+    //   setAddressTabList(list);
+  }, []);
 
   return (
-    <Layout pageTitle="Profile">
+    <Layout pageTitle='Profile'>
       <Toaster />
-      <div className="mt-8 max-w-3xl mx-auto gap-6 sm:px-6 lg:max-w-7xl pb-12 space-y-12">
+      <div className='mx-auto mt-8 max-w-3xl gap-6 space-y-12 pb-12 sm:px-6 lg:max-w-7xl'>
         <ProfileWrapper
-          title="Organiser profile"
+          title='Organiser profile'
           logo={org_logo}
           user_id={profile.id}
           // subtitle="Information about the Organiser"
         >
           <ProfileContent
             lookUp={orgProfile.id}
-            name="name"
-            label="Full name"
+            name='name'
+            label='Full name'
             value={orgProfile.name}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="email"
-            label="Email"
+            name='email'
+            label='Email'
             value={orgProfile.email}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="phone"
-            label="Phone"
+            name='phone'
+            label='Phone'
             value={orgProfile.phone}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="organiser_type"
-            label="Organisation type"
+            name='organiser_type'
+            label='Organisation type'
             value={orgProfile.organiser_type}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
           <ProfileContent
             lookUp={orgProfile.id}
-            name="description"
-            label="Description"
+            name='description'
+            label='Description'
             value={`${orgProfile.description}`}
-            link="update-organiser-profile/"
+            link='update-organiser-profile/'
           />
         </ProfileWrapper>
         <Wrapper
-          title="Bank information"
+          title='Bank information'
           subtitle={`Different Bank Accounts for ${profile.organisation_name}`}
         >
           <BankDetail BankAccounts={bankAccounts} />
         </Wrapper>
         <Wrapper
-          title="Organiser Addresses"
+          title='Organiser Addresses'
           subtitle={`Different address for ${profile.organisation_name}`}
         >
           <AddressInfo Addresses={addresses} SetAddress={setAddresses} />
@@ -170,8 +170,8 @@ export default Profile;
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req;
   const res = context.res;
-  const token = getCookie("org_token", { req, res });
-  const response = await fetch(USER_BASE_URL + "organiser-profile", {
+  const token = getCookie('org_token', { req, res });
+  const response = await fetch(USER_BASE_URL + 'organiser-profile', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -181,7 +181,7 @@ export async function getServerSideProps(context: NextPageContext) {
   if (!profile) {
     return {
       redirect: {
-        destination: "/",
+        destination: '/',
         permanent: false,
       },
     };
@@ -207,11 +207,13 @@ export const ProfileContent = ({
   link,
 }: ProfileContentProp) => {
   return (
-    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-      <dt className="text-sm font-medium leading-6 text-gray-900">{label}</dt>
-      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex justify-between space-x-4">
+    <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+      <dt className='text-sm font-medium leading-6 text-neutral-900'>
+        {label}
+      </dt>
+      <dd className='mt-1 flex justify-between space-x-4 text-sm leading-6 text-neutral-700 sm:col-span-2 sm:mt-0'>
         <span>{value}</span>
-        <div className="mr-2 flex-shrink-0">
+        <div className='mr-2 flex-shrink-0'>
           <UpdateProfile
             lookUp={lookUp}
             name={name}
@@ -235,8 +237,8 @@ const Wrapper = ({
   subtitle: string;
 }) => {
   return (
-    <div className="bg-white w-full rounded-lg border p-6 shadow-md">
-      <div className="px-4 sm:px-0 text-center">
+    <div className='w-full rounded-lg border bg-white p-6 shadow-md'>
+      <div className='px-4 text-center sm:px-0'>
         {/* <div className="flex items-center gap-x-6">
           <img
             className="h-16 w-16 rounded-full"
@@ -244,7 +246,7 @@ const Wrapper = ({
             alt=""
           />
           <div>
-            <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">
+            <h3 className="text-base font-semibold leading-7 tracking-tight text-neutral-900">
               {title}
             </h3>
             <p className="text-sm font-semibold leading-6 text-indigo-600">
@@ -252,13 +254,13 @@ const Wrapper = ({
             </p>
           </div>
         </div> */}
-        <h3 className="text-xl font-semibold leading-7 text-gray-900">
+        <h3 className='text-xl font-semibold leading-7 text-neutral-900'>
           {title}
         </h3>
-        <p className="mt-1  text-sm leading-6 text-gray-500">{subtitle}</p>
+        <p className='mt-1  text-sm leading-6 text-neutral-500'>{subtitle}</p>
       </div>
-      <div className="mt-6 border-t border-gray-100">
-        <dl className="divide-y divide-gray-100">{children}</dl>
+      <div className='mt-6 border-t border-neutral-100'>
+        <dl className='divide-y divide-neutral-100'>{children}</dl>
       </div>
     </div>
   );
@@ -277,20 +279,20 @@ const ProfileWrapper = ({
 }) => {
   // console.log("Logo: ", logo);
   return (
-    <div className="bg-white w-full rounded-lg border p-6 shadow-md">
-      <div className="px-4 sm:px-0 text-center">
-        <div className="flex items-center gap-x-6">
-          <img className="h-16 w-16 rounded-full" src={logo} alt="" />
+    <div className='w-full rounded-lg border bg-white p-6 shadow-md'>
+      <div className='px-4 text-center sm:px-0'>
+        <div className='flex items-center gap-x-6'>
+          <img className='h-16 w-16 rounded-full' src={logo} alt='' />
           <div>
-            <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">
+            <h3 className='text-base font-semibold leading-7 tracking-tight text-neutral-900'>
               {title}
             </h3>
             <UpdateLogo user_id={user_id} />
           </div>
         </div>
       </div>
-      <div className="mt-6 border-t border-gray-100">
-        <dl className="divide-y divide-gray-100">{children}</dl>
+      <div className='mt-6 border-t border-neutral-100'>
+        <dl className='divide-y divide-neutral-100'>{children}</dl>
       </div>
     </div>
   );

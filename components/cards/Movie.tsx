@@ -1,60 +1,60 @@
-import Image from "next/image";
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 export interface MovieProps {
-	id: number;
-	name: string;
-	year: string;
-	runtime: number;
-	rating?: number;
-	category?: string[];
-	releaseDate: string;
-	director: string;
-	poster: string;
-	writer: string[];
-	actors: string[];
-	storyline: string;
+  id: number;
+  name: string;
+  year: string;
+  runtime: number;
+  rating?: number;
+  category?: string[];
+  releaseDate: string;
+  director: string;
+  poster: string;
+  writer: string[];
+  actors: string[];
+  storyline: string;
 }
 
 const Movie = ({ ...movie }: MovieProps) => {
-	return (
-		<div className="py-2 sm:mx-auto px-3">
-			<div className="bg-zinc-900/50 rounded-3xl shadow-lg border-zinc-800 max-h-80 border sm:rounded-3xl p-3 flex space-x-4">
-				<div className="h-full rounded-3xl overflow-hidden w-1/2 max-h-72">
-					<Image
-						className="rounded-3xl h-full max-h-72 w-full object-cover shadow-lg"
-						src={movie.poster}
-						alt="movie card"
-						height={100}
-						width={100}
-					/>
-				</div>
-				<div className="flex flex-col w-1/2 space-y-2">
-					<div className="flex justify-between items-start">
-						<h2 className="text-xl font-bold">{movie.name}</h2>
-						<div className="bg-yellow-400 font-bold rounded-lg text-2xs py-1 px-2">
-							{movie.rating?.toFixed(1)}
-						</div>
-					</div>
-					<div>
-						<div className="text-sm text-gray-400">Year</div>
-						<div className="text-lg text-zinc-200">{movie.year}</div>
-					</div>
-					<div className="max-h-16 text-ellipsis overflow-y-hidden">
-						<p className=" text-gray-400 text-xs h-16">{movie.storyline}</p>
-					</div>
+  return (
+    <div className='px-3 py-2 sm:mx-auto'>
+      <div className='flex max-h-80 space-x-4 rounded-3xl border border-zinc-800 bg-zinc-900/50 p-3 shadow-lg sm:rounded-3xl'>
+        <div className='h-full max-h-72 w-1/2 overflow-hidden rounded-3xl'>
+          <Image
+            className='h-full max-h-72 w-full rounded-3xl object-cover shadow-lg'
+            src={movie.poster}
+            alt='movie card'
+            height={100}
+            width={100}
+          />
+        </div>
+        <div className='flex w-1/2 flex-col space-y-2'>
+          <div className='flex items-start justify-between'>
+            <h2 className='text-xl font-bold'>{movie.name}</h2>
+            <div className='rounded-lg bg-yellow-400 px-2 py-1 text-2xs font-bold'>
+              {movie.rating?.toFixed(1)}
+            </div>
+          </div>
+          <div>
+            <div className='text-sm text-neutral-400'>Year</div>
+            <div className='text-lg text-zinc-200'>{movie.year}</div>
+          </div>
+          <div className='max-h-16 overflow-y-hidden text-ellipsis'>
+            <p className=' h-16 text-xs text-neutral-400'>{movie.storyline}</p>
+          </div>
 
-					<div className="flex text-2xl font-bold text-a">&#8377;90</div>
-					<button
-						type="button"
-						className="flex justify-center text-center text-lg bg-purple-600 hover:bg-purple-700 transition duration-200 border-purple-500 border rounded-lg py-1 px-4 font-bold text-a"
-					>
-						Go watch
-					</button>
-				</div>
-			</div>
-		</div>
-	);
+          <div className='text-a flex text-2xl font-bold'>&#8377;90</div>
+          <button
+            type='button'
+            className='text-a flex justify-center rounded-lg border border-purple-500 bg-purple-600 px-4 py-1 text-center text-lg font-bold transition duration-200 hover:bg-purple-700'
+          >
+            Go watch
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Movie;
