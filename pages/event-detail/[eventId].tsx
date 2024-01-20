@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { BOOKING_BASE_URL } from "@constants/api-urls";
-import EventDescription from "@components/event-detail/EventDetail";
-import { EventNameStore } from "@store/index";
-import Layout from "@components/layout/Layout";
-import { NextPageContext } from "next";
-import Organisers from "@components/event-detail/Organisers";
-import ProductImage from "@components/event-detail/ProductImage";
-import ShareOnSocial from "@components/event-detail/ShareOnSocial";
-import { useRouter } from "next/router";
+import { BOOKING_BASE_URL } from '@constants/api-urls';
+import EventDescription from '@components/event-detail/EventDetail';
+import { EventNameStore } from '@store/index';
+import Layout from '@components/layout/Layout';
+import { NextPageContext } from 'next';
+import Organisers from '@components/event-detail/Organisers';
+import ProductImage from '@components/event-detail/ProductImage';
+import ShareOnSocial from '@components/event-detail/ShareOnSocial';
+import { useRouter } from 'next/router';
 
 export interface TicketVariantProps {
   id: string;
@@ -57,7 +57,7 @@ export interface EventDetailProps {
 }
 
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
@@ -73,9 +73,9 @@ const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
   return (
     <Layout>
       <div className='border-none bg-transparent'>
-        <div className='mx-auto py-16 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8'>
+        <div className='mx-auto px-4 py-16 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8'>
           {/* Product */}
-          <div className='lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16'>
+          <div className='lg:grid lg:grid-cols-7 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16'>
             {/* Product image */}
             <ProductImage
               ImageSrc={event_detail.hero_image}
@@ -83,7 +83,7 @@ const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
             />
 
             {/* Event details */}
-            <div className='max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3'>
+            <div className='mx-auto mt-14 max-w-2xl sm:mt-16 lg:col-span-3 lg:row-span-2 lg:row-end-2 lg:mt-0 lg:max-w-none'>
               <EventDescription
                 event={event_detail.id}
                 name={event_detail.name}
@@ -93,9 +93,9 @@ const EventDetail = ({ event_detail }: { event_detail: EventDetailProps }) => {
                 description={event_detail.description}
               />
 
-              {/* <div className="border-t border-gray-200 mt-10 pt-10">
+              {/* <div className="border-t border-neutral-200 mt-10 pt-10">
                 <h3 className="text-sm font-medium">Highlights</h3>
-                <div className="mt-4 prose prose-sm text-gray-500">
+                <div className="mt-4 prose prose-sm text-neutral-500">
                   <ul role="list">
                     {product.highlights.map((highlight) => (
                       <li key={highlight}>{highlight}</li>
@@ -119,7 +119,7 @@ export default EventDetail;
 
 export async function getServerSideProps(context: NextPageContext) {
   const { eventId } = context.query;
-  const response = await fetch(BOOKING_BASE_URL + "event-detail/" + eventId);
+  const response = await fetch(BOOKING_BASE_URL + 'event-detail/' + eventId);
   const event_detail = await response.json();
   console.log(event_detail);
   return {

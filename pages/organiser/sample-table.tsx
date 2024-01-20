@@ -18,20 +18,20 @@ import {
   getSortedRowModel,
   sortingFns,
   useReactTable,
-} from "@tanstack/react-table";
-import { Person, makeData } from "@constants/sample-table-data";
+} from '@tanstack/react-table';
+import { Person, makeData } from '@constants/sample-table-data';
 import {
   RankingInfo,
   compareItems,
   rankItem,
-} from "@tanstack/match-sorter-utils";
+} from '@tanstack/match-sorter-utils';
 
-import Layout from "@components/organiser/layout/Layout";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import TablePageOption from "@components/common/TablePageOption";
+import Layout from '@components/organiser/layout/Layout';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import TablePageOption from '@components/common/TablePageOption';
 
-declare module "@tanstack/table-core" {
+declare module '@tanstack/table-core' {
   interface FilterFns {
     fuzzy: FilterFn<unknown>;
   }
@@ -74,62 +74,62 @@ export default function App() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [globalFilter, setGlobalFilter] = React.useState('');
 
   const columns = React.useMemo<ColumnDef<Person, any>[]>(
     () => [
       {
-        header: "Name",
+        header: 'Name',
         footer: (props) => props.column.id,
         columns: [
           {
-            accessorKey: "firstName",
+            accessorKey: 'firstName',
             cell: (info) => info.getValue(),
             footer: (props) => props.column.id,
           },
           {
             accessorFn: (row) => row.lastName,
-            id: "lastName",
+            id: 'lastName',
             cell: (info) => info.getValue(),
             header: () => <span>Last Name</span>,
             footer: (props) => props.column.id,
           },
           {
             accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-            id: "fullName",
-            header: "Full Name",
+            id: 'fullName',
+            header: 'Full Name',
             cell: (info) => info.getValue(),
             footer: (props) => props.column.id,
-            filterFn: "fuzzy",
+            filterFn: 'fuzzy',
             sortingFn: fuzzySort,
           },
         ],
       },
       {
-        header: "Info",
+        header: 'Info',
         footer: (props) => props.column.id,
         columns: [
           {
-            accessorKey: "age",
-            header: () => "Age",
+            accessorKey: 'age',
+            header: () => 'Age',
             footer: (props) => props.column.id,
           },
           {
-            header: "More Info",
+            header: 'More Info',
             columns: [
               {
-                accessorKey: "visits",
+                accessorKey: 'visits',
                 header: () => <span>Visits</span>,
                 footer: (props) => props.column.id,
               },
               {
-                accessorKey: "status",
-                header: "Status",
+                accessorKey: 'status',
+                header: 'Status',
                 footer: (props) => props.column.id,
               },
               {
-                accessorKey: "progress",
-                header: "Profile Progress",
+                accessorKey: 'progress',
+                header: 'Profile Progress',
                 footer: (props) => props.column.id,
               },
             ],
@@ -169,27 +169,27 @@ export default function App() {
   });
 
   React.useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === "fullName") {
-      if (table.getState().sorting[0]?.id !== "fullName") {
-        table.setSorting([{ id: "fullName", desc: false }]);
+    if (table.getState().columnFilters[0]?.id === 'fullName') {
+      if (table.getState().sorting[0]?.id !== 'fullName') {
+        table.setSorting([{ id: 'fullName', desc: false }]);
       }
     }
   }, [table.getState().columnFilters[0]?.id]);
 
   return (
     <Layout>
-      <div className='max-w-7xl mx-auto'>
+      <div className='mx-auto max-w-7xl'>
         <DebouncedInput
-          value={globalFilter ?? ""}
+          value={globalFilter ?? ''}
           onChange={(value) => setGlobalFilter(String(value))}
-          className='p-2 font-lg shadow border border-block text-black'
+          className='font-lg border-block border p-2 text-black shadow'
           placeholder='Search all columns...'
         />
       </div>
       <div className=''>
         <div className='h-2 ' />
-        <table className='p-2 max-w-7xl mx-auto overflow-x-auto'>
-          <thead className='min-w-full divide-y divide-gray-200'>
+        <table className='mx-auto max-w-7xl overflow-x-auto p-2'>
+          <thead className='min-w-full divide-y divide-neutral-200'>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -197,15 +197,15 @@ export default function App() {
                     <th
                       key={header.id}
                       colSpan={header.colSpan}
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                      className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500'
                     >
                       {header.isPlaceholder ? null : (
                         <>
                           <div
                             {...{
                               className: header.column.getCanSort()
-                                ? "cursor-pointer select-none"
-                                : "",
+                                ? 'cursor-pointer select-none'
+                                : '',
                               onClick: header.column.getToggleSortingHandler(),
                             }}
                           >
@@ -214,8 +214,8 @@ export default function App() {
                               header.getContext()
                             )}
                             {{
-                              asc: " 🔼",
-                              desc: " 🔽",
+                              asc: ' 🔼',
+                              desc: ' 🔽',
                             }[header.column.getIsSorted() as string] ?? null}
                           </div>
                           {header.column.getCanFilter() ? (
@@ -231,7 +231,7 @@ export default function App() {
               </tr>
             ))}
           </thead>
-          <tbody className='divide-y divide-gray-700'>
+          <tbody className='divide-y divide-neutral-700'>
             {table.getRowModel().rows.map((row) => {
               return (
                 <tr key={row.id}>
@@ -239,7 +239,7 @@ export default function App() {
                     return (
                       <td
                         key={cell.id}
-                        className='px-6 py-4 whitespace-nowrap text-sm'
+                        className='whitespace-nowrap px-6 py-4 text-sm'
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -256,37 +256,37 @@ export default function App() {
         <div className='h-2' />
         <div className='flex items-center gap-2'>
           <button
-            className='border rounded p-1'
+            className='rounded border p-1'
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            {"<<"}
+            {'<<'}
           </button>
           <button
-            className='border rounded p-1'
+            className='rounded border p-1'
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            {"<"}
+            {'<'}
           </button>
           <button
-            className='border rounded p-1'
+            className='rounded border p-1'
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            {">"}
+            {'>'}
           </button>
           <button
-            className='border rounded p-1'
+            className='rounded border p-1'
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
-            {">>"}
+            {'>>'}
           </button>
           <span className='flex items-center gap-1'>
             <div>Page</div>
             <strong>
-              {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getState().pagination.pageIndex + 1} of{' '}
               {table.getPageCount()}
             </strong>
           </span>
@@ -299,7 +299,7 @@ export default function App() {
                 const page = e.target.value ? Number(e.target.value) - 1 : 0;
                 table.setPageIndex(page);
               }}
-              className='border p-1 rounded w-16'
+              className='w-16 rounded border p-1'
             />
           </span>
           dgxgx
@@ -309,13 +309,13 @@ export default function App() {
             onChange={(e) => {
               table.setPageSize(Number(e.target.value));
             }}
-            className='bg-transparent rounded-lg'
+            className='rounded-lg bg-transparent'
           >
             {[10, 20, 30, 40, 50].map((pageSize) => (
               <option
                 key={pageSize}
                 value={pageSize}
-                className='bg-black absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+                className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-neutral-100 rounded-md bg-black  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
               >
                 Show {pageSize}
               </option>
@@ -350,62 +350,62 @@ function Filter({
 
   const sortedUniqueValues = React.useMemo(
     () =>
-      typeof firstValue === "number"
+      typeof firstValue === 'number'
         ? []
         : Array.from(column.getFacetedUniqueValues().keys()).sort(),
     [column.getFacetedUniqueValues()]
   );
 
-  return typeof firstValue === "number" ? (
+  return typeof firstValue === 'number' ? (
     <div>
       <div className='flex space-x-2'>
         <DebouncedInput
           type='number'
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-          value={(columnFilterValue as [number, number])?.[0] ?? ""}
+          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
+          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
+          value={(columnFilterValue as [number, number])?.[0] ?? ''}
           onChange={(value) =>
             column.setFilterValue((old: [number, number]) => [value, old?.[1]])
           }
           placeholder={`Min ${
             column.getFacetedMinMaxValues()?.[0]
               ? `(${column.getFacetedMinMaxValues()?.[0]})`
-              : ""
+              : ''
           }`}
-          className='w-24 border shadow rounded'
+          className='w-24 rounded border shadow'
         />
         <DebouncedInput
           type='number'
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? "")}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? "")}
-          value={(columnFilterValue as [number, number])?.[1] ?? ""}
+          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
+          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
+          value={(columnFilterValue as [number, number])?.[1] ?? ''}
           onChange={(value) =>
             column.setFilterValue((old: [number, number]) => [old?.[0], value])
           }
           placeholder={`Max ${
             column.getFacetedMinMaxValues()?.[1]
               ? `(${column.getFacetedMinMaxValues()?.[1]})`
-              : ""
+              : ''
           }`}
-          className='w-24 border shadow rounded'
+          className='w-24 rounded border shadow'
         />
       </div>
       <div className='h-1' />
     </div>
   ) : (
     <>
-      <datalist id={column.id + "list"}>
+      <datalist id={column.id + 'list'}>
         {sortedUniqueValues.slice(0, 5000).map((value: any) => (
           <option value={value} key={value} />
         ))}
       </datalist>
       <DebouncedInput
         type='text'
-        value={(columnFilterValue ?? "") as string}
+        value={(columnFilterValue ?? '') as string}
         onChange={(value) => column.setFilterValue(value)}
         placeholder={`Search... (${column.getFacetedUniqueValues().size})`}
-        className='w-36 border shadow rounded text-black'
-        list={column.id + "list"}
+        className='w-36 rounded border text-black shadow'
+        list={column.id + 'list'}
       />
       <div className='h-1' />
     </>
@@ -422,7 +422,7 @@ function DebouncedInput({
   value: string | number;
   onChange: (value: string | number) => void;
   debounce?: number;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">) {
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
   const [value, setValue] = React.useState(initialValue);
 
   React.useEffect(() => {

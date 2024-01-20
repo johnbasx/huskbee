@@ -1,6 +1,6 @@
-import {Fragment, useState, useEffect} from 'react';
-import {Combobox, Transition, Dialog} from '@headlessui/react';
-import {CheckIcon, AtSymbolIcon} from '@heroicons/react/24/outline';
+import { Fragment, useState, useEffect } from 'react';
+import { Combobox, Transition, Dialog } from '@headlessui/react';
+import { CheckIcon, AtSymbolIcon } from '@heroicons/react/24/outline';
 
 interface PeopleProps {
   id: number;
@@ -14,15 +14,15 @@ interface DialogProps {
 }
 
 const people: PeopleProps[] = [
-  {id: 1, name: 'Wade Cooper'},
-  {id: 2, name: 'Arlene Mccoy'},
-  {id: 3, name: 'Devon Webb'},
-  {id: 4, name: 'Tom Cook'},
-  {id: 5, name: 'Tanya Fox'},
-  {id: 6, name: 'Hellen Schmidt'},
+  { id: 1, name: 'Wade Cooper' },
+  { id: 2, name: 'Arlene Mccoy' },
+  { id: 3, name: 'Devon Webb' },
+  { id: 4, name: 'Tom Cook' },
+  { id: 5, name: 'Tanya Fox' },
+  { id: 6, name: 'Hellen Schmidt' },
 ];
 
-const TestHead = ({testValue}: any) => {
+const TestHead = ({ testValue }: any) => {
   const [selected, setSelected] = useState(people[0]);
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(true);
@@ -40,55 +40,60 @@ const TestHead = ({testValue}: any) => {
   const filteredPeople =
     query === ''
       ? people
-      : people.filter(person =>
+      : people.filter((person) =>
           person.name
             .toLowerCase()
             .replace(/\s+/g, '')
-            .includes(query.toLowerCase().replace(/\s+/g, '')),
+            .includes(query.toLowerCase().replace(/\s+/g, ''))
         );
 
   return (
     <Dialog open={isOpen} onClose={() => closeModal}>
-      <Dialog.Overlay className="fixed inset-0" />
-      <div className="relative my-4">
-        <div className="absolute top-2 w-full">
+      <Dialog.Overlay className='fixed inset-0' />
+      <div className='relative my-4'>
+        <div className='absolute top-2 w-full'>
           <Combobox value={selected} onChange={setSelected}>
-            <div className="relative mt-1">
-              <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-gray-700/50 text-left shadow-md backdrop-blur-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-purple-300 sm:text-sm">
+            <div className='relative mt-1'>
+              <div className='relative w-full cursor-default overflow-hidden rounded-lg bg-neutral-700/50 text-left shadow-md backdrop-blur-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-purple-300 sm:text-sm'>
                 <Combobox.Input
-                  className="w-full border-none bg-gray-700/50 py-3 pl-3 pr-10 text-sm font-medium leading-5 text-gray-100 backdrop-blur-lg focus:ring-0"
-                  autoComplete="off"
+                  className='w-full border-none bg-neutral-700/50 py-3 pl-3 pr-10 text-sm font-medium leading-5 text-neutral-100 backdrop-blur-lg focus:ring-0'
+                  autoComplete='off'
                   displayValue={(person: PeopleProps) => person.name}
-                  onChange={event => setQuery(event.target.value)}
+                  onChange={(event) => setQuery(event.target.value)}
                 />
-                <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                  <AtSymbolIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
+                  <AtSymbolIcon
+                    className='h-5 w-5 text-neutral-400'
+                    aria-hidden='true'
+                  />
                 </Combobox.Button>
               </div>
               <Transition
                 as={Fragment}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                leave='transition ease-in duration-100'
+                leaveFrom='opacity-100'
+                leaveTo='opacity-0'
                 afterLeave={() => setQuery('')}
               >
-                <Combobox.Options className="absolute my-2 max-h-72 w-full overflow-auto rounded-lg bg-gray-700/50 py-1 text-base font-medium shadow-lg ring-1 ring-black ring-opacity-5 backdrop-blur-xl focus:outline-none sm:text-sm">
+                <Combobox.Options className='absolute my-2 max-h-72 w-full overflow-auto rounded-lg bg-neutral-700/50 py-1 text-base font-medium shadow-lg ring-1 ring-black ring-opacity-5 backdrop-blur-xl focus:outline-none sm:text-sm'>
                   {filteredPeople.length === 0 && query !== '' ? (
-                    <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                    <div className='relative cursor-default select-none px-4 py-2 text-neutral-700'>
                       Nothing found.
                     </div>
                   ) : (
-                    filteredPeople.map(person => (
+                    filteredPeople.map((person) => (
                       <Combobox.Option
                         key={person.id}
-                        className={({active}) =>
+                        className={({ active }) =>
                           `relative mx-2 cursor-default select-none rounded-md py-2 pl-10 pr-4 ${
-                            active ? 'bg-purple-700/50 text-white' : 'text-gray-100'
+                            active
+                              ? 'bg-purple-700/50 text-white'
+                              : 'text-neutral-100'
                           }`
                         }
                         value={person}
                       >
-                        {({selected, active}) => (
+                        {({ selected, active }) => (
                           <>
                             <span
                               className={`block truncate ${
@@ -103,7 +108,10 @@ const TestHead = ({testValue}: any) => {
                                   active ? 'text-white' : 'text-teal-600'
                                 }`}
                               >
-                                <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                <CheckIcon
+                                  className='h-5 w-5'
+                                  aria-hidden='true'
+                                />
                               </span>
                             ) : null}
                           </>

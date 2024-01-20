@@ -1,13 +1,13 @@
-import { BASE_URL, CROWDFUNDING_BASE_URL } from "@constants/api-urls";
-import React, { useEffect, useState } from "react";
+import { BASE_URL, CROWDFUNDING_BASE_URL } from '@constants/api-urls';
+import React, { useEffect, useState } from 'react';
 
-import Layout from "@components/admin/layout/Layout";
-import { NextPageContext } from "next";
-import Pagination from "@components/common/table/pagination";
-import { RootUrlStore } from "@store/table-store";
-import axios from "axios";
-import { donorsListStore } from "@store/office-admin-store";
-import { getCookie } from "cookies-next";
+import Layout from '@components/admin/layout/Layout';
+import { NextPageContext } from 'next';
+import Pagination from '@components/common/table/pagination';
+import { RootUrlStore } from '@store/table-store';
+import axios from 'axios';
+import { donorsListStore } from '@store/office-admin-store';
+import { getCookie } from 'cookies-next';
 
 type DonorsListProp = {
   donor_username: string;
@@ -36,10 +36,10 @@ const DonorList = ({
 
   useEffect(() => {
     setDonorsListObj(donors_list_obj);
-    setRootUrl(CROWDFUNDING_BASE_URL + "donor-list?page=");
+    setRootUrl(CROWDFUNDING_BASE_URL + 'donor-list?page=');
   }, []);
-  const [prev, setPrev] = useState<string | null>("");
-  const [next, setNext] = useState<string | null>("");
+  const [prev, setPrev] = useState<string | null>('');
+  const [next, setNext] = useState<string | null>('');
 
   useEffect(() => {
     setDonorsList(donorsListObj != null ? donorsListObj.results : []);
@@ -51,7 +51,7 @@ const DonorList = ({
     if (url != null) {
       try {
         const response = await axios.get(url, {
-          headers: { Authorization: "Bearer " + token },
+          headers: { Authorization: 'Bearer ' + token },
         });
         setDonorsListObj(response.data);
       } catch (e: any) {
@@ -61,7 +61,7 @@ const DonorList = ({
   };
   return (
     <Layout pageTitle='Donors List'>
-      <div className='max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-12 space-y-12'>
+      <div className='mx-auto max-w-7xl space-y-12 px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-12'>
         <div className='space-y-8 sm:space-y-12'>
           <ul
             role='list'
@@ -71,22 +71,22 @@ const DonorList = ({
               <li key={donor.donor_username}>
                 <div className='space-y-4'>
                   <img
-                    className='mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24 shadow-lg'
-                    src={BASE_URL + "media/" + donor.donor_photo}
+                    className='mx-auto h-20 w-20 rounded-full shadow-lg lg:h-24 lg:w-24'
+                    src={BASE_URL + 'media/' + donor.donor_photo}
                     alt=''
                   />
                   <div className='space-y-2'>
-                    <div className='text-xs font-medium lg:text-sm space-y-2'>
-                      <h3 className='text-gray-800 text-base font-bold'>
+                    <div className='space-y-2 text-xs font-medium lg:text-sm'>
+                      <h3 className='text-base font-bold text-neutral-800'>
                         {donor.donor_fullname}
                       </h3>
 
-                      <p className='text-gray-600'>
-                        Donated {"₹" + donor.total_donation_amount}
+                      <p className='text-neutral-600'>
+                        Donated {'₹' + donor.total_donation_amount}
                         &nbsp;at&nbsp;{donor.total_donation}
                         {donor.total_donation > 1
-                          ? " Fundraisers"
-                          : " Fundraiser"}
+                          ? ' Fundraisers'
+                          : ' Fundraiser'}
                       </p>
                     </div>
                   </div>
@@ -111,9 +111,9 @@ export default DonorList;
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req;
   const res = context.res;
-  const token = getCookie("admin_token", { req, res });
+  const token = getCookie('admin_token', { req, res });
 
-  const response = await fetch(CROWDFUNDING_BASE_URL + "donor-list", {
+  const response = await fetch(CROWDFUNDING_BASE_URL + 'donor-list', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

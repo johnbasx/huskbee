@@ -1,14 +1,14 @@
-import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { EventNameStore, PaymentAmountStore } from "@store/index";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { EventNameStore, PaymentAmountStore } from '@store/index';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import { BOOKING_BASE_URL } from "@constants/api-urls";
-import BookedBy from "@components/book-event/BookedBy";
-import BookingSummary from "@components/book-event/BookingSummary";
-import Layout from "@components/layout/Layout";
-import { NextPageContext } from "next/types";
-import { getCookie } from "cookies-next";
-import { useRouter } from "next/router";
+import { BOOKING_BASE_URL } from '@constants/api-urls';
+import BookedBy from '@components/book-event/BookedBy';
+import BookingSummary from '@components/book-event/BookingSummary';
+import Layout from '@components/layout/Layout';
+import { NextPageContext } from 'next/types';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 interface TicketsProps {
   id: string;
@@ -89,14 +89,14 @@ const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
   return (
     <Layout title='event-book'>
       <div className='bg-white'>
-        <div className='max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8'>
-          <h1 className='text-3xl font-extrabold tracking-tight text-gray-900 sm:text-3xl'>
-            Available Tickets for{" "}
-            <span className='text-indigo-700 font-base text-xl'>
+        <div className='mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
+          <h1 className='text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-3xl'>
+            Available Tickets for{' '}
+            <span className='font-base text-xl text-indigo-700'>
               {eventName}
             </span>
           </h1>
-          <form className='mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16'>
+          <form className='mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16'>
             <section aria-labelledby='cart-heading' className='lg:col-span-7'>
               <h2 id='cart-heading' className='sr-only'>
                 Items in your shopping cart
@@ -104,7 +104,7 @@ const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
 
               <ul
                 role='list'
-                className='border-t border-gray-200 divide-y divide-gray-200'
+                className='divide-y divide-neutral-200 border-t border-neutral-200'
               >
                 {eventTickets.length > 0 ? (
                   eventTickets.map((ticket, ticketIdx) => (
@@ -117,25 +117,25 @@ const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
                         />
                       </div> */}
 
-                      <div className='ml-4 flex-1 flex flex-col justify-between sm:ml-6'>
+                      <div className='ml-4 flex flex-1 flex-col justify-between sm:ml-6'>
                         <div className='relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0'>
                           <div>
                             <div className='flex justify-between'>
                               <h3 className='text-sm'>
                                 <a
                                   href='#!'
-                                  className='font-medium text-gray-700 hover:text-gray-800'
+                                  className='font-medium text-neutral-700 hover:text-neutral-800'
                                 >
                                   {ticket.type}
                                 </a>
                               </h3>
                             </div>
                             <div className='mt-1 flex text-sm'>
-                              <p className='text-gray-500'>
+                              <p className='text-neutral-500'>
                                 {ticket.total_tickets} Tickets
                               </p>
                             </div>
-                            <p className='mt-1 text-sm font-medium text-gray-900'>
+                            <p className='mt-1 text-sm font-medium text-neutral-900'>
                               ₹{ticket.offer_price}
                             </p>
                           </div>
@@ -160,7 +160,7 @@ const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
                               }}
                               id={`quantity-${ticketIdx}`}
                               name={`quantity-${ticketIdx}`}
-                              className='max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                              className='max-w-full rounded-md border border-neutral-300 py-1.5 text-left text-base font-medium leading-5 text-neutral-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
                             >
                               {Options()}
                             </select>
@@ -168,7 +168,7 @@ const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
                             {/* <div className="absolute top-0 right-0">
                             <button
                               type="button"
-                              className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500"
+                              className="-m-2 p-2 inline-flex text-neutral-400 hover:text-neutral-500"
                             >
                               <span className="sr-only">Remove</span>
                               <XMarkIcon
@@ -180,15 +180,15 @@ const BookEvent = ({ eventTickets }: { eventTickets: TicketsProps[] }) => {
                           </div>
                         </div>
 
-                        <p className='mt-4 flex text-sm text-gray-700 space-x-2'>
+                        <p className='mt-4 flex space-x-2 text-sm text-neutral-700'>
                           {ticket.available_tickets > 0 ? (
                             <CheckIcon
-                              className='flex-shrink-0 h-5 w-5 text-green-500'
+                              className='h-5 w-5 flex-shrink-0 text-green-500'
                               aria-hidden='true'
                             />
                           ) : (
                             <XMarkIcon
-                              className='flex-shrink-0 h-5 w-5 text-red-500'
+                              className='h-5 w-5 flex-shrink-0 text-red-500'
                               aria-hidden='true'
                             />
                           )}
@@ -241,10 +241,10 @@ export async function getServerSideProps(context: NextPageContext) {
   const { eventId } = context.query;
   const req = context.req;
   const res = context.res;
-  const token = getCookie("access_token", { req, res });
+  const token = getCookie('access_token', { req, res });
 
-  const response = await fetch(BOOKING_BASE_URL + "event-tickets/" + eventId, {
-    headers: { Authorization: "Bearer " + token },
+  const response = await fetch(BOOKING_BASE_URL + 'event-tickets/' + eventId, {
+    headers: { Authorization: 'Bearer ' + token },
   });
 
   const instance = await response.json();
