@@ -30,6 +30,7 @@ module.exports = {
         // nunito: ["Nunito Sans", "Inter", "system-ui", "sans-serif"],
         oracle: `Oracle, "Noto Sans JP", "Noto Sans KR", "Noto Sans SC", "Noto Sans TC", "Noto Sans Regular", "Helvetica Neue", Helvetica, Arial, sans-serif`,
         sans: `Open Sans, "Noto Sans Regular", "Helvetica Neue", Helvetica, Arial, sans-serif`,
+        circular: `Circular, -apple-system, "system-ui", Roboto, "Helvetica Neue", sans-serif;`,
       },
     },
   },

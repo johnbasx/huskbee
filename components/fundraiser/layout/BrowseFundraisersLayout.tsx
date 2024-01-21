@@ -55,7 +55,7 @@ const BrowseFundraisersLayout = ({
 }) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   return (
-    <div className='bg-neutral-50'>
+    <div className='bg-white'>
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>

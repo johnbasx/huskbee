@@ -82,8 +82,8 @@ const BrowseFundraisers = ({
   }, [user_token]);
 
   return (
-    <Layout title='Exocrowd - fundraiser details page'>
-      <section className='mx-auto bg-neutral-50 bg-heroImage bg-cover bg-no-repeat'>
+    <Layout title='Exocrowd - fundraiser details page' className='bg-white'>
+      <section className='mx-auto bg-white bg-heroImage bg-cover bg-no-repeat'>
         <div className='flex h-[50vh] w-full flex-col items-center justify-center py-4 backdrop-brightness-50 md:h-[25vh] md:py-20'>
           <div className='px-4 text-center text-white'>
             <h1 className='text-center text-2xl font-bold text-white md:text-3xl'>
@@ -133,7 +133,7 @@ const BrowseFundraisers = ({
             {tagsList.map((item, index) => (
               <li
                 key={'fundraiser-tag-' + item.tag + index}
-                className='rounded-full bg-neutral-200 px-6 py-2 text-black duration-300 first:bg-blue-300 hover:bg-neutral-300'
+                className='rounded-full bg-neutral-200 px-3 py-2 text-black duration-300 first:bg-blue-300 hover:bg-neutral-300'
               >
                 <Link href={'#!'}>{item.tag}</Link>
               </li>
@@ -147,7 +147,7 @@ const BrowseFundraisers = ({
             <p>Showing {fundraisers.length} fundraisers near you</p>
           </div>
         )}
-        <div className='grid grid-cols-1 gap-4 px-0 sm:mx-0 md:grid-cols-3 lg:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-6 px-0 sm:mx-0 md:grid-cols-3 lg:grid-cols-3'>
           {fundraisers.map((data, index) => (
             <BrowseFundraiserCardBlock
               key={`display-card-block-${data.id}${index}`}

@@ -3,6 +3,7 @@ import {
   ArrowLongRightIcon,
 } from '@heroicons/react/20/solid';
 import { cn } from '@utils/lib';
+import { TbArrowBigLeft, TbArrowLeft, TbArrowRight } from 'react-icons/tb';
 
 export default function Pagination() {
   return (
@@ -12,8 +13,8 @@ export default function Pagination() {
           href='#'
           className='inline-flex items-center border-transparent py-2 pr-1 text-sm font-medium text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
         >
-          <ArrowLongLeftIcon
-            className='mr-3 h-5 w-5 text-neutral-400'
+          <TbArrowLeft
+            className='mr-2 h-5 w-5 text-neutral-400'
             aria-hidden='true'
           />
           Previous
@@ -39,8 +40,8 @@ export default function Pagination() {
           className='inline-flex items-center border-transparent py-2 pl-1 text-sm font-medium text-neutral-500 hover:border-neutral-300 hover:text-neutral-700'
         >
           Next
-          <ArrowLongRightIcon
-            className='ml-3 h-5 w-5 text-neutral-400'
+          <TbArrowRight
+            className='ml-2 h-5 w-5 text-neutral-400'
             aria-hidden='true'
           />
         </a>
