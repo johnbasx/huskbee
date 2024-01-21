@@ -17,7 +17,7 @@ import { Toaster } from "react-hot-toast";
 import { getCookie } from "cookies-next";
 import { orgTokenStore } from "@store/index";
 
-export type FunraiserPhotoType = {
+export type FundraiserPhotoType = {
 	id: string;
 	photo: string;
 	fundraiser: string;
@@ -25,7 +25,7 @@ export type FunraiserPhotoType = {
 
 export interface FundraiserEventsProps extends FundraiserEventProps {
 	donated_amount(donated_amount: number): React.ReactNode;
-	fundraiser_photo: FunraiserPhotoType[];
+	fundraiser_photo: FundraiserPhotoType[];
 }
 
 export interface DonationProps {
@@ -72,7 +72,7 @@ const FunraiserDetail = ({
 	const { donorsIns, setDonorsIns } = DonorsObjStore();
 	const { setOrgToken } = orgTokenStore();
 	const [fundraiserPhotos, setFundraiserPhotos] = useState<
-		FunraiserPhotoType[]
+		FundraiserPhotoType[]
 	>(detail.fundraiser_photo);
 	const [recentDonations, setRecentDonations] = useState<DonationProps[]>(
 		donors_obj.results,

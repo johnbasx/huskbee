@@ -32,6 +32,20 @@ module.exports = {
         sans: `Open Sans, "Noto Sans Regular", "Helvetica Neue", Helvetica, Arial, sans-serif`,
         circular: `Circular, -apple-system, "system-ui", Roboto, "Helvetica Neue", sans-serif;`,
       },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        shine: {
+          '0%': { transform: 'translateX(-20%)' },
+          '100%': { transform: 'translateX(400%)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 200ms ease-in-out',
+        shine: 'shine 6s ease-out infinite',
+      },
     },
   },
   plugins: [

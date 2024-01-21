@@ -18,6 +18,7 @@ import { DisplayCardBlock } from '@components/exocrowd-client/scroll/MoreWaysScr
 import BrowseFundraiserCardBlock from '@components/fundraiser/fundraiser-detail/BrowseFundraiserCardBlock';
 import Pagination from '@components/fundraiser/layout/Pagination';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const headlineTags = [
   {
@@ -83,8 +84,20 @@ const BrowseFundraisers = ({
 
   return (
     <Layout title='Exocrowd - fundraiser details page' className='bg-white'>
-      <section className='mx-auto bg-white bg-heroImage bg-cover bg-no-repeat'>
-        <div className='flex h-[50vh] w-full flex-col items-center justify-center py-4 backdrop-brightness-50 md:h-[25vh] md:py-20'>
+      <section className='relative mx-auto bg-white'>
+        <div className='absolute h-[50vh] w-full overflow-hidden md:h-[35vh]'>
+          <Image
+            src={'/images/camp-01.JPG'}
+            alt='background-header-image'
+            priority
+            placeholder='blur'
+            blurDataURL='/images/camp-01.JPG'
+            width={1000}
+            height={500}
+            className='h-full w-full object-cover'
+          />
+        </div>
+        <div className='flex h-[50vh] w-full flex-col items-center justify-center py-4 backdrop-brightness-50 md:h-[35vh] md:py-20'>
           <div className='px-4 text-center text-white'>
             <h1 className='text-center text-2xl font-bold text-white md:text-3xl'>
               Want to make contributions?

@@ -7,44 +7,10 @@ import React, { MutableRefObject, useState } from 'react';
 import { TbArrowLeft, TbArrowRight } from 'react-icons/tb';
 
 import { BASE_URL } from '@constants/api-urls';
-import { FunraiserPhotoType } from '../../../pages/organiser/fundraiser-detail/[fundraiserId]';
+import { FundraiserPhotoType } from '../../../pages/organiser/fundraiser-detail/[fundraiserId]';
 import Image from 'next/image';
-import { nanoid } from 'nanoid';
-
-export const fundraiserImages = [
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-1.jpg',
-  },
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-2.jpg',
-  },
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-3.jpg',
-  },
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-4.jpg',
-  },
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-5.jpg',
-  },
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-1.jpg',
-  },
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-2.jpg',
-  },
-  {
-    id: nanoid(),
-    image_link: '/images/carousel/carousel-3.jpg',
-  },
-];
+import { cn } from '@utils/lib';
+import { fundraiserImages } from '@constants/fundraiser-static-data';
 
 function ThumbnailPlugin(
   mainRef: MutableRefObject<KeenSliderInstance | null>
@@ -84,7 +50,7 @@ function ThumbnailPlugin(
 const ImageScrollWithThumbnails = ({
   fundraisers_photos,
 }: {
-  fundraisers_photos: FunraiserPhotoType[];
+  fundraisers_photos: FundraiserPhotoType[];
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -221,12 +187,33 @@ const ImageScrollWithThumbnails = ({
         </div>
       )}
 
+      {loaded && instanceRef.current && (
+        <div className='absolute inset-x-0 bottom-1 flex justify-center gap-1 p-2 lg:hidden lg:gap-2'>
+          {fundraisers_photos.length > 0
+            ? fundraisers_photos.map((data, idx) => (
+                <button
+                  key={data.id}
+                  onClick={() => {
+                    instanceRef.current?.moveToIdx(idx);
+                  }}
+                  className={cn(
+                    'my-2 h-2 w-2 cursor-pointer rounded-full border focus:outline-none lg:h-2 lg:w-2' +
+                      (currentSlide === idx
+                        ? ' active border-neutral-200 bg-white'
+                        : 'border-neutral-300/50 bg-neutral-200/50')
+                  )}
+                ></button>
+              ))
+            : null}
+        </div>
+      )}
+
       <div ref={thumbnailRef} className='keen-slider thumbnail mt-2'>
         {fundraisers_photos.length > 0 ? (
           fundraisers_photos.map((data, index) => (
             <div
               key={data.id}
-              className='keen-slider__slide flex h-[3rem] max-h-screen w-[3rem] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-neutral-200 text-2xl font-medium text-white opacity-30 lg:h-[4rem] lg:w-[4rem] lg:rounded-lg'
+              className='keen-slider__slide hidden h-[3rem] max-h-screen w-[3rem] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-neutral-200 text-2xl font-medium text-white opacity-30 lg:flex lg:h-[4rem] lg:w-[4rem] lg:rounded-lg'
             >
               <Image
                 height={100}
@@ -240,7 +227,7 @@ const ImageScrollWithThumbnails = ({
             </div>
           ))
         ) : (
-          <div className='keen-slider__slide flex h-[3rem] max-h-screen w-[3rem] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-neutral-300 text-2xl font-medium text-white opacity-20 lg:h-[4rem] lg:w-[4rem] lg:rounded-lg'>
+          <div className='keen-slider__slide hidden h-[3rem] max-h-screen w-[3rem] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-neutral-300 text-2xl font-medium text-white opacity-20 lg:flex lg:h-[4rem] lg:w-[4rem] lg:rounded-lg'>
             <Image
               height={100}
               width={100}
@@ -269,11 +256,11 @@ function Arrow(props: {
     <button type='button' onClick={props.onClick}>
       {props.left ? (
         <TbArrowLeft
-          className={`arrow arrow--left absolute left-2 top-[35%] h-9 w-9 cursor-pointer rounded-full border border-blue-300/50 bg-blue-400/50 p-2 text-neutral-100 backdrop-blur transition-colors duration-150 hover:border-neutral-200 hover:text-neutral-200 md:h-10 md:w-10 lg:top-[40%] ${disabled}`}
+          className={`arrow arrow--left absolute left-2 top-[40%] h-9 w-9 cursor-pointer rounded-full border border-blue-300/50 bg-blue-400/50 p-2 text-neutral-100 backdrop-blur transition-colors duration-150 hover:border-neutral-200 hover:text-neutral-200 md:h-10 md:w-10 lg:top-[40%] ${disabled}`}
         />
       ) : (
         <TbArrowRight
-          className={`arrow arrow--right absolute right-2 top-[35%] h-9 w-9 cursor-pointer rounded-full border border-blue-300/50 bg-blue-400/50 p-2 text-neutral-100 backdrop-blur transition-colors duration-150 hover:border-neutral-200 hover:text-neutral-200 md:h-10 md:w-10 lg:top-[40%] ${disabled}`}
+          className={`arrow arrow--right absolute right-2 top-[40%] h-9 w-9 cursor-pointer rounded-full border border-blue-300/50 bg-blue-400/50 p-2 text-neutral-100 backdrop-blur transition-colors duration-150 hover:border-neutral-200 hover:text-neutral-200 md:h-10 md:w-10 lg:top-[40%] ${disabled}`}
         />
       )}
     </button>

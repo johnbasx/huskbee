@@ -3,8 +3,7 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 
 import { AtSymbolIcon } from '@heroicons/react/24/solid';
 import { BsTwitterX } from 'react-icons/bs';
-import { CROWDFUNDING_BASE_URL } from '@constants/api-urls';
-import { FaRegCopy } from 'react-icons/fa';
+import { CROWDFUNDING_BASE_URL, FRONT_URL } from '@constants/api-urls';
 import { FaTelegramPlane } from 'react-icons/fa';
 import { IoShareSocial } from 'react-icons/io5';
 import { RiWhatsappFill } from 'react-icons/ri';
@@ -12,16 +11,15 @@ import { ShareCountStore } from '@store/fundraiser-detail-store';
 import { SiFacebook } from 'react-icons/si';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import {
   TbBrandFacebook,
   TbBrandInstagram,
   TbBrandX,
   TbBrandYoutube,
   TbCopy,
-  TbShare2,
-  TbShare3,
 } from 'react-icons/tb';
+import useCopyClipboard from '@hooks/useCopyClipboard';
+import { cn } from '@utils/lib';
 
 // import { socialShare } from '@constants/list-items';
 
@@ -55,12 +53,13 @@ export const socialShare = [
 
 const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
   const { count, setCount } = ShareCountStore();
+  const { handleCopyClick, isCopied } = useCopyClipboard();
 
   const [open, setOpen] = useState(false);
   const [shareCount, setShareCount] = useState<number>(count);
   const cancelButtonRef = useRef(null);
   const [link, setLink] = useState<string>(
-    'https://www.figma.com/file/NlfVhYygR9mAQasassdsada/Share...'
+    `${FRONT_URL}fundraiser/fundraiser-details/${fundraiser_id}`
   );
 
   useEffect(() => {
@@ -75,7 +74,9 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
     }
   };
 
-  const shareCountHandler = async (e: React.MouseEvent) => {
+  const shareCountHandler = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     try {
       const response = await axios.put(
@@ -83,7 +84,7 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
       );
       setShareCount(response.data.share_count);
       // toast.success('Share success');
-      setOpen(false);
+      setTimeout(() => setOpen(false), 1000);
     } catch (e: any) {
       console.log(e);
       // toast.error('Share failed');
@@ -137,9 +138,9 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
                   <div className='grid w-full place-content-center'>
                     <div
                       id='modal'
-                      className='rounded-3xl bg-white px-4 py-6 transition-transform duration-300 lg:py-8'
+                      className='rounded-3xl bg-white px-12 py-10 transition-transform duration-300 lg:py-8'
                     >
-                      <div className='mb-11 flex items-center justify-between'>
+                      <div className='mb-6 flex items-center justify-between'>
                         <span className='font-medium leading-5 text-neutral-500'>
                           Share with
                         </span>
@@ -148,7 +149,7 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
                         </button>
                       </div>
 
-                      <div className='mb-11 grid grid-cols-4 gap-4 sm:grid-cols-3 md:grid-cols-6'>
+                      <div className='mb-6 grid grid-cols-4 gap-4 sm:grid-cols-3 md:grid-cols-6'>
                         {socialShare.map((item) => (
                           <button
                             onClick={(e) => shareCountHandler(e)}
@@ -193,8 +194,9 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
                             className='placeholder:text-text-neutral-800 w-full rounded-lg border-neutral-400 px-3 py-2 pr-14 text-sm text-neutral-600 outline-none'
                             defaultValue={link}
                             readOnly
+                            disabled
                           />
-                          <button
+                          {/* <button
                             type='button'
                             onClick={(e) => {
                               copyTextToClipboard();
@@ -203,7 +205,43 @@ const SocialShare = ({ fundraiser_id }: { fundraiser_id: string }) => {
                             className='absolute right-4 top-1/2 -translate-y-1/2'
                           >
                             <TbCopy className='h-6 w-6 text-blue-500' />
+                          </button> */}
+                          <button
+                            type='button'
+                            onClick={(e) => {
+                              handleCopyClick(link), shareCountHandler(e);
+                            }}
+                            className='absolute right-4 top-1/2 -translate-y-1/2'
+                          >
+                            <TbCopy
+                              className={cn(
+                                'h-6 w-6',
+                                isCopied ? 'text-emerald-500' : 'text-blue-500'
+                              )}
+                            />
                           </button>
+                          <Transition
+                            as={Fragment}
+                            // className='mx-auto my-16 max-w-md space-y-4'
+                            show={isCopied}
+                            enter='transition-all ease-out duration-300'
+                            enterFrom='opacity-0 -translate-y-6 rotate-0'
+                            enterTo='opacity-100 -translate-y-8 -rotate-3'
+                            leave='transition-all ease-out duration-300'
+                            leaveFrom='opacity-100'
+                            leaveTo='opacity-0'
+                          >
+                            <span
+                              className={cn(
+                                'right-0 rounded-md bg-emerald-50 px-2 py-1 text-sm text-emerald-600 duration-300',
+                                isCopied
+                                  ? 'absolute opacity-100 transition-transform'
+                                  : 'top-0 hidden opacity-0'
+                              )}
+                            >
+                              {isCopied && 'Copied!'}
+                            </span>
+                          </Transition>
                         </div>
                       </div>
                     </div>

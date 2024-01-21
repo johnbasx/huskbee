@@ -2,7 +2,7 @@ import { BASE_URL, CROWDFUNDING_BASE_URL } from '@constants/api-urls';
 import { Dialog, Transition } from '@headlessui/react';
 import { Dispatch, FormEvent, Fragment, useRef, useState } from 'react';
 
-import { FunraiserPhotoType } from '../../../pages/organiser/fundraiser-detail/[fundraiserId]';
+import { FundraiserPhotoType } from '../../../pages/organiser/fundraiser-detail/[fundraiserId]';
 import axios from 'axios';
 import { orgTokenStore } from '@store/index';
 import toast from 'react-hot-toast';
@@ -12,8 +12,8 @@ const AddMorePhoto = ({
   setFundraiserPhoto,
   fundraiserId,
 }: {
-  fundraiserPhotos: FunraiserPhotoType[];
-  setFundraiserPhoto: Dispatch<FunraiserPhotoType[]>;
+  fundraiserPhotos: FundraiserPhotoType[];
+  setFundraiserPhoto: Dispatch<FundraiserPhotoType[]>;
   fundraiserId: string;
 }) => {
   const { token } = orgTokenStore();

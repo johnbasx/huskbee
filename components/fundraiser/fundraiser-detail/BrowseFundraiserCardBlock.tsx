@@ -11,19 +11,21 @@ const BrowseFundraiserCardBlock = ({ data }: DisplayCardBlockDataType) => {
   return (
     <div className='group flex max-w-sm cursor-pointer flex-col overflow-hidden rounded-2xl bg-white transition-colors duration-150 lg:bg-white lg:hover:bg-white/50'>
       <div className='relative overflow-hidden rounded-2xl'>
-        <Image
-          className='h-48 w-full rounded-2xl object-cover transition-transform duration-200 ease-in group-hover:scale-110 md:h-52'
-          width={500}
-          height={500}
-          priority
-          quality={100}
-          src={
-            data.fundraiser_photo.length === 0
-              ? '/images/relief-camp.jpg'
-              : BASE_URL + data.fundraiser_photo[0].photo
-          }
-          alt='donate'
-        />
+        <Link href={'/fundraiser/fundraiser-details/' + data.id}>
+          <Image
+            className='h-48 w-full rounded-2xl object-cover transition-transform duration-200 ease-in group-hover:scale-110 md:h-52'
+            width={500}
+            height={500}
+            priority
+            quality={100}
+            src={
+              data.fundraiser_photo.length === 0
+                ? '/images/relief-camp.jpg'
+                : BASE_URL + data.fundraiser_photo[0].photo
+            }
+            alt='donate'
+          />
+        </Link>
         <div className='absolute left-2 top-2 rounded-full text-xs font-semibold tracking-tight text-black'>
           <div className='inline-flex items-center justify-end gap-1'>
             <span className='rounded-full bg-white/60 px-2 py-1.5 backdrop-blur-md'>
@@ -74,10 +76,12 @@ const BrowseFundraiserCardBlock = ({ data }: DisplayCardBlockDataType) => {
             <div className='flex flex-col-reverse'>
               <dt>Helpers</dt>
               <dd className='font-medium text-neutral-600'>179</dd>
+              {/* FIXME */}
             </div>
             <div className='flex flex-col-reverse'>
               <dt>Left</dt>
               <dd className='font-medium text-neutral-600'>14 Days</dd>
+              {/* FIXME */}
             </div>
           </div>
         </dl>

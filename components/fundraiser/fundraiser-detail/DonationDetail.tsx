@@ -12,16 +12,14 @@ import {
   TbUserHeart,
   TbUserUp,
 } from 'react-icons/tb';
-import {
-  formatDate,
-  formatDistance,
-  formatDistanceStrict,
-  formatDistanceToNow,
-} from 'date-fns';
+import { formatDate } from 'date-fns';
 import { IconType } from 'react-icons';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import SocialShare from './SocialShare';
+import { cn } from '@utils/lib';
+import usePageIsLoading from '@hooks/usePageIsLoading';
+import LoadingDots from '@components/common/LoadingDots';
 
 type DonationDetailType = {
   share_count: number;
@@ -53,16 +51,20 @@ const DonationDetail = ({
   end_date,
   goToDonatePage,
 }: DonationDetailType) => {
+  const { pageIsLoading } = usePageIsLoading();
+  const [contributeButtonClick, setContributeButtonClick] = useState(false);
   return (
-    <div className='rounded-2xl bg-white p-5 shadow-lg'>
+    <div className='rounded-2xl border-neutral-400/30 bg-white py-2 lg:border lg:p-5 lg:shadow-xl'>
       <div className='mb-4 flex flex-col gap-4'>
         <div className='flex flex-col gap-2 text-base'>
           <div className='flex flex-col'>
-            <span className='text-[0.6rem] font-medium uppercase tracking-wider text-neutral-500'>
-              Total Contributions
-            </span>
             <span className='text-2xl font-bold tracking-tight text-neutral-800'>
-              {toIndianCurrency(total_donation)}
+              {total_donation === 0 ? (
+                <span className='text-emerald-500'>awaiting for help</span>
+              ) : (
+                <span>{toIndianCurrency(total_donation)}</span>
+              )}
+              {/* {toIndianCurrency(total_donation)} */}
               {/* <span className="">raised</span> */}
             </span>
           </div>
@@ -83,7 +85,7 @@ const DonationDetail = ({
             className='block rounded-full bg-blue-700/20'
           >
             <span
-              className='block h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500'
+              className='block h-2 rounded-full bg-gradient-to-r from-emerald-300 to-blue-500'
               style={{ width: GetPercentage(total_donation, target_amount) }}
               // Dynamic data for progress bar
             />
@@ -96,7 +98,8 @@ const DonationDetail = ({
           </span>
           <span className='text-neutral-400'>&bull;</span>
           <span>
-            {formatDistanceToNow(end_date, { addSuffix: true })}
+            {/* FIXME */}
+            {/* {formatDistanceToNow(end_date, { addSuffix: true })} */}
             {/* {GetDaysLeft(formatDate(end_date, 'dd/mm/yyyy')) <= 0 ? (
               'fundraiser ended'
             ) : (
@@ -110,13 +113,31 @@ const DonationDetail = ({
       </div>
       <div className='flex flex-col gap-3 border-b border-dashed pb-3'>
         {/* <Link href={`/ad`}> */}
-        <button
+        {/* <button
           type='button'
           onClick={() => goToDonatePage()}
-          className='w-full rounded-xl bg-blue-600 px-4 py-3 text-lg font-medium text-white duration-300 ease-out hover:bg-blue-500'
+          className='w-full rounded-xl bg-blue-600 px-4 py-3 font-medium text-white duration-300 ease-out hover:bg-blue-500'
         >
           Contribute now
-        </button>
+        </button> */}
+        <Link
+          href={`/fundraiser/contribute/${fundraiser_id}`}
+          onClick={() => setContributeButtonClick(true)}
+          className={cn(
+            'relative w-full cursor-pointer overflow-hidden rounded-xl border border-neutral-700 bg-gradient-to-b from-neutral-700 to-black px-4 py-3 text-center text-lg font-medium text-white duration-300 ease-out hover:from-neutral-800 hover:to-black',
+            pageIsLoading &&
+              contributeButtonClick &&
+              'pointer-events-none cursor-not-allowed opacity-70'
+          )}
+        >
+          {pageIsLoading && contributeButtonClick ? (
+            <LoadingDots />
+          ) : (
+            <span>Contribute now</span>
+          )}
+          {/* <span className='animate-shine absolute inset-0 h-40 w-1/4 rotate-90 bg-gradient-to-r from-transparent via-white/50 to-transparent blur-xl'></span> */}
+        </Link>
+
         {/* </Link> */}
         <SocialShare fundraiser_id={fundraiser_id} />
 
