@@ -152,13 +152,7 @@ const DonationDetail = ({
                     redirect_text="Top donations"
                     Icon={TbMoodHeart}
                 />}
-                {/* {min_max_donation && <DonatedUserAndAmountSmallDisplay
-                    username={min_max_donation.min_donated_by}
-                    donated_amount={min_max_donation.min_amount}
-                    redirect_link="#!"
-                    redirect_text="Smallest donation"
-                    Icon={TbUserUp}
-                />} */}
+                
                 {first_donation != null ?
                     <DonatedUserAndAmountSmallDisplay
                         username={first_donation.fullname}
