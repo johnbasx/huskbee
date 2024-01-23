@@ -2,19 +2,19 @@ import {
   ArrowLongLeftIcon,
   ArrowLongRightIcon,
   MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-import { EventListStore, orgTokenStore } from "@store/index";
-import React, { useEffect, useState } from "react";
+} from '@heroicons/react/24/outline';
+import { EventListStore, orgTokenStore } from '@store/index';
+import React, { useEffect, useState } from 'react';
 
-import { BOOKING_BASE_URL } from "@constants/api-urls";
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { EventDetailProps } from "../event-detail/[eventId]";
-import Layout from "@components/organiser/layout/Layout";
-import Link from "next/link";
-import { NextPageContext } from "next";
-import { TableStore } from "@store/table-store";
-import axios from "axios";
-import { getCookie } from "cookies-next";
+import { BOOKING_BASE_URL } from '@constants/api-urls';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import { EventDetailProps } from '../event-detail/[eventId]';
+import Layout from '@components/organiser/layout/Layout';
+import Link from 'next/link';
+import { NextPageContext } from 'next';
+import { TableStore } from '@store/table-store';
+import axios from 'axios';
+import { getCookie } from 'cookies-next';
 
 export interface EventsProps {
   count: number;
@@ -28,8 +28,8 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
   const { setOrgToken } = orgTokenStore();
   const { pageNumberList, setPageNumberList } = TableStore();
   const [eventList, setEventList] = useState<EventDetailProps[]>();
-  const [prev, setPrev] = useState<string | null>("");
-  const [next, setNext] = useState<string | null>("");
+  const [prev, setPrev] = useState<string | null>('');
+  const [next, setNext] = useState<string | null>('');
 
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 
@@ -66,8 +66,8 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
     <Layout>
       <div className='w-5xl mx-auto'>
         <div className='mt-2 p-8 sm:ml-6'>
-          <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md'>
-            <span className='flex select-none items-center pl-3 text-gray-500 sm:text-sm'>
+          <div className='bg-transparentfocus:border-transparent flex rounded-md border-transparent border-b-neutral-300 shadow-sm ring-1 ring-inset ring-neutral-400 focus:border-b-neutral-300 focus:ring-0 sm:max-w-md'>
+            <span className='flex select-none items-center pl-3 text-neutral-500 sm:text-sm'>
               <MagnifyingGlassIcon className='h-6 w-6' />
             </span>
             <input
@@ -78,57 +78,57 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
               name='username'
               id='username'
               autoComplete='username'
-              className='block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
+              className='block flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-900 placeholder:text-neutral-400 focus:ring-0 sm:text-sm sm:leading-6'
               placeholder='Search in this page'
             />
           </div>
         </div>
 
-        <div className=' overflow-x-auto sm:mx-6 pt-2 sm:pt-10 pb-10'>
-          <div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
-            <div className='shadow overflow-hidden border-b border-gray-400 '>
-              <table className='min-w-full divide-y divide-gray-400'>
+        <div className=' overflow-x-auto pb-10 pt-2 sm:mx-6 sm:pt-10'>
+          <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
+            <div className='overflow-hidden border-b border-neutral-400 shadow '>
+              <table className='min-w-full divide-y divide-neutral-400'>
                 <thead className='bg-transparent'>
                   <tr>
                     <th
                       scope='col'
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
+                      className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-200'
                     >
                       Name
                     </th>
                     <th
                       scope='col'
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
+                      className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-200'
                     >
                       Type
                     </th>
                     <th
                       scope='col'
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
+                      className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-200'
                     >
                       Start date
                     </th>
                     <th
                       scope='col'
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
+                      className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-200'
                     >
                       End date
                     </th>
                     <th
                       scope='col'
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
+                      className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-200'
                     >
                       Start time
                     </th>
                     <th
                       scope='col'
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
+                      className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-200'
                     >
                       End time
                     </th>
                     <th
                       scope='col'
-                      className=' px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider'
+                      className=' px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-200'
                     >
                       <span className='sr-only'>Edit</span>Action
                     </th>
@@ -140,28 +140,28 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
                       <tr
                         key={event.id}
                         className={
-                          Idx % 2 === 0 ? "bg-transparent" : "bg-transparent"
+                          Idx % 2 === 0 ? 'bg-transparent' : 'bg-transparent'
                         }
                       >
-                        <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200'>
+                        <td className='whitespace-nowrap px-6 py-4 text-sm font-medium text-neutral-200'>
                           {event.name}
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
+                        <td className='whitespace-nowrap px-6 py-4 text-sm text-neutral-200'>
                           {event.event_type}
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
+                        <td className='whitespace-nowrap px-6 py-4 text-sm text-neutral-200'>
                           {event.start_date}
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
+                        <td className='whitespace-nowrap px-6 py-4 text-sm text-neutral-200'>
                           {event.end_date}
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
+                        <td className='whitespace-nowrap px-6 py-4 text-sm text-neutral-200'>
                           {event.start_time}
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-200'>
+                        <td className='whitespace-nowrap px-6 py-4 text-sm text-neutral-200'>
                           {event.end_time}
                         </td>
-                        <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
+                        <td className='whitespace-nowrap px-6 py-4 text-right text-sm font-medium'>
                           <Link href={`/organiser/event-detail/${event.id}`}>
                             <span className='text-indigo-600 hover:text-indigo-900'>
                               Detail
@@ -186,12 +186,12 @@ export default Events;
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req;
   const res = context.res;
-  const token = getCookie("org_token", { req, res });
+  const token = getCookie('org_token', { req, res });
 
-  const login_status = getCookie("login", { req, res });
+  const login_status = getCookie('login', { req, res });
   const login = login_status ? login_status == true : false;
 
-  const response = await fetch(BOOKING_BASE_URL + "list-create-event", {
+  const response = await fetch(BOOKING_BASE_URL + 'list-create-event', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -213,7 +213,7 @@ const Pagination = ({
   const { eventsObj, setEventObj } = EventListStore();
 
   const { token } = orgTokenStore();
-  const [gotoUrl, setGotoUrl] = useState("");
+  const [gotoUrl, setGotoUrl] = useState('');
   const { pageNumberList, setPageNumberList } = TableStore();
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>();
@@ -222,7 +222,7 @@ const Pagination = ({
     if (url != null) {
       try {
         const response = await axios(url, {
-          headers: { Authorization: "Bearer " + token },
+          headers: { Authorization: 'Bearer ' + token },
         });
         setEventObj(response.data);
       } catch (e: any) {
@@ -260,18 +260,18 @@ const Pagination = ({
 
   return (
     <nav
-      className='grid grid-cols-6 gap-2 mx-1 sm:mx-16 px-4 sm:px-0 mt-2'
+      className='mx-1 mt-2 grid grid-cols-6 gap-2 px-4 sm:mx-16 sm:px-0'
       aria-label='Pagination'
     >
-      <div className='col-span-6 sm:col-span-4 max-w-3xl flex items-center justify-between'>
-        <div className='-mt-px w-0 flex-1 flex'>
+      <div className='col-span-6 flex max-w-3xl items-center justify-between sm:col-span-4'>
+        <div className='-mt-px flex w-0 flex-1'>
           <button
             disabled={prev == null ? true : false}
             onClick={() => getData(prev)}
-            className={`border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-300 cursor-pointer disabled:text-gray-500 disabled:cursor-not-allowed `}
+            className={`inline-flex cursor-pointer items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-neutral-400 hover:text-neutral-300 disabled:cursor-not-allowed disabled:text-neutral-500 `}
           >
             <ArrowLongLeftIcon
-              className='mr-3 h-5 w-5 text-gray-400'
+              className='mr-3 h-5 w-5 text-neutral-400'
               aria-hidden='true'
             />
             Previous
@@ -283,51 +283,51 @@ const Pagination = ({
               <a
                 onClick={() => {
                   PageClickHandler(
-                    BOOKING_BASE_URL + "list-create-event?page=" + content,
+                    BOOKING_BASE_URL + 'list-create-event?page=' + content,
                     content
                   );
                 }}
                 key={content}
-                className={`cursor-pointer border-transparent text-gray-500 hover:text-gray-400 hover:border-gray-200 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium ${
+                className={`inline-flex cursor-pointer items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-neutral-500 hover:border-neutral-200 hover:text-neutral-400 ${
                   content == currentPage
-                    ? "border-t-1 border-t-purple-500 text-purple-600"
-                    : ""
+                    ? 'border-t-1 border-t-purple-500 text-purple-600'
+                    : ''
                 }`}
               >
                 {content}
               </a>
             ))}
         </div>
-        <div className='-mt-px w-0 flex-1 flex justify-end'>
+        <div className='-mt-px flex w-0 flex-1 justify-end'>
           <button
             disabled={next == null ? true : false}
             onClick={() => getData(next)}
-            className='border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-400 hover:text-gray-300 cursor-pointer disabled:text-gray-500 disabled:cursor-not-allowed '
+            className='inline-flex cursor-pointer items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-neutral-400 hover:text-neutral-300 disabled:cursor-not-allowed disabled:text-neutral-500 '
           >
             Next
             <ArrowLongRightIcon
-              className='ml-3 h-5 w-5 text-gray-400'
+              className='ml-3 h-5 w-5 text-neutral-400'
               aria-hidden='true'
             />
           </button>
         </div>
       </div>
 
-      <div className='col-span-6 sm:col-span-2 mt-4 '>
-        <div className='flex gap-x-2 float-right'>
-          <span className='mt-1 text-gray-400 text-sm '>Go to page</span>
-          <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-400 border-transparent border-b-gray-300 bg-transparentfocus:border-transparent focus:border-b-gray-300 focus:ring-0 sm:max-w-md px-2 '>
+      <div className='col-span-6 mt-4 sm:col-span-2 '>
+        <div className='float-right flex gap-x-2'>
+          <span className='mt-1 text-sm text-neutral-400 '>Go to page</span>
+          <div className='bg-transparentfocus:border-transparent flex rounded-md border-transparent border-b-neutral-300 px-2 shadow-sm ring-1 ring-inset ring-neutral-400 focus:border-b-neutral-300 focus:ring-0 sm:max-w-md '>
             <input
               onChange={(e) =>
                 setGotoUrl(
-                  BOOKING_BASE_URL + "list-create-event?page=" + e.target.value
+                  BOOKING_BASE_URL + 'list-create-event?page=' + e.target.value
                 )
               }
               type='text'
               name='gotopage'
               id='gotopage'
               autoComplete='gotopage'
-              className='w-28 sm:w-24 block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-200 placeholder:text-gray-500 focus:ring-0 sm:text-sm sm:leading-6'
+              className='block w-28 flex-1 border-0 bg-transparent py-1.5 pl-1 text-neutral-200 placeholder:text-neutral-500 focus:ring-0 sm:w-24 sm:text-sm sm:leading-6'
               placeholder='Pagenumber'
             />
           </div>

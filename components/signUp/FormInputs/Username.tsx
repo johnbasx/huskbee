@@ -1,9 +1,9 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 
-import { Path, UseFormRegister, useForm } from "react-hook-form";
-import React, { HTMLInputTypeAttribute } from "react";
+import { Path, UseFormRegister, useForm } from 'react-hook-form';
+import React, { HTMLInputTypeAttribute } from 'react';
 
-import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface IFormValues {
   username: string;
@@ -43,13 +43,13 @@ const Username = ({ label, username, type }: InputProps) => {
   return (
     <>
       <label
-        className="block mb-2 text-sm font-medium text-gray-200"
-        htmlFor="user_name"
+        className='mb-2 block text-sm font-medium text-neutral-200'
+        htmlFor='user_name'
       >
         {label}
       </label>
       <input
-        className="block w-full px-4 py-2 border-gray-700/50 bg-zinc-700/20 text-gray-200 border rounded-md   focus:ring-opacity-40 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 autofill:bg-zinc-700/50"
+        className='block w-full rounded-md border border-neutral-700/50 bg-zinc-700/20 px-4 py-2 text-neutral-200   autofill:bg-zinc-700/50 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40'
         type={type}
         {...register(username, { required: true, minLength: 3 })}
       />

@@ -3,15 +3,15 @@ import {
   HeroImage,
   Logo,
   PartnerName,
-} from "./AddEventPartnerInputs";
-import { Path, SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
-import { eventPartnersStore, orgTokenStore } from "@store/index";
+} from './AddEventPartnerInputs';
+import { Path, SubmitHandler, UseFormRegister, useForm } from 'react-hook-form';
+import { eventPartnersStore, orgTokenStore } from '@store/index';
 
-import { BOOKING_BASE_URL } from "@constants/api-urls";
-import { Dispatch } from "react";
-import { EventPartnersProps } from "../../../pages/event-detail/[eventId]";
-import axios from "axios";
-import { toast } from "react-hot-toast";
+import { BOOKING_BASE_URL } from '@constants/api-urls';
+import { Dispatch } from 'react';
+import { EventPartnersProps } from '../../../pages/event-detail/[eventId]';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 export interface PartnerFormValues {
   name: string;
@@ -52,10 +52,10 @@ const AddNewPartner = ({
     };
 
     for (const key in newdata) {
-      if (key == "logo" && data["logo"] != null) {
-        form_data.append(key, data["logo"][0]);
-      } else if (key == "hero_image" && data["hero_image"] != null) {
-        form_data.append(key, data["hero_image"][0]);
+      if (key == 'logo' && data['logo'] != null) {
+        form_data.append(key, data['logo'][0]);
+      } else if (key == 'hero_image' && data['hero_image'] != null) {
+        form_data.append(key, data['hero_image'][0]);
       } else {
         // console.log("data: ", newdata[key as keyof PartnerFormValues]);
         form_data.append(key, newdata[key as keyof PartnerFormValues]);
@@ -64,10 +64,10 @@ const AddNewPartner = ({
 
     try {
       const response: Response = await axios.post(
-        BOOKING_BASE_URL + "add-partner",
+        BOOKING_BASE_URL + 'add-partner',
         form_data,
         {
-          headers: { Authorization: "Bearer " + token },
+          headers: { Authorization: 'Bearer ' + token },
         }
       );
 
@@ -76,15 +76,15 @@ const AddNewPartner = ({
         name: response.data.name,
         description: response.data.description,
         logo: response.data.logo,
-        hero_image: "",
+        hero_image: '',
       });
 
       setPartners(newPartner!);
-      toast.success("Partner added");
+      toast.success('Partner added');
 
       setOpen(false);
     } catch (e: any) {
-      toast.error("Cannot add partner");
+      toast.error('Cannot add partner');
       console.log(e);
     }
   };
@@ -92,27 +92,27 @@ const AddNewPartner = ({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+        <div className='space-y-12'>
+          <div className='border-b border-neutral-900/10 pb-12'>
+            <div className='mt-4 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6'>
               <PartnerName
-                label="Partner"
-                name="name"
+                label='Partner'
+                name='name'
                 register={register}
                 required
               />
 
               <Description
-                label="Description"
-                name="description"
+                label='Description'
+                name='description'
                 register={register}
                 required
               />
-              <Logo label="Logo" name="logo" register={register} required />
+              <Logo label='Logo' name='logo' register={register} required />
 
               <HeroImage
-                label="Hero image"
-                name="hero_image"
+                label='Hero image'
+                name='hero_image'
                 register={register}
                 required
               />
@@ -120,17 +120,17 @@ const AddNewPartner = ({
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-x-2">
+        <div className='flex items-center justify-end gap-x-2'>
           <button
             onClick={() => setOpen(false)}
-            type="button"
-            className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-1/2"
+            type='button'
+            className='mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 sm:mt-0 sm:w-1/2'
           >
             Cancel
           </button>
           <button
-            type="submit"
-            className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-1/2"
+            type='submit'
+            className='inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-1/2'
           >
             Save
           </button>

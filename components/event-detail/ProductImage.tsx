@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
 const ProductImage = ({
   ImageSrc,
@@ -8,12 +8,12 @@ const ProductImage = ({
   ImageAlt: string;
 }) => {
   return (
-    <div className="lg:row-end-1 lg:col-span-4">
-      <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
+    <div className='lg:col-span-4 lg:row-end-1'>
+      <div className='aspect-w-4 aspect-h-3 overflow-hidden rounded-lg bg-neutral-100'>
         <img
           src={ImageSrc}
           alt={ImageAlt}
-          className="object-center object-cover"
+          className='object-cover object-center'
         />
       </div>
     </div>
