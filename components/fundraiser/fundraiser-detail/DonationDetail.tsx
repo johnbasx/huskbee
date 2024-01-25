@@ -23,7 +23,6 @@ import usePageIsLoading from '@hooks/usePageIsLoading';
 
 // import { formatDate } from 'date-fns';
 
-
 type DonationDetailType = {
   share_count: number;
   fundraiser_id: FundraiserEventProps['id'];
@@ -85,42 +84,54 @@ const DonationDetail = ({
             // role="progressbar"
             // aria-labelledby="ProgressLabel"
             // aria-valuenow="75"
-            className="block rounded-full bg-blue-900/20"
+            className='block rounded-full bg-blue-900/20'
           >
             <span
-              className="block h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500"
+              className='block h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500'
               style={{ width: GetPercentage(total_donation, target_amount) }}
-            // Dynamic data for progress bar
+              // Dynamic data for progress bar
             />
           </span>
         </div>
-        <span className="font-nato inline-flex items-center gap-2 text-sm font-medium text-slate-500">
+        <span className='font-nato inline-flex items-center gap-2 text-sm font-medium text-slate-500'>
           <span>
             {total_donors}
-            <span className="font-nunito"> donations</span>
+            <span className='font-nunito'> donations</span>
           </span>
-          <span className="text-slate-400">&bull;</span>
+          <span className='text-slate-400'>&bull;</span>
           <span>
             {end_date}
             {GetDaysLeft(end_date) <= 0 ? (
-              "fundraiser ended"
+              'fundraiser ended'
             ) : (
               <>
                 {GetDaysLeft(end_date)}
-                <span className="font-nunito">days left</span>
+                <span className='font-nunito'>days left</span>
               </>
             )}
           </span>
         </span>
       </div>
-      <div className="flex flex-col gap-3 border-b pb-3 border-dashed">
+      <div className='flex flex-col gap-3 border-b border-dashed pb-3'>
         {/* <Link href={`/ad`}> */}
         <button
-          type="button"
-          onClick={() => goToDonatePage()}
-          className="rounded-xl py-3 px-4 bg-blue-600 hover:bg-blue-500 duration-300 ease-out text-white w-full font-semibold text-lg"
+          type='button'
+          disabled={pageIsLoading && contributeButtonClick ? true : false}
+          onClick={() => {
+            goToDonatePage(), setContributeButtonClick(true);
+          }}
+          className={cn(
+            'w-full rounded-xl bg-gradient-to-b from-neutral-700 to-black px-4 py-3 text-lg font-semibold text-white duration-300 ease-out hover:bg-gradient-to-b hover:from-neutral-700 hover:to-neutral-900',
+            pageIsLoading && contributeButtonClick
+              ? 'animate-pulse opacity-75'
+              : 'opacity-100'
+          )}
         >
-          Contribute now
+          {pageIsLoading && contributeButtonClick ? (
+            <LoadingDots />
+          ) : (
+            <span>Contribute now</span>
+          )}
         </button>
         {/* </Link> */}
         <SocialShare fundraiser_id={fundraiser_id} />

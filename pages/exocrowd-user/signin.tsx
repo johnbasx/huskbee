@@ -56,11 +56,7 @@ const SignInPage = () => {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-<<<<<<< HEAD
       console.log('resp from google: ', tokenResponse);
-=======
-      console.log("resp from google: ", tokenResponse)
->>>>>>> 9934d9a25d0e2fdfc30510bd1416fb1f23bdcc42
       LoginWithGoogle(tokenResponse.access_token);
     },
   });
