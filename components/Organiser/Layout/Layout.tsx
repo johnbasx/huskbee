@@ -1,8 +1,9 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState } from 'react';
 
-import Head from "next/head";
-import NavBar from "./NavBar";
-import SideBar from "./SideBar";
+import Head from 'next/head';
+import NavBar from './NavBar';
+import SideBar from './SideBar';
+import PageHeading from '@components/admin/layout/PageHeading';
 
 const Layout = ({
   children,
@@ -27,11 +28,12 @@ const Layout = ({
         {/* <meta name="apple-mobile-web-app-status-bar" content="#0f172a" /> */}
         <meta name='apple-mobile-web-app-status-bar' content='#0f172a' />
       </Head>
-      <div className='min-h-full flex'>
+      <div className='flex min-h-full font-circular'>
         <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-        <div className='lg:pl-64 flex flex-col w-0 flex-1'>
+        <div className='flex w-0 flex-1 flex-col lg:pl-64'>
           <NavBar pageTitle={pageTitle} setSidebarOpen={setSidebarOpen} />
+          {/* <PageHeading /> */}
 
           <main className='flex-1'>{children}</main>
         </div>
