@@ -56,7 +56,7 @@ const SignInPage = () => {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      // console.log("resp from google: ", tokenResponse)
+      console.log('resp from google: ', tokenResponse);
       LoginWithGoogle(tokenResponse.access_token);
     },
   });
@@ -65,7 +65,7 @@ const SignInPage = () => {
     <>
       <Toaster />
       <AuthLayout>
-        <div className='relative mx-auto flex min-h-screen max-w-screen-2xl flex-1 flex-col items-center justify-center bg-gradient-to-b from-blue-50 via-emerald-100 to-blue-400 px-3'>
+        <div className='relative mx-auto flex min-h-screen flex-1 flex-col items-center justify-center bg-gradient-to-b from-blue-50 via-emerald-100 to-blue-400 px-3'>
           <div className='pointer-events-none absolute h-full w-full'>
             <div className='relative h-screen w-full'>
               <Image

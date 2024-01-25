@@ -21,7 +21,7 @@ const AttractiveHero = () => {
               alt='Exocrowd icon'
               width={100}
               height={100}
-              className='h-8 w-8'
+              className='h-8 w-8 object-contain object-left'
             />
             <h1 className='rounded-full py-2 text-4xl font-bold tracking-tight text-white drop-shadow md:text-6xl'>
               Making contributions better for everyone
@@ -45,26 +45,26 @@ const AttractiveHero = () => {
                 alt='Exocrowd logo'
                 width={100}
                 height={100}
-                className='h-4 w-auto md:h-6'
+                className='h-4 object-contain object-left saturate-0 md:h-6'
               />
-              <div className='mb-6 mt-8 flex flex-wrap gap-1 text-black md:mt-20 md:gap-2'>
-                <span className='rounded-full border border-black px-6 py-2 text-2xl font-normal tracking-tight md:text-5xl'>
+              <div className='mb-6 mt-6 flex flex-wrap gap-1 font-oracle font-normal text-black md:mt-12 md:gap-2'>
+                <span className='rounded-full border border-black px-6 py-2 text-2xl tracking-tight md:text-5xl'>
                   Create
                 </span>
 
-                <span className='rounded-full border border-black px-6 py-2 text-2xl font-normal tracking-tight md:text-5xl'>
+                <span className='rounded-full border border-black px-6 py-2 text-2xl tracking-tight md:text-5xl'>
                   Donate
                 </span>
-                <span className='flex items-center justify-center rounded-full bg-blue-500 px-3.5 py-2 text-center text-2xl font-normal tracking-tight text-white md:px-2.5 md:text-5xl'>
+                <span className='flex items-center justify-center rounded-full bg-blue-500 px-3.5 py-2 text-center text-2xl tracking-tight text-white md:px-2.5 md:text-5xl'>
                   <TbArrowRight />
                 </span>
-                <span className='rounded-full border border-black px-6 py-2 text-2xl font-normal tracking-tight md:text-5xl'>
+                <span className='rounded-full border border-black px-6 py-2 text-2xl tracking-tight md:text-5xl'>
                   Help
                 </span>
-                <span className='rounded-full border border-black px-6 py-2 text-2xl font-normal tracking-tight md:text-5xl'>
+                <span className='rounded-full border border-black px-6 py-2 text-2xl tracking-tight md:text-5xl'>
                   Develop
                 </span>
-                <span className='rounded-full border border-black px-6 py-2 text-2xl font-normal tracking-tight md:text-5xl'>
+                <span className='rounded-full border border-black px-6 py-2 text-2xl tracking-tight md:text-5xl'>
                   Together
                 </span>
               </div>
