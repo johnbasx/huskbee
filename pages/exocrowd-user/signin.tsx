@@ -3,13 +3,13 @@ import React, { FormEvent, useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 
 import AuthLayout from '@components/layout/AuthLayout';
+import { FcGoogle } from 'react-icons/fc';
 import { GoogleSvg } from '@components/common/GoogleSvg';
 import Image from 'next/image';
 import Link from 'next/link';
+import { TbArrowBack } from 'react-icons/tb';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { FcGoogle } from 'react-icons/fc';
-import { TbArrowBack } from 'react-icons/tb';
 
 const SignInPage = () => {
   const router = useRouter();
@@ -56,7 +56,7 @@ const SignInPage = () => {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      // console.log("resp from google: ", tokenResponse)
+      console.log("resp from google: ", tokenResponse)
       LoginWithGoogle(tokenResponse.access_token);
     },
   });

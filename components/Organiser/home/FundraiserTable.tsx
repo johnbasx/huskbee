@@ -1,4 +1,5 @@
 import { FormatDate, toIndianCurrency } from '@utils/index';
+
 import { FundraiserEventProps } from '../../../pages/organiser/fundraisers';
 import Link from 'next/link';
 import React from 'react';
@@ -73,14 +74,14 @@ const FundraiserTable = ({
                   </td>
                   <td className='whitespace-nowrap px-6 py-6'>
                     <div className='whitespace-nowrap text-sm text-neutral-800'>
-                      {data.total_donors}
+                      {data.donation_detail.total_donors}
                     </div>
                     {/* <div className="text-sm text-neutral-500">
                       {data.department}
                     </div> */}
                   </td>
                   <td className='whitespace-nowrap px-6 py-2 text-neutral-800'>
-                    {toIndianCurrency(data.total_donation)}
+                    {toIndianCurrency(data.donation_detail.total_donation)}
                   </td>
                   <td className='whitespace-nowrap px-6 py-6 text-sm text-neutral-800'>
                     {FormatDate(data.created_at)}
