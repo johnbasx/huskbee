@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Spinner } from 'flowbite-react';
 import { orgTokenStore } from '@store/index';
 import useDebounce from '@hooks/useDebounce';
+import { TbSearch } from 'react-icons/tb';
 
 const SearchFundraiser = ({
   setFundraisers,
@@ -52,17 +53,16 @@ const SearchFundraiser = ({
           <label htmlFor='search-field' className='sr-only'>
             Search
           </label>
-          <div className='relative w-full border border-transparent border-b-neutral-700 text-neutral-400 focus-within:text-neutral-600'>
-            <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center'>
-              <FaSearch className='h-5 w-5' aria-hidden='true' />
+          <div className='relative w-full rounded-full shadow-sm'>
+            <div className='pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3'>
+              <TbSearch className='h-5 w-5 text-gray-400' aria-hidden='true' />
             </div>
             <input
+              type='search'
               id='search-field'
               onChange={(event) => setQuery(event.target.value)}
-              className='block h-full w-full border-transparent bg-white py-2 pl-8 pr-3  text-neutral-700 placeholder-neutral-400 focus:border-transparent focus:placeholder-neutral-900 focus:outline-none focus:ring-0 sm:text-sm'
-              placeholder='Search fundraiser'
-              type='search'
-              name='search'
+              className='block w-full rounded-full border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6'
+              placeholder='Search fundraiser...'
             />
           </div>
         </form>

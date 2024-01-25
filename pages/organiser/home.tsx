@@ -49,7 +49,7 @@ const Home = ({
   graph_data: HomeGraphType[];
   fundraisers: FundraiserEventProps[];
 }) => {
-  console.log('Fundraisers: ', fundraisers);
+  // console.log('Fundraisers: ', fundraisers);
   // const { setOrgPartners } = OrgPartnersStore();
 
   // useEffect(() => {

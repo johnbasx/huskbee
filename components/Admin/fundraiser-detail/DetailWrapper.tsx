@@ -9,8 +9,8 @@ const DetailWrapper = ({
 }: {
   children: React.ReactNode;
   status: string;
-  totalDonation: number;
-  totalDonors: number;
+  totalDonation?: number;
+  totalDonors?: number;
 }) => {
   return (
     <div className='space-y-6 lg:col-span-2 lg:col-start-1'>

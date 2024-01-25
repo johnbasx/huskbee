@@ -71,8 +71,8 @@ const FundDonors = ({
             </tr>
           </thead>
           <tbody className='divide-y divide-neutral-200 bg-white'>
-            {donors.map((donor) => (
-              <tr key={donor.donor_email}>
+            {donors.map((donor, idx) => (
+              <tr key={'donor-' + donor.donor_email + idx}>
                 <td className='whitespace-nowrap px-6 py-4'>
                   <div className='flex items-center'>
                     <div className='h-10 w-10 flex-shrink-0'>

@@ -1,13 +1,14 @@
 import { FundraiserStore, orgTokenStore } from '@store/index';
 import React, { useEffect } from 'react';
 
-import { FormatDate } from '@utils/index';
+import { FormatDate, toIndianCurrency } from '@utils/index';
 import Layout from '@components/organiser/layout/Layout';
 import Link from 'next/link';
 import { NextPageContext } from 'next';
 import SearchFundraiser from '@components/organiser/fundraiser/SearchFundraiser';
 import { ShareCountStore } from '@store/fundraiser-detail-store';
 import { getCookie } from 'cookies-next';
+import { cn, sanitizedData } from '@utils/lib';
 
 export type RecentDonorType = {
   donated_by__photo: string;
@@ -61,65 +62,85 @@ const Fundraisers = ({ token }: { token: string }) => {
   }, [token]);
 
   return (
-    <Layout pageTitle='Your Fundraiser Events'>
-      <div className='bg-transparent py-10 sm:py-10'>
-        <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+    <Layout pageTitle='Your Fundraisers all in one place'>
+      <div className='py-10 sm:py-10'>
+        <div className='mx-auto px-6 lg:px-8'>
           <SearchFundraiser setFundraisers={setFundraisers} />
 
-          <div className='mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 pt-10 sm:mt-6 sm:pt-1 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+          <div className='mx-auto mt-6 grid max-w-screen-2xl grid-cols-1 gap-x-6 gap-y-6 pt-10 sm:mt-6 sm:grid-cols-2 sm:pt-1 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4'>
             {fundraisers &&
               fundraisers.map((event) => (
-                <article
-                  key={event.id}
-                  className='flex max-w-xl flex-col items-start justify-between space-y-2 rounded-lg border bg-white p-6 shadow-lg'
-                >
-                  <div className='group relative'>
-                    <h3 className=' text-lg font-semibold leading-6 text-black'>
-                      <Link href={`fundraiser-detail/` + event.id}>
-                        <span className='absolute inset-0 cursor-pointer' />
-                        {event.title}
-                      </Link>
-                    </h3>
-                    <p className='mt-4 line-clamp-3 text-sm leading-6 text-neutral-700'>
-                      {event.description}
-                    </p>
-                  </div>
-                  <div className='relative mt-8 flex items-center gap-x-4'>
-                    <div className='text-sm leading-6'>
-                      <p className='font-semibold text-neutral-700'>
-                        <a href='#!'>
-                          <span className='absolute inset-0' />
-                          {event.donation_detail.total_donors + ' Donors'}
-                        </a>
-                      </p>
-                      {/* <p className="text-neutral-600">{post.author.role}</p> */}
-                    </div>
-                  </div>
-                  <div className='flex w-full flex-col justify-between text-center text-sm text-black md:flex-row'>
-                    <div>
-                      <span className='mt-1 font-medium'>
-                        Created on{' '}
-                        {/* {event.created_at + "  " + event.created_at.length} */}
-                        {FormatDate(event.created_at)}
-                      </span>
-                    </div>
-                    {/* text-[#166534] bg-[#DCFCE7]*/}
-                    <div>
-                      <span
-                        className={`relative rounded-full border border-transparent shadow-lg  ${
-                          event.open_status ? 'bg-[#7ce7a1]' : 'bg-red-400'
-                        } px-2 py-1 font-medium text-black hover:border hover:border-neutral-700 hover:bg-neutral-100 hover:text-black hover:shadow-xl`}
-                      >
-                        {event.open_status ? 'Active' : 'Close'}
-                      </span>
-                    </div>
-                  </div>
-                </article>
+                <OrganiserFundraiserCardBlock
+                  {...event}
+                  key={'fundraiser-card-' + event.id}
+                />
               ))}
           </div>
         </div>
       </div>
     </Layout>
+  );
+};
+
+const OrganiserFundraiserCardBlock = ({
+  ...fundraiser
+}: FundraiserEventProps) => {
+  return (
+    <Link
+      href={`fundraiser-detail/` + fundraiser.id}
+      className='relative block overflow-hidden rounded-xl border border-neutral-200 p-4 sm:p-4 lg:p-6 xl:p-8'
+    >
+      <span className='absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-emerald-300 via-blue-500 to-purple-600'></span>
+
+      <div className='sm:flex sm:justify-between sm:gap-4'>
+        <div>
+          <h3 className='line-clamp-2 text-lg font-bold text-gray-900 sm:text-xl'>
+            {fundraiser.title}
+          </h3>
+
+          <p className='mt-1 text-xs font-medium text-gray-600'>
+            Published on • {FormatDate(fundraiser.created_at)}
+          </p>
+        </div>
+
+        <div className='hidden sm:block sm:shrink-0'>
+          {/* <img
+        alt="Paul Clapton"
+        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+        className="h-16 w-16 rounded-lg object-cover shadow-sm"
+      /> */}
+        </div>
+      </div>
+
+      <div className='mt-4'>
+        <p
+          className='line-clamp-3 max-w-[40ch] text-sm text-gray-500'
+          dangerouslySetInnerHTML={sanitizedData(fundraiser.description)}
+        ></p>
+      </div>
+
+      <dl className='mt-6 flex gap-4 sm:gap-6'>
+        <div className='flex flex-col-reverse'>
+          <dd className='text-sm font-medium text-gray-600'>
+            {toIndianCurrency(fundraiser.donation_detail.total_donation)}
+          </dd>
+          <dt className='text-xs text-gray-500'>
+            Donated
+            {/* {FormatDate(fundraiser.created_at)} */}
+          </dt>
+        </div>
+
+        <div className='flex flex-col-reverse'>
+          <dd className='text-sm font-medium text-gray-600'>
+            {fundraiser.donation_detail.total_donors}
+          </dd>
+          <dt className='text-xs text-gray-500'>
+            Contributors
+            {/* {FormatDate(fundraiser.end_date)} */}
+          </dt>
+        </div>
+      </dl>
+    </Link>
   );
 };
 

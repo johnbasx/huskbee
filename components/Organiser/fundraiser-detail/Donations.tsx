@@ -2,8 +2,11 @@ import { BASE_URL } from '@constants/api-urls';
 import { DonationProps } from '../../../pages/organiser/fundraiser-detail/[fundraiserId]';
 import { FormatDate } from '@utils/index';
 import React from 'react';
+import Link from 'next/link';
+import { TbChartDots3 } from 'react-icons/tb';
 
 const Donations = ({ donors }: { donors: DonationProps[] }) => {
+  console.log(donors);
   return (
     <section aria-labelledby='recent-hires-title'>
       <div className='overflow-hidden rounded-lg border bg-white shadow'>
@@ -15,12 +18,12 @@ const Donations = ({ donors }: { donors: DonationProps[] }) => {
             >
               Recent donations
             </h2>
-            <a
+            <Link
               href='#donation-chart'
-              className='cursor-pointer text-base text-blue-700'
+              className='inline-flex cursor-pointer items-center gap-1 text-xs text-blue-700'
             >
-              View graph
-            </a>
+              View insights <TbChartDots3 />
+            </Link>
           </div>
           <div className='mt-6 flow-root'>
             <ul className='-my-5 divide-y divide-neutral-200'>
@@ -32,12 +35,18 @@ const Donations = ({ donors }: { donors: DonationProps[] }) => {
                         {/* {donor.donor_photo_url} */}
                         <img
                           className='h-8 w-8 rounded-full'
-                          src={BASE_URL + donor.donor_photo_url}
+                          src={
+                            donor.donor_photo_url &&
+                            donor.donor_photo_url !== 'undefined'
+                              ? BASE_URL + donor.donor_photo_url
+                              : '/images/profile_photo/account.jpg'
+                          }
                           alt={donor.donor_name}
                         />
                       </div>
                       <div className='min-w-0 flex-1'>
                         <p className='truncate text-sm font-medium capitalize text-neutral-900'>
+                          {/* #FIXME #TODO */}
                           {donor.donor_name}
                         </p>
                         <p className='truncate text-sm text-neutral-500'>
