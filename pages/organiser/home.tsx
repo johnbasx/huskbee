@@ -45,13 +45,13 @@ const Home = ({
   graph_data,
   fundraisers,
 }: // orgPartners,
-{
-  overview: OverViewProps;
-  // events: EventDetailProps[];
-  // orgPartners: EventPartnersProps[];
-  graph_data: HomeGraphType[];
-  fundraisers: FundraiserEventProps[];
-}) => {
+  {
+    overview: OverViewProps;
+    // events: EventDetailProps[];
+    // orgPartners: EventPartnersProps[];
+    graph_data: HomeGraphType[];
+    fundraisers: FundraiserEventProps[];
+  }) => {
   console.log("Fundraisers: ", fundraisers);
   // const { setOrgPartners } = OrgPartnersStore();
 
@@ -132,6 +132,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
   const fundraisers_res = await fetch(
     CROWDFUNDING_BASE_URL + "list-create-fundraiser-event/?q=all",
+    // CROWDFUNDING_BASE_URL+ "crowdfunding/fundraisers/?q=all",
     {
       headers: {
         Authorization: `Bearer ${token}`,

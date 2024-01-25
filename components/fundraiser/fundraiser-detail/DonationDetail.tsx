@@ -4,6 +4,7 @@ import {
   MaxDonationType,
 } from '../../../pages/organiser/fundraisers';
 import { GetDaysLeft, GetPercentage, toIndianCurrency } from '@utils/index';
+import React, { useState } from 'react';
 import {
   TbDevicesHeart,
   TbMoodHeart,
@@ -12,14 +13,16 @@ import {
   TbUserHeart,
   TbUserUp,
 } from 'react-icons/tb';
-import { formatDate } from 'date-fns';
+
 import { IconType } from 'react-icons';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import LoadingDots from '@components/common/LoadingDots';
 import SocialShare from './SocialShare';
 import { cn } from '@utils/lib';
 import usePageIsLoading from '@hooks/usePageIsLoading';
-import LoadingDots from '@components/common/LoadingDots';
+
+// import { formatDate } from 'date-fns';
+
 
 type DonationDetailType = {
   share_count: number;
@@ -82,62 +85,43 @@ const DonationDetail = ({
             // role="progressbar"
             // aria-labelledby="ProgressLabel"
             // aria-valuenow="75"
-            className='block rounded-full bg-blue-700/20'
+            className="block rounded-full bg-blue-900/20"
           >
             <span
-              className='block h-2 rounded-full bg-gradient-to-r from-emerald-300 to-blue-500'
+              className="block h-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500"
               style={{ width: GetPercentage(total_donation, target_amount) }}
-              // Dynamic data for progress bar
+            // Dynamic data for progress bar
             />
           </span>
         </div>
-        <span className='inline-flex items-center gap-2 text-sm font-medium text-neutral-500'>
+        <span className="font-nato inline-flex items-center gap-2 text-sm font-medium text-slate-500">
           <span>
             {total_donors}
-            <span className=''> donations</span>
+            <span className="font-nunito"> donations</span>
           </span>
-          <span className='text-neutral-400'>&bull;</span>
+          <span className="text-slate-400">&bull;</span>
           <span>
-            {/* FIXME */}
-            {/* {formatDistanceToNow(end_date, { addSuffix: true })} */}
-            {/* {GetDaysLeft(formatDate(end_date, 'dd/mm/yyyy')) <= 0 ? (
-              'fundraiser ended'
+            {end_date}
+            {GetDaysLeft(end_date) <= 0 ? (
+              "fundraiser ended"
             ) : (
               <>
                 {GetDaysLeft(end_date)}
-                <span className=''>days left</span>
+                <span className="font-nunito">days left</span>
               </>
-            )} */}
+            )}
           </span>
         </span>
       </div>
-      <div className='flex flex-col gap-3 border-b border-dashed pb-3'>
+      <div className="flex flex-col gap-3 border-b pb-3 border-dashed">
         {/* <Link href={`/ad`}> */}
-        {/* <button
-          type='button'
+        <button
+          type="button"
           onClick={() => goToDonatePage()}
-          className='w-full rounded-xl bg-blue-600 px-4 py-3 font-medium text-white duration-300 ease-out hover:bg-blue-500'
+          className="rounded-xl py-3 px-4 bg-blue-600 hover:bg-blue-500 duration-300 ease-out text-white w-full font-semibold text-lg"
         >
           Contribute now
-        </button> */}
-        <Link
-          href={`/fundraiser/contribute/${fundraiser_id}`}
-          onClick={() => setContributeButtonClick(true)}
-          className={cn(
-            'relative w-full cursor-pointer overflow-hidden rounded-xl border border-neutral-700 bg-gradient-to-b from-neutral-700 to-black px-4 py-3 text-center text-lg font-medium text-white duration-300 ease-out hover:from-neutral-800 hover:to-black',
-            pageIsLoading &&
-              contributeButtonClick &&
-              'pointer-events-none cursor-not-allowed opacity-70'
-          )}
-        >
-          {pageIsLoading && contributeButtonClick ? (
-            <LoadingDots />
-          ) : (
-            <span>Contribute now</span>
-          )}
-          {/* <span className='animate-shine absolute inset-0 h-40 w-1/4 rotate-90 bg-gradient-to-r from-transparent via-white/50 to-transparent blur-xl'></span> */}
-        </Link>
-
+        </button>
         {/* </Link> */}
         <SocialShare fundraiser_id={fundraiser_id} />
 
