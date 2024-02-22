@@ -67,7 +67,9 @@ export const getServerSideProps: GetServerSideProps<{
   }
 
   const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);
-  const fundraisers = await data.json();
+  const fundraiser_first = await data.json();
+
+  const fundraisers = fundraiser_first.results
   if (!fundraisers) {
     return {
       notFound: true,

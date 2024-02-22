@@ -1,5 +1,5 @@
-import Layout from '@components/exocrowd-client/Layout';
-import React, { useEffect } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import React, { useEffect, useState } from 'react';
 import {
   TbArrowRight,
   TbCircleCheck,
@@ -7,18 +7,21 @@ import {
   TbPigMoney,
   TbSearch,
 } from 'react-icons/tb';
-import { nanoid } from 'nanoid';
+
+import BrowseFundraiserCardBlock from '@components/fundraiser/fundraiser-detail/BrowseFundraiserCardBlock';
 import BrowseFundraisersLayout from '@components/fundraiser/layout/BrowseFundraisersLayout';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getCookie } from 'cookies-next';
-import { orgTokenStore } from '@store/index';
-import { FundraiserEventsProps } from '../organiser/fundraiser-detail/[fundraiserId]';
 import { CROWDFUNDING_BASE_URL } from '@constants/api-urls';
 import { DisplayCardBlock } from '@components/exocrowd-client/scroll/MoreWaysScroll';
-import BrowseFundraiserCardBlock from '@components/fundraiser/fundraiser-detail/BrowseFundraiserCardBlock';
-import Pagination from '@components/fundraiser/layout/Pagination';
-import Link from 'next/link';
+import { FundraiserEventProps } from '../organiser/fundraisers';
+import { FundraiserEventsProps } from '../organiser/fundraiser-detail/[fundraiserId]';
 import Image from 'next/image';
+import Layout from '@components/exocrowd-client/Layout';
+import Link from 'next/link';
+import Pagination from '@components/fundraiser/layout/Pagination';
+import { getCookie } from 'cookies-next';
+import { nanoid } from 'nanoid';
+import { orgTokenStore } from '@store/index';
+import useDebounce from '@hooks/useDebounce';
 
 export const headlineTags = [
   {
@@ -71,16 +74,43 @@ export const tagsList = [
 
 const BrowseFundraisers = ({
   access_token,
-  fundraisers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { user_token, setUserToken } = orgTokenStore();
-  // console.log('U_token: ', user_token);
 
   useEffect(() => {
     if (access_token != '') {
       setUserToken(access_token);
     }
   }, [user_token]);
+
+  const { token } = orgTokenStore();
+  const [query, setQuery] = useState('');
+  const debouncedSearch = useDebounce(query, 500);
+  const [loading, setLoading] = useState(false);
+  const [searchedResults, setSearchedResults] = useState<FundraiserEventsProps[]>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+
+      const data = await fetch(
+        `${CROWDFUNDING_BASE_URL}fundraisers/?q=${debouncedSearch}`,
+
+      ).then((res) => res.json());
+      setSearchedResults(data.results);
+
+      setLoading(false);
+    };
+    if (debouncedSearch) {
+      fetchData();
+    }
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (query === '') {
+      setQuery('all');
+    }
+  }, [query]);
 
   return (
     <Layout title='Exocrowd - fundraiser details page' className='bg-white'>
@@ -121,6 +151,7 @@ const BrowseFundraisers = ({
           <div className='mx-auto mt-4 flex w-full max-w-xl items-center justify-center gap-2 px-4'>
             <div className='relative mx-auto w-full text-neutral-600'>
               <input
+                onChange={(event) => setQuery(event.target.value)}
                 className='h-12 w-full rounded-full border border-neutral-300 bg-white px-5 pl-12 text-sm font-medium shadow-2xl placeholder:text-neutral-600 focus:outline-none'
                 type='search'
                 name='search'
@@ -155,13 +186,13 @@ const BrowseFundraisers = ({
         </div>
       </section>
       <BrowseFundraisersLayout>
-        {fundraisers?.length && (
+        {searchedResults?.length && (
           <div className='pb-4 text-sm text-neutral-500'>
-            <p>Showing {fundraisers.length} fundraisers near you</p>
+            <p>Showing {searchedResults.length} fundraisers near you</p>
           </div>
         )}
         <div className='grid grid-cols-1 gap-6 px-0 sm:mx-0 md:grid-cols-3 lg:grid-cols-3'>
-          {fundraisers.map((data, index) => (
+          {searchedResults.map((data, index) => (
             <BrowseFundraiserCardBlock
               key={`display-card-block-${data.id}${index}`}
               data={data}
@@ -178,7 +209,7 @@ export default BrowseFundraisers;
 
 export const getServerSideProps: GetServerSideProps<{
   access_token: string;
-  fundraisers: FundraiserEventsProps[];
+  all_fundraisers: FundraiserEventsProps[];
 }> = async (context) => {
   const req = context.req;
   const res = context.res;
@@ -190,11 +221,16 @@ export const getServerSideProps: GetServerSideProps<{
   }
 
   const data = await fetch(`${CROWDFUNDING_BASE_URL}fundraisers/?q=all`);
-  const fundraisers = await data.json();
-  if (!fundraisers) {
+  const all_fundraisers = await data.json();
+  if (!all_fundraisers) {
     return {
       notFound: true,
     };
   }
-  return { props: { access_token, fundraisers } };
+  return {
+    props: {
+      access_token,
+      all_fundraisers
+    }
+  };
 };
