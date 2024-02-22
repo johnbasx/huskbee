@@ -2,28 +2,25 @@ import {
   BOOKING_BASE_URL,
   CROWDFUNDING_BASE_URL,
   USER_BASE_URL,
-} from "@constants/api-urls";
+} from '@constants/api-urls';
 import {
   EventDetailProps,
   EventPartnersProps,
-} from "../event-detail/[eventId]";
-import {
-  FcBusinessman,
-  FcConferenceCall,
-  FcMultipleInputs,
-} from "react-icons/fc";
+} from '../event-detail/[eventId]';
 
-import Events from "@components/organiser/home/Events";
-import FundraiserChart from "@components/organiser/home/FundraiserChart";
-import { FundraiserEventProps } from "./fundraisers";
-import FundraiserTable from "@components/organiser/home/FundraiserTable";
-import Layout from "@components/organiser/layout/Layout";
-import MyPartners from "@components/organiser/home/MyPartners";
-import { NextPageContext } from "next";
-import { OrgPartnersStore } from "@store/index";
-import Overview from "@components/common/Overview";
-import { getCookie } from "cookies-next";
-import { useEffect } from "react";
+import Events from '@components/organiser/home/Events';
+import FundraiserChart from '@components/organiser/home/FundraiserChart';
+import { FundraiserEventProps } from './fundraisers';
+import FundraiserTable from '@components/organiser/home/FundraiserTable';
+import Layout from '@components/organiser/layout/Layout';
+import MyPartners from '@components/organiser/home/MyPartners';
+import { NextPageContext } from 'next';
+import { OrgPartnersStore } from '@store/index';
+import Overview from '@components/common/Overview';
+import { getCookie } from 'cookies-next';
+import { useEffect } from 'react';
+import { TbCalendarHeart, TbHeartDollar } from 'react-icons/tb';
+import { BiDonateHeart } from 'react-icons/bi';
 
 // import Overview from "@components/Organiser/home/Overview";
 
@@ -45,14 +42,14 @@ const Home = ({
   graph_data,
   fundraisers,
 }: // orgPartners,
-  {
-    overview: OverViewProps;
-    // events: EventDetailProps[];
-    // orgPartners: EventPartnersProps[];
-    graph_data: HomeGraphType[];
-    fundraisers: FundraiserEventProps[];
-  }) => {
-  console.log("Fundraisers: ", fundraisers);
+{
+  overview: OverViewProps;
+  // events: EventDetailProps[];
+  // orgPartners: EventPartnersProps[];
+  graph_data: HomeGraphType[];
+  fundraisers: FundraiserEventProps[];
+}) => {
+  // console.log('Fundraisers: ', fundraisers);
   // const { setOrgPartners } = OrgPartnersStore();
 
   // useEffect(() => {
@@ -61,28 +58,31 @@ const Home = ({
 
   return (
     <Layout pageTitle='Home'>
-      <div className='py-12 xl:py-10 space-y-24'>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+      <div className='space-y-24 py-12 xl:py-10'>
+        <div className='mr-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
             <Overview
-              icon={FcMultipleInputs}
+              icon={TbCalendarHeart}
               title='Fundraiser'
               total={overview.total_fundraiser}
-              color='border-l-[#4e73df]'
+              color='purple'
+              bgColor='bg-purple-500/10'
               link='/organiser/fundraisers'
             />
             <Overview
-              icon={FcConferenceCall}
+              icon={TbHeartDollar}
               title='Donors'
               total={overview.total_donors}
-              color='border-l-[#1cc88a]'
+              color='rose'
+              bgColor='bg-rose-500/10'
               link='/organiser/fundraisers'
             />
             <Overview
-              icon={FcMultipleInputs}
+              icon={BiDonateHeart}
               title='Donations'
-              total={"₹ " + overview.total_donation}
-              color='border-l-[#f6c23e]'
+              total={'₹' + overview.total_donation}
+              color='emerald'
+              bgColor='bg-emerald-500/10'
               link='/organiser/donations'
             />
           </div>
@@ -101,9 +101,9 @@ export default Home;
 export async function getServerSideProps(context: NextPageContext) {
   const req = context.req;
   const res = context.res;
-  const token = getCookie("org_token", { req, res });
+  const token = getCookie('org_token', { req, res });
 
-  const overview_response = await fetch(USER_BASE_URL + "organiser-overview", {
+  const overview_response = await fetch(USER_BASE_URL + 'organiser-overview', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -131,7 +131,7 @@ export async function getServerSideProps(context: NextPageContext) {
   // const orgPartners = instance.results;
 
   const fundraisers_res = await fetch(
-    CROWDFUNDING_BASE_URL + "list-create-fundraiser-event/?q=all",
+    CROWDFUNDING_BASE_URL + 'list-create-fundraiser-event/?q=all',
     // CROWDFUNDING_BASE_URL+ "crowdfunding/fundraisers/?q=all",
     {
       headers: {
@@ -143,7 +143,7 @@ export async function getServerSideProps(context: NextPageContext) {
   // const orgPartners = instance.results;
 
   const graph_data_response = await fetch(
-    CROWDFUNDING_BASE_URL + "fundraiser-graph",
+    CROWDFUNDING_BASE_URL + 'fundraiser-graph',
     {
       headers: { Authorization: `Bearer ${token}` },
     }
@@ -154,7 +154,7 @@ export async function getServerSideProps(context: NextPageContext) {
   if (!graph_data || !fundraisers) {
     return {
       redirect: {
-        destination: "/",
+        destination: '/',
         permanent: false,
       },
     };

@@ -40,8 +40,13 @@ const NavBar = ({
         </h1>
       </div>
       <div className='mt-4 flex sm:ml-4 sm:mt-0'>
+        {/* FIXME */}
         <ProfileDropDown
-          logo={logo}
+          image={
+            logo && logo !== 'undefined'
+              ? logo
+              : '/images/profile_photo/account.jpg'
+          }
           content={user}
           handleSignOut={handleSignOut}
           listItems={org_dropdown_list}

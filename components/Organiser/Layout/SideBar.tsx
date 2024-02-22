@@ -16,6 +16,7 @@ import { MdEventAvailable } from 'react-icons/Md';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { cn } from '@utils/lib';
 
 const settings = [{ id: 1, name: 'Profile', href: '#' }];
 
@@ -86,10 +87,10 @@ const SideBar = ({
                   height={20}
                   width={250}
                   className='h-8 w-auto object-contain'
-                  src='/logo/axewhy-colorful-logo.png'
-                  alt='HuskBee'
+                  src='/exocrowd-logo.svg'
+                  alt='Exocrowd logo'
                 />
-                <span className='font-base text-2xl'>HuskBee</span>
+                <span className='font-base text-2xl'>exocrowd</span>
               </div>
               <div className='mt-5 h-0 flex-1 overflow-y-auto'>
                 <nav className='px-2'>
@@ -153,83 +154,100 @@ const SideBar = ({
             <Image
               height={50}
               width={150}
-              className='h-8 w-auto object-contain'
-              src='/logo/axewhy-colorful-logo.png'
-              alt='HuskBee'
+              className='h-8 w-fit object-contain'
+              src='/exocrowd-logo.svg'
+              alt='Exocrowd logo'
             />
-            <span className='text-3xl font-bold uppercase text-neutral-800'>
+            {/* <span className='text-3xl font-bold uppercase text-neutral-800'>
               huskbee
-            </span>
+            </span> */}
           </div>
-          <span className='ml-14 items-center text-sm text-blue-700'>
-            (For organiser)
+          <span className='ml-8 items-center text-sm text-blue-700'>
+            Organiser Dashboard
           </span>
         </div>
         <div className='mt-1 flex h-0 flex-1 flex-col overflow-y-auto'>
           <nav className='flex-1 px-2 py-4'>
-            <div className='space-y-1'>
-              {org_navigation.map((item) => (
-                <Link key={item.name} href={item.href}>
-                  <span
-                    className={clsx(
-                      router.pathname === item.href
-                        ? 'bg-neutral-200 text-neutral-900'
-                        : 'text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900',
-                      'group flex items-center rounded-md px-2 py-2 text-sm font-medium'
-                    )}
-                    // className={clsx(
-                    //   item.current
-                    //     ? "bg-neutral-900 text-white"
-                    //     : "text-neutral-300 hover:bg-neutral-700 hover:text-white",
-                    //   "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                    // )}
-                    aria-current={item.current ? 'page' : undefined}
-                  >
-                    <item.icon
-                      className={clsx(
-                        router.pathname === item.href
-                          ? 'text-neutral-500'
-                          : 'text-neutral-400 group-hover:text-neutral-500',
-                        'mr-3 h-6 w-6 flex-shrink-0'
-                      )}
-                      aria-hidden='true'
-                    />
-                    {item.name}
-                  </span>
-                </Link>
-              ))}
-            </div>
-
-            <div className='mt-8'>
-              {/* Secondary navigation */}
+            <div className=''>
+              {/* Crowdfunding navigation */}
               <h3
                 className='px-3 text-xs font-semibold uppercase tracking-wider text-neutral-500'
-                id='desktop-teams-headline'
+                id='desktop-crowdfunding-headline'
               >
                 Crowd Funding
               </h3>
               <div
                 className='mt-1 space-y-1'
                 role='group'
-                aria-labelledby='desktop-teams-headline'
+                aria-labelledby='desktop-crowdfunding-links'
               >
-                {org_crowd_funding.map((content) => (
+                {org_crowd_funding.map((content, index) => (
                   <Link key={content.name} href={content.href}>
                     <span
-                      className={`group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-neutral-50 ${
+                      aria-current={index === 0 ? 'page' : undefined}
+                      className={`group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium ${
                         router.pathname === content.href
                           ? 'bg-neutral-200 text-neutral-900'
-                          : 'text-neutral-700 hover:text-neutral-900 '
+                          : 'text-neutral-700 hover:bg-neutral-50'
                       }`}
                     >
-                      <span
+                      <content.icon
+                        className={cn('h-5 w-5', content.iconColor)}
+                      />
+                      {/* <span
                         className={clsx(
                           content.bgColorClass,
                           'mr-4 h-2.5 w-2.5 rounded-full'
                         )}
                         aria-hidden='true'
-                      />
+                      /> */}
                       <span className='truncate'>{content.name}</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Events links */}
+            <div className='mt-8'>
+              <h3
+                className='px-3 text-xs font-semibold uppercase tracking-wider text-neutral-500'
+                id='desktop-crowdfunding-headline'
+              >
+                Event Management
+              </h3>
+              <div
+                className='mt-1 space-y-1'
+                role='group'
+                aria-labelledby='desktop-event-management-links'
+              >
+                {org_navigation.map((item) => (
+                  <Link key={item.name} href={item.href}>
+                    <span
+                      className={cn(
+                        router.pathname === item.href
+                          ? 'bg-neutral-200 text-neutral-900'
+                          : 'text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900',
+                        'group flex items-center rounded-md px-3 py-2 text-sm font-medium'
+                      )}
+                      // className={clsx(
+                      //   item.current
+                      //     ? "bg-neutral-900 text-white"
+                      //     : "text-neutral-300 hover:bg-neutral-700 hover:text-white",
+                      //   "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                      // )}
+                      aria-current={item.current ? 'page' : undefined}
+                    >
+                      <item.icon
+                        className={cn(
+                          router.pathname === item.href
+                            ? 'text-neutral-500'
+                            : 'text-neutral-400 group-hover:text-neutral-500',
+                          'mr-2 h-5 w-5 flex-shrink-0'
+                        )}
+                        aria-hidden='true'
+                      />
+                      {item.name}
                     </span>
                   </Link>
                 ))}

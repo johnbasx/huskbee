@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
+import * as DOMPurify from 'dompurify';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -16,3 +17,7 @@ export async function copyTextToClipboard(text: string) {
     return document.execCommand('copy', true, text);
   }
 }
+
+export const sanitizedData = (data: string) => ({
+  __html: DOMPurify.sanitize(data),
+});

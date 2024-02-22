@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
-import { TbLogout } from 'react-icons/tb';
+import { TbLogout, TbUserCircle } from 'react-icons/tb';
 import clsx from 'clsx';
 
 type DropDownListItemsType = {
@@ -13,7 +13,7 @@ type DropDownListItemsType = {
 };
 type ProfileDropDownType = {
   image: string;
-  content: string | null;
+  content?: string | null;
   handleSignOut: () => void;
   listItems: DropDownListItemsType[];
 };
@@ -27,13 +27,16 @@ export const ProfileDropDown = ({
     <Menu as='div' className='relative ml-3'>
       <div>
         <Menu.Button className='flex max-w-xs items-center rounded-full border bg-white text-xs focus:outline-none lg:rounded-lg lg:p-2'>
+          {/* <TbUserCircle className='h-5 w-5 text-neutral-500' /> */}
+
           <Image
             height={30}
             width={30}
             className='h-5 w-5 rounded-full object-contain'
             src={image}
-            alt='Company logo'
+            alt='Organiser logo'
           />
+
           <span className='ml-2 mr-1 line-clamp-1 hidden text-xs font-semibold capitalize text-neutral-700 lg:block'>
             <span className='sr-only'>Open user menu for </span>
             {content && content}

@@ -185,13 +185,13 @@ export const footerLinks = [
 const Footer = () => {
   return (
     <footer className='bg-black text-white lg:grid lg:grid-cols-5'>
-      <div className='relative block h-[25vh] lg:col-span-2 lg:h-full'>
+      <div className='relative block h-12 lg:col-span-2 lg:h-full'>
         <Image
           src='/exocrowd-wlogo.svg'
           alt='Exocrowd Logo'
           width={1000}
           height={1000}
-          className='absolute inset-0 h-full w-full object-contain p-10 lg:p-24'
+          className='absolute inset-0 h-full w-full object-contain'
         />
       </div>
 
@@ -259,7 +259,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className='mt-12 border-t border-neutral-600 pt-12'>
+        <div className='mt-12 border-t border-neutral-800 pt-12'>
           <div className='sm:flex sm:items-center sm:justify-between'>
             <ul className='flex flex-wrap gap-4 text-xs'>
               <li>
@@ -291,7 +291,7 @@ const Footer = () => {
             </ul>
 
             <p className='mt-8 text-xs text-neutral-50 sm:mt-0'>
-              &copy; {copyrightYear}. Exocrowd. All rights reserved.
+              &copy; {copyrightYear}. Foxbeta Pvt ltd. All rights reserved.
             </p>
           </div>
         </div>
