@@ -1,9 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { EnvelopeIcon, UserIcon } from '@heroicons/react/24/outline';
-import { Fragment, useState } from 'react';
+import { ForwardRefExoticComponent, Fragment, RefAttributes, SVGProps, useState } from 'react';
 
-import React from 'react';
 import { IconType } from 'react-icons';
+import React from 'react';
+
+//  import UserI
+
+
 
 const DonorInfo = () => {
   const [open, setOpen] = useState(false);
@@ -55,8 +59,8 @@ const DonorInfo = () => {
               <div className='inline-block transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle'>
                 <div>
                   <div className='space-y-2 text-center'>
-                    <DataDisplay Icon={UserIcon} content='Full Name' />
-                    <DataDisplay Icon={EnvelopeIcon} content='name@gmail.com' />
+                    <DataDisplay Aicon={UserIcon} content='Full Name' />
+                    <DataDisplay Aicon={EnvelopeIcon} content='name@gmail.com' />
                   </div>
                 </div>
                 <div className='mt-5 sm:mt-6' />
@@ -72,16 +76,16 @@ const DonorInfo = () => {
 export default DonorInfo;
 
 const DataDisplay = ({
-  Icon,
+  Aicon,
   content,
 }: {
   // Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  Icon: IconType;
+  Aicon: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & { title?: string | undefined; titleId?: string | undefined; } & RefAttributes<SVGSVGElement>>;
   content: string;
 }) => {
   return (
     <div className='flex'>
-      <Icon
+      <Aicon
         className='h-6 w-6 flex-shrink-0 text-blue-700'
         aria-hidden='true'
       />

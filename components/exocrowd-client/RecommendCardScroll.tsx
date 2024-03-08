@@ -1,33 +1,36 @@
-import {
-  recommendedData,
-  RecommendedProps,
-} from '@/src/contents/recommendData';
-import clsx from 'clsx';
+// import {
+//   recommendedData,
+//   RecommendedProps,
+// } from '@/src/contents/recommendData';
+
+import { BiArrowBack } from 'react-icons/bi';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { BiArrowBack } from 'react-icons/bi';
 import { TbMoodPlus } from 'react-icons/tb';
+import clsx from 'clsx';
 
-const RecommendCard = ({ ...data }: RecommendedProps) => {
+const RecommendCard = (
+  // { ...data }: RecommendedProps
+) => {
   return (
     <div className='inline-block pr-3'>
-      <Link href={data.link}>
+      <Link href={`#!`}>
         <div className='relative h-40 w-40 max-w-7xl overflow-hidden rounded-3xl bg-neutral-200 duration-300 ease-in-out md:h-[20rem] md:w-[30rem]'>
-          <Image
+          {/* <Image
             src={data.imageUrl}
             alt={data.name}
             height={100}
             width={100}
             className='aspect-square h-full w-full object-cover'
-          />
+          /> */}
           <div
             className={clsx(
               'justify-left absolute inset-0 flex items-end bg-gradient-to-b from-black/10 to-black/90 p-4'
             )}
           >
             <h3 className='font-bold leading-tight tracking-tight text-white'>
-              {data.name}
+              {/* {data.name} */}
             </h3>
           </div>
         </div>
@@ -63,9 +66,9 @@ const RecommendCardScoll = () => {
                 </div>
               </div>
             </div>
-            {recommendedData.map((data, index) => (
+            {/* {recommendedData.map((data, index) => (
               <RecommendCard key={data.name + index * 3} {...data} />
-            ))}
+            ))} */}
           </div>
         </div>
       </div>

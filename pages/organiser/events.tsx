@@ -54,16 +54,16 @@ const Events = ({ token, events }: { token: string; events: EventsProps }) => {
     if (eventsObj != null) {
       const filteredList = query
         ? eventsObj.results &&
-          eventsObj.results.filter((event) =>
-            event.name.toLowerCase().includes(query.toLowerCase())
-          )
+        eventsObj.results.filter((event) =>
+          event.name.toLowerCase().includes(query.toLowerCase())
+        )
         : events.results;
       setEventList(filteredList);
     }
   };
 
   return (
-    <Layout>
+    <Layout pageTitle='Events'>
       <div className='w-5xl mx-auto'>
         <div className='mt-2 p-8 sm:ml-6'>
           <div className='bg-transparentfocus:border-transparent flex rounded-md border-transparent border-b-neutral-300 shadow-sm ring-1 ring-inset ring-neutral-400 focus:border-b-neutral-300 focus:ring-0 sm:max-w-md'>
@@ -288,11 +288,10 @@ const Pagination = ({
                   );
                 }}
                 key={content}
-                className={`inline-flex cursor-pointer items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-neutral-500 hover:border-neutral-200 hover:text-neutral-400 ${
-                  content == currentPage
+                className={`inline-flex cursor-pointer items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-neutral-500 hover:border-neutral-200 hover:text-neutral-400 ${content == currentPage
                     ? 'border-t-1 border-t-purple-500 text-purple-600'
                     : ''
-                }`}
+                  }`}
               >
                 {content}
               </a>

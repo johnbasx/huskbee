@@ -23,7 +23,7 @@ const OganiserDetail = ({
 		setOfficeAdminToken(token);
 	}, []);
 
-	const active_bankDetail = organiser_detail.bank_detail.filter(
+	const active_bankDetail = organiser_detail.bank_accounts.filter(
 		(detail) => detail.default,
 	);
 

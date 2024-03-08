@@ -9,6 +9,7 @@ import Layout from '@components/exocrowd-client/Layout';
 import Script from 'next/script';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
+
 // @ts-ignore
 import { load } from '@cashfreepayments/cashfree-js';
 import { orgTokenStore } from '@store/index';
@@ -92,9 +93,9 @@ const Contribute = ({
         <br />
         End date - {FormatDate(fundraiser_detail.end_date)}
         <br />
-        Total donors - {fundraiser_detail.total_donors}
+        Total donors - {fundraiser_detail.donation_detail.total_donors}
         <br />
-        Total donations - {toIndianCurrency(fundraiser_detail.total_donation)}
+        Total donations - {toIndianCurrency(fundraiser_detail.donation_detail.total_donation)}
         <br />
         Fundraiser creator or Organiser name -{' '}
         {fundraiser_detail.organiser_name}

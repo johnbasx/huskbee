@@ -7,6 +7,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { ChevronLeftIcon, PhoneIcon } from '@heroicons/react/24/solid';
 import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useState } from 'react';
+
 /*
   This example requires Tailwind CSS v2.0+ 
   
@@ -23,7 +25,7 @@ import { Dialog, Transition } from '@headlessui/react';
   }
   ```
 */
-import { Fragment, useState } from 'react';
+
 
 const user = {
   name: 'Tom Cook',
@@ -643,7 +645,7 @@ export default function Example() {
                           {field}
                         </dt>
                         <dd className='mt-1 text-sm text-neutral-900'>
-                          {profile.fields[field]}
+                          {/* {profile.fields[field]} */}
                         </dd>
                       </div>
                     ))}
@@ -715,7 +717,7 @@ export default function Example() {
                       role='list'
                       className='relative z-0 divide-y divide-neutral-200'
                     >
-                      {directory[letter].map((person) => (
+                      {/* {directory[letter].map((person) => (
                         <li key={person.id}>
                           <div className='relative flex items-center space-x-3 px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-pink-500 hover:bg-neutral-50'>
                             <div className='flex-shrink-0'>
@@ -727,7 +729,7 @@ export default function Example() {
                             </div>
                             <div className='min-w-0 flex-1'>
                               <a href='#' className='focus:outline-none'>
-                                {/* Extend touch target to entire panel */}
+                               
                                 <span
                                   className='absolute inset-0'
                                   aria-hidden='true'
@@ -742,7 +744,7 @@ export default function Example() {
                             </div>
                           </div>
                         </li>
-                      ))}
+                      ))} */}
                     </ul>
                   </div>
                 ))}

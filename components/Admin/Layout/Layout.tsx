@@ -8,13 +8,13 @@ import {
 } from '@constants/list-items';
 
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import ProfileDropDown from '@components/common/ProfileDropDown';
 import TopNavbar from './TopNavbar';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -261,11 +261,10 @@ const Layout = ({
                   {crowd_funding.map((content) => (
                     <Link key={content.name} href={content.href}>
                       <span
-                        className={`group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-neutral-50 ${
-                          router.pathname === content.href
+                        className={`group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-neutral-50 ${router.pathname === content.href
                             ? 'bg-neutral-200 text-neutral-900'
                             : 'text-neutral-700 hover:text-neutral-900 '
-                        }`}
+                          }`}
                       >
                         <span
                           className={classNames(

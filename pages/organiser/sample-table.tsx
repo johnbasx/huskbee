@@ -177,7 +177,7 @@ export default function App() {
   }, [table.getState().columnFilters[0]?.id]);
 
   return (
-    <Layout>
+    <Layout pageTitle='Sample table'>
       <div className='mx-auto max-w-7xl'>
         <DebouncedInput
           value={globalFilter ?? ''}
@@ -367,11 +367,10 @@ function Filter({
           onChange={(value) =>
             column.setFilterValue((old: [number, number]) => [value, old?.[1]])
           }
-          placeholder={`Min ${
-            column.getFacetedMinMaxValues()?.[0]
+          placeholder={`Min ${column.getFacetedMinMaxValues()?.[0]
               ? `(${column.getFacetedMinMaxValues()?.[0]})`
               : ''
-          }`}
+            }`}
           className='w-24 rounded border shadow'
         />
         <DebouncedInput
@@ -382,11 +381,10 @@ function Filter({
           onChange={(value) =>
             column.setFilterValue((old: [number, number]) => [old?.[0], value])
           }
-          placeholder={`Max ${
-            column.getFacetedMinMaxValues()?.[1]
+          placeholder={`Max ${column.getFacetedMinMaxValues()?.[1]
               ? `(${column.getFacetedMinMaxValues()?.[1]})`
               : ''
-          }`}
+            }`}
           className='w-24 rounded border shadow'
         />
       </div>

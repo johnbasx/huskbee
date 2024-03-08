@@ -628,7 +628,7 @@ export default function Example() {
                                                 added tags
                                               </span>{' '}
                                               <span className='mr-0.5'>
-                                                {item.tags.map((tag) => (
+                                                {/* {item.tags.map((tag) => (
                                                   <Fragment key={tag.name}>
                                                     <a
                                                       href={tag.href}
@@ -648,7 +648,7 @@ export default function Example() {
                                                       </span>
                                                     </a>{' '}
                                                   </Fragment>
-                                                ))}
+                                                ))} */}
                                               </span>
                                               <span className='whitespace-nowrap'>
                                                 {item.date}

@@ -71,9 +71,9 @@ const FundraiserList = ({
     if (fundraisersIns != null) {
       const filteredList = query
         ? fundraisersIns.results &&
-          fundraisersIns.results.filter((fundraiser) =>
-            fundraiser.title.toLowerCase().includes(query.toLowerCase())
-          )
+        fundraisersIns.results.filter((fundraiser) =>
+          fundraiser.title.toLowerCase().includes(query.toLowerCase())
+        )
         : fundraisers_obj.results;
       setfundraisers(filteredList);
     }

@@ -1,17 +1,18 @@
-import React, { useState, PureComponent } from 'react';
+import React, { PureComponent, useState } from 'react';
 
 import { FormatDate } from '@utils/index';
 import { FundDonationsGraphProp } from '../../../pages/organiser/fundraiser-detail/[fundraiserId]';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+//   ResponsiveContainer,
+// } from 'recharts';
 
 const ChartAnalyticsOrganiserDonations = ({
   graphData,
@@ -37,7 +38,7 @@ const ChartAnalyticsOrganiserDonations = ({
     >
       <h2 className='text-xl font-bold text-black'>Donation graph new</h2>
       {/* <ResponsiveContainer width='100%' height='100%'> */}
-      <LineChart
+      {/* <LineChart
         width={500}
         height={300}
         data={graphData}
@@ -66,7 +67,7 @@ const ChartAnalyticsOrganiserDonations = ({
           stroke='#82ca9d'
           strokeWidth={4}
         />
-      </LineChart>
+      </LineChart> */}
       {/* </ResponsiveContainer> */}
     </div>
   );
